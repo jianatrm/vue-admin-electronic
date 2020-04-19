@@ -6,7 +6,7 @@
         <h3 class="title">电子证照管理平台</h3>
       </div>
 
-      <el-form-item prop="username">+\
+      <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
@@ -102,8 +102,8 @@ export default {
       })
     },
     handleLogin() {
-      this.$router.push({ path: this.redirect || '/' })
-     /* this.$refs.loginForm.validate(valid => {
+      //this.$router.push({ path: this.redirect || '/' })
+      this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then((res) => {
@@ -120,7 +120,7 @@ export default {
           console.log('error submit!!')
           return false
         }
-      })*/
+      })
     }
   }
 }

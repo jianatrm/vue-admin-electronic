@@ -2,38 +2,31 @@
   <div class="app-container">
     <el-row :gutter="20">
       <el-col :span="12" style="text-align: left">
-        <el-input v-model="search" placeholder="根据部门搜索" style="width: 30%;"></el-input>
-        <el-button type="primary" @click="querydeptList(search)">查询</el-button>
-      </el-col>
-      <el-col :span="12" style="text-align: right">
-        <el-button type="primary" @click="handleAdddept">新建部门</el-button>
+        <el-input v-model="search" placeholder="文档搜索" style="width: 30%;"></el-input>
+        <el-button type="primary" @click="querydocList(search)">查询</el-button>
       </el-col>
     </el-row>
-    <el-table :data="deptList" style="width: 100%;margin-top:30px;" border>
+    <el-table :data="docList" style="width: 100%;margin-top:30px;" border>
       <el-table-column type="index" align="center" label="序号" width="220">
 
       </el-table-column>
 
-      <el-table-column align="center" label="部门名称" width="220">
+      <el-table-column align="center" label="文档名称" width="220">
         <template slot-scope="scope">
-          {{ scope.row.deptName }}
+          {{ scope.row.docName }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="部门编码">
+      <el-table-column align="center" label="修改时间">
         <template slot-scope="scope">
-          {{ scope.row.deptCode }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="部门描述">
-        <template slot-scope="scope">
-          {{ scope.row.remark }}
+          {{ scope.row.operateTime }}
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)">编辑</el-button>
-          <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button>
+          <el-button type="primary" size="small" icon="el-icon-download" @click="handleEdit(scope)">下载</el-button>
+          <el-button type="primary" size="small" icon="el-icon-star-off" @click="handleEdit(scope)">收藏</el-button>
+          <el-button type="primary" size="small" icon="el-icon-search" @click="handleEdit(scope)">预览</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -42,14 +35,14 @@
         <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize" @pagination="getList"/>
       </el-col>
     </el-row>
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑部门':'新建部门'">
-      <el-form :model="dept" label-width="80px" label-position="left" :inline="true" :rules="rules" ref="dept">
-        <el-form-item label="部门编号" prop="deptCode">
-          <el-input v-model="dept.deptCode" placeholder="部门编号"/>
+    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑文档':'新建文档'">
+      <el-form :model="doc" label-width="80px" label-position="left" :inline="true" :rules="rules" ref="doc">
+        <el-form-item label="文档编号" prop="docCode">
+          <el-input v-model="doc.docCode" placeholder="文档编号"/>
         </el-form-item>
-        <el-form-item label="部门名称" prop="deptName">
+        <el-form-item label="文档名称" prop="docName">
           <el-input
-            v-model="dept.deptName"
+            v-model="doc.docName"
             placeholder="邮箱"
           />
         </el-form-item>
@@ -59,14 +52,14 @@
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="dialogVisible=false">取消</el-button>
-        <el-button type="primary" @click="submitForm('dept')">提交</el-button>
+        <el-button type="primary" @click="submitForm('doc')">提交</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-  import {querydept, updatedept, adddept} from "../../api/dept";
+  import {querydoc, updatedoc, adddoc} from "../../api/doc";
   import Pagination from '@/components/Pagination'
 
   export default {
@@ -74,18 +67,18 @@
     data() {
       return {
         rules: {
-          deptName: [
+          docName: [
             {required: true, message: '请输入账户', trigger: 'blur'},
             {min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur'}
           ],
         },
 
         search: '',
-        dept: {
-          deptName: '',
-          deptCode: '',
+        doc: {
+          docName: '',
+          docCode: '',
         },
-        deptList: [],
+        docList: [],
         dialogVisible: false,
         dialogType: 'new',
         checkStrictly: false,
@@ -100,30 +93,30 @@
 
     },
     mounted() {
-      this.querydeptList()
+      this.querydocList()
     },
     methods: {
-      querydeptList(val) {
-        querydept({
+      querydocList(val) {
+        querydoc({
           pageSize: this.pageSize,
           pageNum: this.pageNum,
-          deptName:val
+          docName:val
         }).then(res => {
           if (res.success) {
-            this.deptList = res.result.result
+            this.docList = res.result.result
             this.total = res.result.count
           }
         })
       },
       getList() {
         this.pageNum++;
-        this.querydeptList();
+        this.querydocList();
       },
       handleEdit(scope) {
         this.dialogType = 'edit'
         this.dialogVisible = true
-        this.dept = scope.row;
-        this.dept.checkPass = scope.row.password
+        this.doc = scope.row;
+        this.doc.checkPass = scope.row.password
 
       },
       handleDelete({$index, row}) {
@@ -132,20 +125,20 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(async () => {
-          await this.deleteRole(row.deptId, $index)
+          await this.deleteRole(row.docId, $index)
         }).catch(err => {
-            console.error(err)
-          })
+          console.error(err)
+        })
       },
-      handleAdddept() {
+      handleAdddoc() {
         this.dialogType = 'new'
         this.dialogVisible = true
-        this.dept = {}
+        this.doc = {}
       },
-      deleteRole(deptId, $index) {
-        updatedept({
+      deleteRole(docId, $index) {
+        updatedoc({
           status: 0,
-          deptId: deptId
+          docId: docId
         }).then(res => {
           if (res.success) {
             this.$message({
@@ -153,7 +146,7 @@
               message: '删除成功'
             })
             this.pageNum = 1;
-            this.querydeptList();
+            this.querydocList();
           }
         })
       },
@@ -161,7 +154,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             if (this.dialogType == 'new') {
-              adddept(this.dept).then(res => {
+              adddoc(this.doc).then(res => {
                 if (res.success) {
                   this.$message({
                     type: 'success',
@@ -170,7 +163,7 @@
                 }
               })
             } else {
-              updatedept(this.dept).then(res => {
+              updatedoc(this.doc).then(res => {
                 if (res.success) {
                   this.$message({
                     type: 'success',
@@ -180,7 +173,7 @@
               })
             }
             this.pageNum = 1;
-            this.querydeptList();
+            this.querydocList();
           } else {
             console.log('error submit!!');
             return false;

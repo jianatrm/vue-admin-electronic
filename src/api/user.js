@@ -26,3 +26,26 @@ export function logout() {
     method: 'post'
   })
 }
+
+
+export function queryuser(data) {
+  return request({
+    url: 'electronic/user/queryuser',
+    method: 'post',
+    data:data,
+  })
+}
+
+export function updateuser(data) {
+  return request({
+    url: 'electronic/user/updateuser',
+    method: 'post',
+    data:data,
+  })
+}export function adduser(data) {
+  return request({
+    url: 'electronic/user/adduser',
+    method: 'post',
+    data:data,
+  })
+}

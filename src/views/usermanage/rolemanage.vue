@@ -1,274 +1,200 @@
 <template>
-  <div class="app-container">
-    <el-button type="primary" @click="handleAddRole">新建角色</el-button>
+  <el-container style="height: 100%">
+    <el-aside width="25%" style="margin-top: 25px;">
+      <el-card class="box-card" style="height: 100%">
+        <div class="custom-tree-container" >
+          <div class="block" style="width:100%">
+            <el-tree :data="data"  node-key="id" default-expand-all :expand-on-click-node="false">
+              <span class="custom-tree-node" slot-scope="{ node, data }">
+              <span>  <i class="iconfont icon-bumenguanli"></i>{{ node.label }}</span>
+                <span>
+                  <el-button type="text" size="mini" @click="() => append(data)">
+                    <i class="el-icon-plus"></i>
+                  </el-button> <el-button type="text" size="mini" @click="() => append(data)">
+                    <i class="el-icon-edit"></i>
+                  </el-button>
+                  <el-button type="text" size="mini" @click="() => remove(node, data)">
+                    <i class="el-icon-delete"></i>
+                  </el-button>
+                </span>
+               </span>
+            </el-tree>
+          </div>
+        </div>
 
-    <el-table :data="rolesList" style="width: 100%;margin-top:30px;" border>
-      <el-table-column align="center" label="角色ID" width="220">
-        <template slot-scope="scope">
-          {{ scope.row.key }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="角色名" width="220">
-        <template slot-scope="scope">
-          {{ scope.row.name }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="角色描述">
-        <template slot-scope="scope">
-          {{ scope.row.description }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="操作">
-        <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)">Edit</el-button>
-          <el-button type="danger" size="small" @click="handleDelete(scope)">Delete</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+      </el-card>
+    </el-aside>
 
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑角色':'新建角色'">
-      <el-form :model="role" label-width="80px" label-position="left">
-        <el-form-item label="角色名">
-          <el-input v-model="role.name" placeholder=""/>
-        </el-form-item>
-        <el-form-item label="角色描述">
-          <el-input
-            v-model="role.description"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            type="textarea"
-            placeholder="Role Description"
-          />
-        </el-form-item>
-        <el-form-item label="菜单">
-          <el-tree
-            ref="tree"
-            :check-strictly="checkStrictly"
-            :data="routesData"
-            :props="defaultProps"
-            show-checkbox
-            node-key="path"
-            class="permission-tree"
-          />
-        </el-form-item>
-      </el-form>
-      <div style="text-align:right;">
-        <el-button type="danger" @click="dialogVisible=false">Cancel</el-button>
-        <el-button type="primary" @click="confirmRole">Confirm</el-button>
-      </div>
-    </el-dialog>
-  </div>
+
+    <el-main>
+      <el-card class="box-card" style="margin-top: 5px">
+        <el-row :gutter="20" >
+          <el-col :span="24">
+            <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="500px">
+              <el-form-item label="" >
+                <el-input v-model="w" placeholder="请输入持证主体代码" style="width: 250px"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="onSubmit">查询</el-button>
+              </el-form-item>
+            </el-form>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="20" >
+          <el-col :span="24">
+            <el-card class="box-card" :body-style="{ padding: '10px' }">
+              <div>
+                <span>已选中2项</span>
+                <el-divider direction="vertical"></el-divider>
+                <span class="user-btn"><i class="el-icon-delete "></i> 删除</span>
+                <el-divider direction="vertical"></el-divider>
+                <span class="user-btn"><i class="el-icon-edit-outline"></i> 编辑</span>
+                <el-divider direction="vertical"></el-divider>
+                <span class="user-btn"><i class="iconfont icon-fenpei"></i>分配角色</span>
+                <el-divider direction="vertical"></el-divider>
+                <span class="user-btn"> <i class="iconfont icon-yuangonglizhi"></i>离职</span>
+                <el-divider direction="vertical"></el-divider>
+                <span class="user-btn"> <i class="el-icon-circle-close"></i>禁用</span>
+                <el-divider direction="vertical"></el-divider>
+                <span class="user-btn"> <i class="el-icon-refresh"></i>重置密码</span>
+
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
+        <el-table :data="tableData" border style="width: 100%;margin-top: 10px">
+          <el-table-column type="selection" width="55" align="center"></el-table-column>
+
+          <el-table-column prop="date" label="证照类型" width="80" align="center"></el-table-column>
+
+          <el-table-column prop="name" label="证照代码" width="100" align="center"></el-table-column>
+
+          <el-table-column prop="address" label="颁发机构" align="center"></el-table-column>
+
+          <el-table-column prop="address" label="持证主体" align="center"></el-table-column>
+
+          <el-table-column prop="address" label="持证主体代码" width="150" align="center"></el-table-column>
+
+          <el-table-column prop="address" label="注册状态" align="center"></el-table-column>
+
+          <el-table-column prop="address" label="证照状态" align="center"></el-table-column>
+
+          <el-table-column prop="address" label="操作" align="center"></el-table-column>
+
+        </el-table>
+        <el-row :gutter="20" >
+          <el-col :span="24" style="text-align: right">
+            <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList"/>
+          </el-col>
+        </el-row>
+
+      </el-card>
+
+    </el-main>
+  </el-container>
 </template>
 
 <script>
-  import path from 'path'
-  import { deepClone } from '@/utils'
-  import { addRole, deleteRole, getRoles, getRoutes, updateRole } from '@/api/role'
-
-  const defaultRole = {
-    key: '',
-    name: '',
-    description: '',
-    routes: []
-  }
-
+  let id = 1000;
+  import Pagination from '@/components/Pagination'
   export default {
+    components: { Pagination},
     data() {
+
+      const data = [
+        {
+          id: 1,
+          label: '一级 1',
+          icon:'el-icon-plus',
+          children: [{
+            id: 4,
+            label: '二级 1-1',
+            children: [{
+              id: 9,
+              label: '三级 1-1-1'
+            }, {
+              id: 10,
+              label: '三级 1-1-2'
+            }]
+          }]
+        }, {
+          id: 2,
+          label: '一级 2',
+          children: [{
+            id: 5,
+            label: '二级 2-1'
+          }, {
+            id: 6,
+            label: '二级 2-2'
+          }]
+        }, {
+          id: 3,
+          label: '一级 3',
+          children: [{
+            id: 7,
+            label: '二级 3-1'
+          }, {
+            id: 8,
+            label: '二级 3-2'
+          }]
+        }];
       return {
-        role: Object.assign({}, defaultRole),
-        routes: [],
-        rolesList: [],
-        dialogVisible: false,
-        dialogType: 'new',
-        checkStrictly: false,
-        defaultProps: {
-          children: 'children',
-          label: 'title'
+        data: JSON.parse(JSON.stringify(data)),
+        data: JSON.parse(JSON.stringify(data)),
+        total: 100,
+        listLoading: true,
+        listQuery: {
+          page: 1,
+          limit: 20,
+          importance: undefined,
+          title: undefined,
+          type: undefined,
+          sort: '+id'
         }
       }
     },
-    computed: {
-      routesData() {
-        return this.routes
-      }
-    },
-    created() {
-      // Mock: get all routes and roles list from server
-      this.getRoutes()
-      this.getRoles()
-    },
+
     methods: {
-      async getRoutes() {
-        const res = await getRoutes()
-        this.serviceRoutes = res.data
-        this.routes = this.generateRoutes(res.data)
-      },
-      async getRoles() {
-        const res = await getRoles()
-        this.rolesList = res.data
-      },
-
-      // Reshape the routes structure so that it looks the same as the sidebar
-      generateRoutes(routes, basePath = '/') {
-        const res = []
-
-        for (let route of routes) {
-          // skip some route
-          if (route.hidden) {
-            continue
-          }
-
-          const onlyOneShowingChild = this.onlyOneShowingChild(route.children, route)
-
-          if (route.children && onlyOneShowingChild && !route.alwaysShow) {
-            route = onlyOneShowingChild
-          }
-
-          const data = {
-            path: path.resolve(basePath, route.path),
-            title: route.meta && route.meta.title
-
-          }
-
-          // recursive child routes
-          if (route.children) {
-            data.children = this.generateRoutes(route.children, data.path)
-          }
-          res.push(data)
+      append(data) {
+        const newChild = { id: id++, label: 'testtest', children: [] };
+        if (!data.children) {
+          this.$set(data, 'children', []);
         }
-        return res
+        data.children.push(newChild);
       },
-      generateArr(routes) {
-        let data = []
-        routes.forEach(route => {
-          data.push(route)
-          if (route.children) {
-            const temp = this.generateArr(route.children)
-            if (temp.length > 0) {
-              data = [...data, ...temp]
-            }
-          }
-        })
-        return data
-      },
-      handleAddRole() {
-        this.role = Object.assign({}, defaultRole)
-        if (this.$refs.tree) {
-          this.$refs.tree.setCheckedNodes([])
-        }
-        this.dialogType = 'new'
-        this.dialogVisible = true
-      },
-      handleEdit(scope) {
-        this.dialogType = 'edit'
-        this.dialogVisible = true
-        this.checkStrictly = true
-        this.role = deepClone(scope.row)
-        this.$nextTick(() => {
-          const routes = this.generateRoutes(this.role.routes)
-          this.$refs.tree.setCheckedNodes(this.generateArr(routes))
-          // set checked state of a node not affects its father and child nodes
-          this.checkStrictly = false
-        })
-      },
-      handleDelete({ $index, row }) {
-        this.$confirm('Confirm to remove the role?', 'Warning', {
-          confirmButtonText: 'Confirm',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        })
-          .then(async() => {
-            await deleteRole(row.key)
-            this.rolesList.splice($index, 1)
-            this.$message({
-              type: 'success',
-              message: 'Delete succed!'
-            })
-          })
-          .catch(err => {
-            console.error(err)
-          })
-      },
-      generateTree(routes, basePath = '/', checkedKeys) {
-        const res = []
 
-        for (const route of routes) {
-          const routePath = path.resolve(basePath, route.path)
-
-          // recursive child routes
-          if (route.children) {
-            route.children = this.generateTree(route.children, routePath, checkedKeys)
-          }
-
-          if (checkedKeys.includes(routePath) || (route.children && route.children.length >= 1)) {
-            res.push(route)
-          }
-        }
-        return res
-      },
-      async confirmRole() {
-        const isEdit = this.dialogType === 'edit'
-
-        const checkedKeys = this.$refs.tree.getCheckedKeys()
-        this.role.routes = this.generateTree(deepClone(this.serviceRoutes), '/', checkedKeys)
-
-        if (isEdit) {
-          await updateRole(this.role.key, this.role)
-          for (let index = 0; index < this.rolesList.length; index++) {
-            if (this.rolesList[index].key === this.role.key) {
-              this.rolesList.splice(index, 1, Object.assign({}, this.role))
-              break
-            }
-          }
-        } else {
-          const { data } = await addRole(this.role)
-          this.role.key = data.key
-          this.rolesList.push(this.role)
-        }
-
-        const { description, key, name } = this.role
-        this.dialogVisible = false
-        this.$notify({
-          title: 'Success',
-          dangerouslyUseHTMLString: true,
-          message: `
-            <div>Role Key: ${key}</div>
-            <div>Role Name: ${name}</div>
-            <div>Description: ${description}</div>
-          `,
-          type: 'success'
-        })
-      },
-      // reference: src/view/layout/components/Sidebar/SidebarItem.vue
-      onlyOneShowingChild(children = [], parent) {
-        let onlyOneChild = null
-        const showingChildren = children.filter(item => !item.hidden)
-
-        // When there is only one child route, the child route is displayed by default
-        if (showingChildren.length === 1) {
-          onlyOneChild = showingChildren[0]
-          onlyOneChild.path = path.resolve(parent.path, onlyOneChild.path)
-          return onlyOneChild
-        }
-
-        // Show parent if there are no child route to display
-        if (showingChildren.length === 0) {
-          onlyOneChild = { ...parent, path: '', noShowingChildren: true }
-          return onlyOneChild
-        }
-
-        return false
+      remove(node, data) {
+        const parent = node.parent;
+        const children = parent.data.children || parent.data;
+        const index = children.findIndex(d => d.id === data.id);
+        children.splice(index, 1);
       }
     }
-  }
+  };
 </script>
 
-<style lang="scss" scoped>
-  .app-container {
-    .roles-table {
-      margin-top: 30px;
-    }
-    .permission-tree {
-      margin-bottom: 30px;
-    }
+<style>
+  .custom-tree-node {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    padding-right: 8px;
+  }
+  .user-btn{
+    cursor: pointer;
+    color: #409EFF;
+  }
+
+  .el-tree {
+    width: 100%;
+    overflow: scroll;
+  }
+
+  .el-tree>.el-tree-node {
+    display: inline-block;
+    min-width: 100%;
   }
 </style>
