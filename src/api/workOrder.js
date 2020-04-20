@@ -36,3 +36,18 @@ export function queryWorkOrderToMe(data) {
     data:data,
   })
 }
+export function queryWorkOrderDetail(data) {
+  return request({
+    url: 'electronic/workOrder/queryWorkOrderDetail',
+    method: 'post',
+    data:data,
+  })
+}
+
+export function approveWorkOrder(data) {
+  return request({
+    url: 'electronic/workOrder/approveWorkOrder',
+    method: 'post',
+    data:data,
+  })
+}

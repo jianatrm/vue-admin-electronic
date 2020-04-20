@@ -123,7 +123,7 @@
         for (let i = 0; i <this.approve.approveList.length; i++) {
           nodeList.push({
             userId:this.approve.approveList[i],
-            nodeOrder:i
+            nodeOrder:i+1
           })
         }
 
@@ -132,7 +132,7 @@
           workOrderDesc:this.doc.remark,
           workInfo:JSON.stringify(docList),
           workType:"doc",
-          nodeList:JSON.stringify(nodeList)
+          workNodeList:JSON.stringify(nodeList)
           }).then(res=>{
             if (res.success){
               this.$message({
