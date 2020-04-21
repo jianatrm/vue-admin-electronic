@@ -25,7 +25,6 @@
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button type="primary" size="small" icon="el-icon-download" @click="handleEdit(scope)">下载</el-button>
-          <el-button type="primary" size="small" icon="el-icon-star-off" @click="handleEdit(scope)">收藏</el-button>
           <el-button type="primary" size="small" icon="el-icon-search" @click="handleEdit(scope)">预览</el-button>
         </template>
       </el-table-column>
@@ -35,31 +34,11 @@
         <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize" @pagination="getList"/>
       </el-col>
     </el-row>
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑文档':'新建文档'">
-      <el-form :model="doc" label-width="80px" label-position="left" :inline="true" :rules="rules" ref="doc">
-        <el-form-item label="文档编号" prop="docCode">
-          <el-input v-model="doc.docCode" placeholder="文档编号"/>
-        </el-form-item>
-        <el-form-item label="文档名称" prop="docName">
-          <el-input
-            v-model="doc.docName"
-            placeholder="邮箱"
-          />
-        </el-form-item>
-
-
-
-      </el-form>
-      <div style="text-align:right;">
-        <el-button type="danger" @click="dialogVisible=false">取消</el-button>
-        <el-button type="primary" @click="submitForm('doc')">提交</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-  import {querydoc, updatedoc, adddoc} from "../../api/doc";
+  import {queryDeptElectronicDoc} from "../../api/dept";
   import Pagination from '@/components/Pagination'
 
   export default {
@@ -88,7 +67,7 @@
         },
         pageNum: 1,
         pageSize: 10,
-        total: 10
+        total: 0
       }
 
     },
@@ -97,7 +76,7 @@
     },
     methods: {
       querydocList(val) {
-        querydoc({
+          queryDeptElectronicDoc({
           pageSize: this.pageSize,
           pageNum: this.pageNum,
           docName:val

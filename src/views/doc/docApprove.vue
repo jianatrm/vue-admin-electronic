@@ -41,22 +41,22 @@
         <el-table :data="workToMeList" style="width: 100%;margin-top:30px;" border>
           <el-table-column align="center" label="工单编码" width="220">
             <template slot-scope="scope">
-              {{ scope.row.workOrder.workOrderCode }}
+              {{ scope.row.workOrderVO.workOrderCode }}
             </template>
           </el-table-column>
           <el-table-column align="center" label="工单名称" >
             <template slot-scope="scope">
-              {{ scope.row.workOrder.workOrderName }}
+              {{ scope.row.workOrderVO.workOrderName }}
             </template>
           </el-table-column>
           <el-table-column align="center" label="申请时间">
             <template slot-scope="scope">
-              {{ new Date(scope.row.workOrder.createTime ).format("yyyy-MM-dd")}}
+              {{ new Date(scope.row.workOrderVO.createTime ).format("yyyy-MM-dd")}}
             </template>
           </el-table-column>
           <el-table-column align="center" label="状态">
             <template slot-scope="scope">
-              {{ scope.row.workOrder.workOrderStatusDesc }}
+              {{ scope.row.workOrderVO.workOrderStatusDesc }}
             </template>
           </el-table-column>
 
@@ -131,18 +131,21 @@
     <el-dialog :visible.sync="dialogVisibleSelectDept" title="选择文档分配部门">
       <el-form :model="dept" :rules="rules" ref="dept" label-width="80px">
         <el-form-item label="活动区域" prop="deptId">
-          <el-select v-model="dept.deptId" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+          <el-select v-model="dept.deptId" placeholder="请选择部门">
+            <el-option :label="item.deptName" :value="item.deptId" v-for="(item,index) in deptList" :key="index"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
+      <div style="text-align:right;">
+        <el-button type="primary" @click="onSubmitFinsh()">提交</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
     import {queryWorkOrder,queryWorkOrderToMe,queryWorkOrderDetail,approveWorkOrder} from "../../api/workOrder";
+    import {querydept} from "../../api/dept";
     import Pagination from '@/components/Pagination'
 
     export default {
@@ -162,12 +165,13 @@
             total: 10,
             approve:{},
             activities: [],
+              deptList:[],
             dept:{
                 deptId:''
             },
               rules: {
                   deptId: [
-                    { required: true, message: '请选择活动区域', trigger: 'change' }
+                    { required: true, message: '请选择部门', trigger: 'change' }
                 ],
               }
           }
@@ -202,11 +206,20 @@
         },
         handle(workOrderId){
           this.dialogVisible =true;
-          this.queryWorkDetail(workOrderId);
+            queryWorkOrderDetail({
+                workOrderId: workOrderId
+            }).then(res=>{
+                if (res.success){
+                    this.workOrderDetail = res.result
+                    this.activities =  JSON.parse(res.result.workNodeList)
+                    this.workOrderDetail.workInfo = JSON.parse(res.result.workInfo)
+                }
+            })
         },
         onSubmit(val){
-            if (this.workOrderDetail.nodeCount == this.workOrderDetail.workNode.nodeOrder){
+            if (this.workOrderDetail.nodeCount == this.workOrderDetail.workNode.nodeOrder&&val == '90'){
                 this.dialogVisibleSelectDept= true
+                this.queryDeptList()
             }else {
                 this.approveSubmit(val);
             }
@@ -246,6 +259,8 @@
                          type: 'success',
                          message: '操作成功'
                      })
+                     this.dialogVisibleSelectDept = false;
+                     this.dialogVisible =false;
                  }else {
                      this.$message({
                          type: 'fail',
@@ -253,7 +268,20 @@
                      })
                  }
              })
-         }
+         },
+          queryDeptList(){
+              querydept({
+                  pageNum:1,
+                  pageSize:1000,
+              }).then(res=>{
+                  if (res.success){
+                      this.deptList = res.result.result
+                  }
+              })
+          },
+          onSubmitFinsh(){
+            this.approveSubmit('90')
+          }
       }
     }
 </script>

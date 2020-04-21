@@ -14,9 +14,18 @@ export function updatedept(data) {
     method: 'post',
     data:data,
   })
-}export function adddept(data) {
+}
+export function adddept(data) {
   return request({
     url: 'electronic/dept/addDept',
+    method: 'post',
+    data:data,
+  })
+}
+
+export function queryDeptElectronicDoc(data) {
+  return request({
+    url: 'electronic/deptElectronicDoc/queryDeptElectronicDoc',
     method: 'post',
     data:data,
   })

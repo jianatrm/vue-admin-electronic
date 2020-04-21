@@ -13,7 +13,7 @@
             <el-upload
               class="upload-demo"
               drag
-              action="http://localhost:8088/electronic/file/uploadFile"
+              action="http://localhost:8001/electronic/file/uploadFile"
               :on-success="handleAvatarSuccess"
               :file-list="fileList"
               multiple>
@@ -67,7 +67,7 @@
         rules: {
           docName: [
             {required: true, message: '请输入文件名称', trigger: 'blur'},
-            {min: 3, max: 5, message: '长度在 3 到 50 个字符', trigger: 'blur'}
+            {min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'blur'}
           ],
           remark: [
             {required: true, message: '请填写文件描述', trigger: 'blur'}
