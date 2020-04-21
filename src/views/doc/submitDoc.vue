@@ -14,8 +14,8 @@
               class="upload-demo"
               drag
               action="http://localhost:8001/electronic/file/uploadFile"
-              :on-success="handleAvatarSuccess"
               :file-list="fileList"
+              ref="upload"
               multiple>
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -24,6 +24,7 @@
             </el-upload>
           </el-form-item>
           <el-form-item>
+            <el-button type="primary" @click="submitUpload('ruleForm')">上传</el-button>
             <el-button type="primary" @click="submitForm('ruleForm')">提交审批</el-button>
           </el-form-item>
         </el-form>
@@ -52,6 +53,7 @@
 
   export default {
     name: "uploadDoc",
+
     data() {
       return {
         activeName: 'first',
@@ -92,8 +94,12 @@
     methods: {
       handleClick() {
       },
+        submitUpload() {
+            this.$refs.upload.submit();
+        },
       handleAvatarSuccess(res, file) {
         if (res.success) {
+            console.log(1)
           this.fileList.push({
             name: res.result.fileName,
             url: res.result.fileDownloadUri
@@ -103,6 +109,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+              console.log(this.$refs.upload.uploadFiles)
             this.dialogVisible = true;
             this.queryUserList();
           } else {
@@ -112,12 +119,14 @@
         });
       },
       submitDoc (){
+
         let docList = [];
         let nodeList = [];
-        for (let i = 0; i <this.fileList.length; i++) {
+          let uploadFiles = this.$refs.upload.uploadFiles;
+        for (let i = 0; i <uploadFiles.length; i++) {
           docList.push({
-            docName:this.fileList[i].name,
-            docUrl:this.fileList[i].url
+            docName:uploadFiles[i].response.result.fileName,
+            docUrl:uploadFiles[i].response.result.fileDownloadUri
           })
         }
         for (let i = 0; i <this.approve.approveList.length; i++) {

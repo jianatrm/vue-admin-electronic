@@ -151,6 +151,7 @@
     export default {
       components: {Pagination},
         name: "docapprove",
+        inject:['reload'],
         data (){
           return{
             dialogVisible:false,
@@ -261,6 +262,7 @@
                      })
                      this.dialogVisibleSelectDept = false;
                      this.dialogVisible =false;
+                     this.reload()
                  }else {
                      this.$message({
                          type: 'fail',
