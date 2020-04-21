@@ -20,7 +20,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '首页', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'iconfont icon-shouye' }
     }]
   },
   {
@@ -33,7 +33,7 @@ export const constantRoutes = [
         path: 'usermanage',
         name: 'usermanage',
         component: () => import('../views/usermanage/usermanager'),
-        meta: { title: '人员管理', icon: 'tree',id:404 }
+        meta: { title: '人员管理', icon: 'iconfont icon-renyuanguanli',id:404 }
       }
     ]
   },
@@ -49,7 +49,7 @@ export const constantRoutes = [
         path: 'mydoc',
         name: 'mydoc',
         component: () => import('@/views/doc/myDoc'),
-        meta: { title: '我的文档', icon: 'tree',id:404 }
+        meta: { title: '我的文档', icon: 'iconfont icon-iconset0155',id:404 }
       }
     ]
   },
@@ -65,7 +65,7 @@ export const constantRoutes = [
         path: 'submitdoc',
         name: 'submitdoc',
         component: () => import('@/views/doc/submitDoc'),
-        meta: { title: '提交文档', icon: 'tree',id:404 }
+        meta: { title: '提交文档', icon: 'iconfont icon-tijiaowendang',id:404 }
       }
     ]
   },
@@ -80,7 +80,7 @@ export const constantRoutes = [
         path: 'docapprove',
         name: 'docapprove',
         component: () => import('@/views/doc/docApprove'),
-        meta: { title: '文档审批', icon: 'tree',id:404 }
+        meta: { title: '文档审批', icon: 'iconfont icon-shenqingshenpi',id:404 }
       }
     ]
   },
@@ -94,7 +94,7 @@ export const constantRoutes = [
         path: 'departmanage',
         name: 'departmanage',
         component: () => import('@/views/usermanage/departmanage'),
-        meta: { title: '部门管理', icon: 'tree',id:404 }
+        meta: { title: '部门管理', icon: 'iconfont icon-ml',id:404 }
       }
     ]
   },
@@ -108,7 +108,7 @@ export const constantRoutes = [
         path: 'deptdoc',
         name: 'deptdoc',
         component: () => import('@/views/doc/deptDoc'),
-        meta: { title: '部门文档', icon: 'tree',id:404 }
+        meta: { title: '部门文档', icon: 'iconfont icon-wendang',id:404 }
       }
     ]
   },
@@ -123,7 +123,7 @@ export const constantRoutes = [
         path: 'countquery',
         name: 'countquery',
         component: () => import('@/views/usermanage/departmanage'),
-        meta: { title: '统计查询', icon: 'tree',id:404 }
+        meta: { title: '统计查询', icon: 'iconfont icon-cz-tjcx',id:404 }
       }
     ]
   },
