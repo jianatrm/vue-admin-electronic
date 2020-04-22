@@ -110,7 +110,6 @@
                 })
             },
             getList() {
-                this.pageNum++;
                 this.querydocList();
             },
             handleEdit() {

@@ -265,6 +265,7 @@
                                         type: 'success',
                                         message: '新增成功'
                                     })
+                                    this.dialogVisible = false
                                 }
                             })
                         } else {
@@ -275,6 +276,7 @@
                                         type: 'success',
                                         message: '修改成功'
                                     })
+                                    this.dialogVisible = false
                                 }
                             })
                         }
