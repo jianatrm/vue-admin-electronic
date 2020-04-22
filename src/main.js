@@ -26,6 +26,9 @@ Vue.prototype.$baseUrl = baseUrl
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })
 
+import pdf from 'vue-pdf'
+Vue.use(pdf)
+
 Vue.config.productionTip = false
 
 const vm = new Vue({

@@ -32,7 +32,7 @@ export const constantRoutes = [
       {
         path: 'usermanage',
         name: 'usermanage',
-        component: () => import('../views/usermanage/usermanager'),
+        component: () => import('../views/user/index'),
         meta: { title: '人员管理', icon: 'iconfont icon-renyuanguanli',id:404 }
       }
     ]
@@ -48,9 +48,10 @@ export const constantRoutes = [
       {
         path: 'mydoc',
         name: 'mydoc',
-        component: () => import('@/views/doc/myDoc'),
+        component: () => import('../views/doc/my-doc'),
         meta: { title: '我的文档', icon: 'iconfont icon-iconset0155',id:404 }
-      }
+      },
+
     ]
   },
 
@@ -64,36 +65,36 @@ export const constantRoutes = [
       {
         path: 'submitdoc',
         name: 'submitdoc',
-        component: () => import('@/views/doc/submitDoc'),
+        component: () => import('../views/doc/submit-doc'),
         meta: { title: '提交文档', icon: 'iconfont icon-tijiaowendang',id:404 }
       }
     ]
   },
 
   {
-    path: '/approve',
+    path: '/workorder',
     component: Layout,
-    redirect: '/docapprove',
+    redirect: '/workdoc',
     meta: { title: '文档审批', icon: 'example',id:401 },
     children: [
       {
-        path: 'docapprove',
-        name: 'docapprove',
-        component: () => import('@/views/doc/docApprove'),
+        path: 'workdoc',
+        name: 'workdoc',
+        component: () => import('@/views/workorder/work-doc'),
         meta: { title: '文档审批', icon: 'iconfont icon-shenqingshenpi',id:404 }
       }
     ]
   },
   {
-    path: '/depart',
+    path: '/dept',
     component: Layout,
     redirect: '/departmanage',
     meta: { title: '部门管理', icon: 'example',id:401 },
     children: [
       {
-        path: 'departmanage',
-        name: 'departmanage',
-        component: () => import('@/views/deptmanage/deptmanage'),
+        path: 'deptmanage',
+        name: 'deptmanage',
+        component: () => import('@/views/dept/index'),
         meta: { title: '部门管理', icon: 'iconfont icon-ml',id:404 }
       }
     ]
@@ -107,13 +108,13 @@ export const constantRoutes = [
       {
         path: 'deptdoc',
         name: 'deptdoc',
-        component: () => import('@/views/doc/deptDoc'),
+        component: () => import('@/views/doc/dept-doc'),
         meta: { title: '部门文档', icon: 'iconfont icon-wendang',id:404 }
       }
     ]
   },
 
-  {
+ /* {
     path: '/query',
     component: Layout,
     redirect: '/countquery',
@@ -126,11 +127,11 @@ export const constantRoutes = [
         meta: { title: '统计查询', icon: 'iconfont icon-cz-tjcx',id:404 }
       }
     ]
-  },
+  },*/
 
   {
     path: '/pdfPreview',
-    component: () => import('@/views/pdf/pdfPreview'),
+    component: () => import('../views/pdf/pdf-preview'),
     hidden: true
   },
 
