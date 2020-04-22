@@ -14,21 +14,25 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    vm.$loading({
-      lock: true,
-      text: 'Loading',
-      spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.7)'
-    });
+    if (config.url.indexOf("/authentication/form")==-1){
+      vm.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
+    }
+
     if (store.getters.token) {
       config.headers['Authorization'] = 'Bearer '+ getToken()
     }
     return config
   },
   error => {
-    vm.$loading().close()
+    setTimeout(() => {
+      vm.$loading().close()
+    },1000)
     // do something with request error
-    console.log(error) // for debug
     return Promise.reject(error)
   }
 )
@@ -37,22 +41,25 @@ service.interceptors.request.use(
 service.interceptors.response.use(
 
   response => {
-    vm.$loading().close()
+    setTimeout(() => {
+      vm.$loading().close()
+    },1000)
     const res = response.data
     if (!res.success) {
-      debugger
       Message({
         message: res.resultMessage || '系统异常',
         type: 'error',
         duration: 5 * 1000
       })
-      return Promise.reject(new Error(res.message || '系统异常'))
+      return Promise.reject(new Error(res.resultMessage || '系统异常'))
     } else {
       return res
     }
   },
   error => {
-    vm.$loading().close()
+    setTimeout(() => {
+      vm.$loading().close()
+    },1000)
     if (error.response.status == 401) {
       MessageBox.confirm('您的认证已失效，可以取消停留在此页面上，或者再次登录', '确认退出', {
         confirmButtonText: '重新登录',
