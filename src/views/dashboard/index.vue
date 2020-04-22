@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container" >
     <el-row class="header">
-      <el-col :span="2">
+      <el-col :span="3" style="text-align: center">
         <el-avatar shape="circle" :size="80" fit="cover" :src="url"></el-avatar>
       </el-col>
       <el-col :span="16">
