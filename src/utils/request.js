@@ -1,11 +1,11 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import {MessageBox, Message} from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 import vm from "../main";
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: "http://localhost:8001", // url = base url + request url
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 50000,
 })
@@ -14,7 +14,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    if (config.url.indexOf("/authentication/form")==-1){
+    if (config.url.indexOf("/authentication/form") == -1) {
       vm.$loading({
         lock: true,
         text: 'Loading',
@@ -24,26 +24,18 @@ service.interceptors.request.use(
     }
 
     if (store.getters.token) {
-      config.headers['Authorization'] = 'Bearer '+ getToken()
+      config.headers['Authorization'] = 'Bearer ' + getToken()
     }
     return config
   },
   error => {
-    setTimeout(() => {
-      vm.$loading().close()
-    },1000)
-    // do something with request error
     return Promise.reject(error)
   }
 )
 
 // response interceptor
 service.interceptors.response.use(
-
   response => {
-    setTimeout(() => {
-      vm.$loading().close()
-    },1000)
     const res = response.data
     if (!res.success) {
       Message({
@@ -57,9 +49,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    setTimeout(() => {
-      vm.$loading().close()
-    },1000)
+    vm.$loading().close()
     if (error.response.status == 401) {
       MessageBox.confirm('您的认证已失效，可以取消停留在此页面上，或者再次登录', '确认退出', {
         confirmButtonText: '重新登录',
@@ -71,6 +61,7 @@ service.interceptors.response.use(
         })
       })
     }
+
     return Promise.reject(error)
   }
 )

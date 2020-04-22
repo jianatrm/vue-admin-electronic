@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-container" >
+  <div class="dashboard-container">
     <el-row class="header">
       <el-col :span="2">
         <el-avatar shape="circle" :size="80" fit="cover" :src="url"></el-avatar>
@@ -36,7 +36,7 @@
     <el-row class="middle">
       <el-col :span="16">
         <div class="box-left-t">
-           123
+          123
         </div>
         <div>
 
@@ -52,69 +52,74 @@
 </template>
 
 <script>
-  import { certificatesCount } from '@/api/server'
+    import {certificatesCount} from '@/api/server'
 
-  export default {
-    name: 'Dashboard',
-    mounted() {
-      this.drawLine()
-    },
-    data() {
-      return {
-        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-      }
-    },
-    methods: {
-
-
+    export default {
+        name: 'Dashboard',
+        mounted() {
+            this.drawLine()
+        },
+        data() {
+            return {
+                url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+            }
+        },
+        methods: {}
     }
-  }
 </script>
 
 <style lang="scss" scoped>
   .dashboard {
     &-container {
-     background-color: #f1f2f5;
+      background-color: #f1f2f5;
       height: 100vh;
-      .header{
+
+      .header {
         background-color: #fff;
         height: 120px;
         display: flex;
         align-items: center;
-        .el-col:nth-child(1){
+
+        .el-col:nth-child(1) {
           padding-left: 20px;
         }
-        .el-col:nth-child(2){
-          .content-title{
-            color: rgba(0,0,0,.85);
+
+        .el-col:nth-child(2) {
+          .content-title {
+            color: rgba(0, 0, 0, .85);
             font-weight: 500;
             font-size: 20px;
           }
-          .content{
-            color: rgba(0,0,0,.45);
+
+          .content {
+            color: rgba(0, 0, 0, .45);
             line-height: 22px;
             font-size: 14px;
           }
         }
-        .doc-title{
+
+        .doc-title {
           margin: 10px 0;
           text-align: center;
-          color: rgba(0,0,0,.45);
+          color: rgba(0, 0, 0, .45);
           font-size: 14px;
         }
-        .doc-content{
+
+        .doc-content {
           margin: 10px 0;
-          color: rgba(0,0,0,.85);
+          color: rgba(0, 0, 0, .85);
           font-size: 24px;
           text-align: center;
         }
-        .el-divider{
+
+        .el-divider {
           height: 3em;
         }
       }
     }
-    &-middle{
-      .box-left-t{
+
+    &-middle {
+      .box-left-t {
         background: #ffffff;
         width: 100%;
         height: 300px;
