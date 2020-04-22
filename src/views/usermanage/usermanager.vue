@@ -88,7 +88,11 @@
         <el-form-item label="确认密码" prop="checkPass" v-if="dialogType == 'new'">
           <el-input type="password" v-model="user.checkPass" autocomplete="off"></el-input>
         </el-form-item>
-
+        <el-form-item label="归属部门" prop="deptId">
+          <el-select v-model="user.deptId" placeholder="请选择部门">
+            <el-option  v-for="(item,index) in deptList" :label="item.deptName" :value="item.deptId" :key="index"></el-option>
+          </el-select>
+        </el-form-item>
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="dialogVisible=false">取消</el-button>
@@ -101,6 +105,7 @@
 <script>
   import {queryuser, updateuser, adduser} from "../../api/user";
   import Pagination from '@/components/Pagination'
+  import {querydept} from "../../api/dept";
 
   export default {
     components: {Pagination},
@@ -144,6 +149,9 @@
           checkPass: [
             {validator: validatePass2, trigger: 'blur'}
           ],
+          deptId: [
+            { required: true, message: '请选择部门', trigger: 'change' }
+          ]
         },
 
         search: '',
@@ -152,8 +160,10 @@
           userEmail: '',
           userPhone: '',
           password: '',
-          checkPass: ''
+          checkPass: '',
+          deptId:''
         },
+        deptList:[],
         userList: [],
         dialogVisible: false,
         dialogType: 'new',
@@ -184,6 +194,17 @@
           }
         })
       },
+      queryDeptList(){
+        querydept({
+          pageNum:1,
+          pageSize:1000,
+        }).then(res=>{
+          if (res.success){
+            this.deptList = res.result.result
+          }
+        })
+      },
+
       getList() {
         this.pageNum++;
         this.queryUserList();
@@ -211,6 +232,7 @@
         this.dialogType = 'new'
         this.dialogVisible = true
         this.user = {}
+        this.queryDeptList();
       },
       deleteRole(userId, $index) {
         updateuser({
