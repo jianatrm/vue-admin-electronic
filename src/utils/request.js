@@ -40,8 +40,9 @@ service.interceptors.response.use(
     vm.$loading().close()
     const res = response.data
     if (!res.success) {
+      debugger
       Message({
-        message: res.message || '系统异常',
+        message: res.resultMessage || '系统异常',
         type: 'error',
         duration: 5 * 1000
       })
