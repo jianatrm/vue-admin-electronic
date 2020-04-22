@@ -2,9 +2,9 @@
   <div v-if="!item.hidden" class="menu-wrapper">
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
+        <el-menu-item :style="sidebar.opened?'':{'text-align': 'center'}" :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
 <!--          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />-->
-          <i :class="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)"></i>&nbsp;&nbsp;
+          <i :class="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)"></i>
           <item :title="onlyOneChild.meta.title"></item>
         </el-menu-item>
       </app-link>
@@ -32,7 +32,7 @@ import { isExternal } from '@/utils/validate'
 import Item from './Item'
 import AppLink from './Link'
 import FixiOSBug from './FixiOSBug'
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'SidebarItem',
   components: { Item, AppLink },
@@ -51,6 +51,12 @@ export default {
       type: String,
       default: ''
     }
+  },
+  computed: {
+    ...mapGetters([
+      'sidebar',
+      'avatar'
+    ])
   },
   data() {
     // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237

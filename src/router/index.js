@@ -93,7 +93,7 @@ export const constantRoutes = [
       {
         path: 'departmanage',
         name: 'departmanage',
-        component: () => import('@/views/usermanage/departmanage'),
+        component: () => import('@/views/deptmanage/deptmanage'),
         meta: { title: '部门管理', icon: 'iconfont icon-ml',id:404 }
       }
     ]
@@ -122,19 +122,24 @@ export const constantRoutes = [
       {
         path: 'countquery',
         name: 'countquery',
-        component: () => import('@/views/usermanage/departmanage'),
+        component: () => import('@/views/deptmanage/deptmanage'),
         meta: { title: '统计查询', icon: 'iconfont icon-cz-tjcx',id:404 }
       }
     ]
   },
 
-
+  {
+    path: '/pdfPreview',
+    component: () => import('@/views/pdf/pdfPreview'),
+    hidden: true
+  },
 
   {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
   },
+
   // {
   //   path: '/certificate',
   //   component: Layout,
@@ -257,7 +262,7 @@ export const constantRoutes = [
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  base: '/electronic/',
+  //base: '/electronic/',
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })

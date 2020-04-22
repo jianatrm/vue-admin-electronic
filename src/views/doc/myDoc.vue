@@ -28,7 +28,7 @@
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button type="primary" size="small" icon="el-icon-download" @click="handleEdit(scope)">下载</el-button>
-          <el-button type="primary" size="small" icon="el-icon-search" @click="handleEdit(scope)">预览</el-button>
+          <el-button type="primary" size="small" icon="el-icon-search" @click="handlePreview(scope)">预览</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -43,7 +43,7 @@
           <el-upload
             class="upload-demo"
             drag
-            action="http://localhost:8088/electronic/file/uploadFile"
+            :action=process.env.VUE_APP_BASE_API+"/electronic/file/uploadFile"
             :on-success="handleAvatarSuccess"
             :file-list="fileList"
             multiple>
@@ -113,6 +113,9 @@
       handleEdit() {
         this.fileList = [];
         this.dialogVisible = true
+      },
+      handlePreview(){
+        window.open
       },
 
       uploaddoc() {
