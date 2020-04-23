@@ -13,7 +13,7 @@
             <el-upload
               class="upload-demo"
               drag
-              action="http://localhost:8001/electronic/file/uploadFile"
+              :action="action"
               :file-list="fileList"
               ref="upload"
               multiple>
@@ -85,12 +85,13 @@
                 fileList: [],
                 options: [],
                 value: [],
+                action:'',
                 pageNum: 1,
                 pageSize: 1000,
             };
         },
         mounted() {
-
+            this.action = process.env.VUE_APP_BASE_API+"electronic/file/uploadFile"
         },
         methods: {
             handleClick() {

@@ -42,9 +42,9 @@
         <el-form-item>
           <el-upload
             class="upload-demo"
+            ref="upload"
             drag
             :action=action
-            :on-success="handleAvatarSuccess"
             :file-list="fileList"
             multiple>
             <i class="el-icon-upload"></i>
@@ -92,7 +92,7 @@
 
         },
         mounted() {
-            this.action = "http://localhost:8001/electronic/file/uploadFile"
+            this.action =  this.action = process.env.VUE_APP_BASE_API+"electronic/file/uploadFile"
             this.querydocList()
         },
         methods: {
@@ -148,22 +148,14 @@
                 this.doc = {}
             },
 
-            handleAvatarSuccess(res, file) {
-                if (res.success) {
-                    this.fileList.push({
-                        name: res.result.fileName,
-                        url: res.result.fileDownloadUri
-                    })
-                }
-            },
-
             submitForm() {
                 let docList = [];
-                for (let i = 0; i < this.fileList.length; i++) {
-                    docList.push({
-                        docName: this.fileList[i].name,
-                        docUrl: this.fileList[i].url
-                    })
+                let uploadFiles = this.$refs.upload.uploadFiles;
+                for (let i = 0; i < uploadFiles.length; i++) {
+                  docList.push({
+                    docName: uploadFiles[i].response.result.fileName,
+                    docUrl: uploadFiles[i].response.result.fileDownloadUri
+                  })
                 }
                 adddoc({
                     electronicDocList: JSON.stringify(docList)

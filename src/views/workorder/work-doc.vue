@@ -72,6 +72,41 @@
           </el-col>
         </el-row>
       </el-tab-pane>
+      <el-tab-pane label="审批记录" name="three">
+        <el-table :data="workToMeList" style="width: 100%;margin-top:30px;" border>
+          <el-table-column align="center" label="工单编码" width="220">
+            <template slot-scope="scope">
+              {{ scope.row.workOrderVO.workOrderCode }}
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="工单名称">
+            <template slot-scope="scope">
+              {{ scope.row.workOrderVO.workOrderName }}
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="申请时间">
+            <template slot-scope="scope">
+              {{ new Date(scope.row.workOrderVO.createTime ).format("yyyy-MM-dd")}}
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="状态">
+            <template slot-scope="scope">
+              {{ scope.row.workOrderVO.workOrderStatusDesc }}
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary" size="small" @click="handle(scope.row.workOrderId)">审批</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <el-row :gutter="20">
+          <el-col :span="24" style="text-align: right">
+            <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize" @pagination="getList"/>
+          </el-col>
+        </el-row>
+      </el-tab-pane>
     </el-tabs>
 
     <el-dialog :visible.sync="dialogVisibleDetail" title="审批详情">
@@ -149,161 +184,175 @@
 </template>
 
 <script>
-    import {queryWorkOrder, queryWorkOrderToMe, queryWorkOrderDetail, approveWorkOrder} from "../../api/workOrder";
-    import {querydept} from "../../api/dept";
-    import Pagination from '@/components/Pagination'
+  import {queryWorkOrder, queryWorkOrderToMe, queryWorkOrderDetail, approveWorkOrder} from "../../api/workOrder";
+  import {querydept} from "../../api/dept";
+  import Pagination from '@/components/Pagination'
 
-    export default {
-        components: {Pagination},
-        name: "docapprove",
-        inject: ['reload'],
-        data() {
-            return {
-                dialogVisible: false,
-                dialogVisibleDetail: false,
-                dialogVisibleSelectDept: false,
-                activeName: 'first',
-                workList: [],
-                workToMeList: [],
-                workOrderDetail: {},
-                pageNum: 1,
-                pageSize: 10,
-                total: 10,
-                approve: {},
-                activities: [],
-                deptList: [],
-                dept: {
-                    deptId: ''
-                },
-                rules: {
-                    deptId: [
-                        {required: true, message: '请选择部门', trigger: 'change'}
-                    ],
-                }
-            }
+  export default {
+    components: {Pagination},
+    name: "docapprove",
+    inject: ['reload'],
+    data() {
+      return {
+        dialogVisible: false,
+        dialogVisibleDetail: false,
+        dialogVisibleSelectDept: false,
+        activeName: 'first',
+        workList: [],
+        workToMeList: [],
+        workOrderDetail: {},
+        pageNum: 1,
+        pageSize: 10,
+        total: 10,
+        approve: {},
+        activities: [],
+        deptList: [],
+        dept: {
+          deptId: ''
         },
-        mounted() {
-            this.queryWorkOrderList();
-
-        },
-        methods: {
-            handleClick(tab, event) {
-               if (tab.index == 0){
-                   this.queryWorkOrderList();
-               }else if (tab.index == 1){
-                   this.queryWorkOrderToMeList();
-                }
-            },
-            getList() {
-            },
-            queryWorkOrderList() {
-                queryWorkOrder({
-                    pageNum: this.pageNum,
-                    pageSize: this.pageSize
-                }).then(res => {
-                    this.$loading().close()
-                    if (res.success) {
-                        this.workList = res.result.result;
-                    }
-                })
-            },
-            queryWorkOrderToMeList() {
-                queryWorkOrderToMe({
-                    pageNum: this.pageNum,
-                    pageSize: this.pageSize,
-                    nodeOperateStatus: 1
-                }).then(res => {
-                    this.$loading().close()
-                    if (res.success) {
-                        this.workToMeList = res.result.result;
-                    }
-                })
-            },
-            handle(workOrderId) {
-                this.dialogVisible = true;
-                queryWorkOrderDetail({
-                    workOrderId: workOrderId
-                }).then(res => {
-                    this.$loading().close()
-                    if (res.success) {
-                        this.workOrderDetail = res.result
-                        this.activities = JSON.parse(res.result.workNodeList)
-                        this.workOrderDetail.workInfo = JSON.parse(res.result.workInfo)
-                    }
-                })
-            },
-            onSubmit(val) {
-                if (this.workOrderDetail.nodeCount == this.workOrderDetail.workNode.nodeOrder && val == '90') {
-                    this.dialogVisibleSelectDept = true
-                    this.queryDeptList()
-                } else {
-                    this.approveSubmit(val);
-                }
-
-            },
-
-            queryWorkDetail(workOrderId) {
-                this.dialogVisibleDetail = true
-                queryWorkOrderDetail({
-                    workOrderId: workOrderId
-                }).then(res => {
-                    this.$loading().close()
-                    if (res.success) {
-                        this.workOrderDetail = res.result
-                        this.activities = JSON.parse(res.result.workNodeList)
-                        this.workOrderDetail.workInfo = JSON.parse(res.result.workInfo)
-                    }
-                })
-            },
-
-
-            approveSubmit(val) {
-                approveWorkOrder({
-                    workOrderId: this.workOrderDetail.workOrderId,
-                    currentNode: this.workOrderDetail.currentNode,
-                    workNode: {
-                        nodeId: this.workOrderDetail.workNode.nodeId,
-                        nodeOperateResult: val,
-                        nodeOperateDesc: this.approve.remark
-                    },
-                    sysDept: {
-                        deptId: this.dept.deptId
-                    }
-
-                }).then(res => {
-                    this.$loading().close()
-                    if (res.success) {
-                        this.$message({
-                            type: 'success',
-                            message: '操作成功'
-                        })
-                        this.dialogVisibleSelectDept = false;
-                        this.dialogVisible = false;
-                        this.reload()
-                    } else {
-                        this.$message({
-                            type: 'fail',
-                            message: '操作失败'
-                        })
-                    }
-                })
-            },
-            queryDeptList() {
-                querydept({
-                    pageNum: 1,
-                    pageSize: 1000,
-                }).then(res => {
-                    this.$loading().close()
-                    if (res.success) {
-                        this.deptList = res.result.result
-                    }
-                })
-            },
-            onSubmitFinsh() {
-                this.approveSubmit('90')
-            }
+        rules: {
+          deptId: [
+            {required: true, message: '请选择部门', trigger: 'change'}
+          ],
         }
+      }
+    },
+    mounted() {
+      this.queryWorkOrderList();
+
+    },
+    methods: {
+      handleClick(tab, event) {
+        if (tab.index == 0) {
+          this.queryWorkOrderList();
+        } else if (tab.index == 1) {
+          this.queryWorkOrderToMeList();
+        } else if (tab.index == 3) {
+          this.queryWorkOrderHistory();
+        }
+      },
+      getList() {
+      },
+      queryWorkOrderList() {
+        queryWorkOrder({
+          pageNum: this.pageNum,
+          pageSize: this.pageSize
+        }).then(res => {
+          this.$loading().close()
+          if (res.success) {
+            this.workList = res.result.result;
+          }
+        })
+      },
+      queryWorkOrderToMeList() {
+        queryWorkOrderToMe({
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+          nodeOperateStatus: 1
+        }).then(res => {
+          this.$loading().close()
+          if (res.success) {
+            this.workToMeList = res.result.result;
+          }
+        })
+      },
+      queryWorkOrderHistory() {
+        queryWorkOrderToMe({
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+          nodeOperateStatus: 2
+        }).then(res => {
+          this.$loading().close()
+          if (res.success) {
+            this.workToMeList = res.result.result;
+          }
+        })
+      },
+      handle(workOrderId) {
+        this.dialogVisible = true;
+        queryWorkOrderDetail({
+          workOrderId: workOrderId
+        }).then(res => {
+          this.$loading().close()
+          if (res.success) {
+            this.workOrderDetail = res.result
+            this.activities = JSON.parse(res.result.workNodeList)
+            this.workOrderDetail.workInfo = JSON.parse(res.result.workInfo)
+          }
+        })
+      },
+      onSubmit(val) {
+        if (this.workOrderDetail.nodeCount == this.workOrderDetail.workNode.nodeOrder && val == '90') {
+          this.dialogVisibleSelectDept = true
+          this.queryDeptList()
+        } else {
+          this.approveSubmit(val);
+        }
+
+      },
+
+      queryWorkDetail(workOrderId) {
+        this.dialogVisibleDetail = true
+        queryWorkOrderDetail({
+          workOrderId: workOrderId
+        }).then(res => {
+          this.$loading().close()
+          if (res.success) {
+            this.workOrderDetail = res.result
+            this.activities = JSON.parse(res.result.workNodeList)
+            this.workOrderDetail.workInfo = JSON.parse(res.result.workInfo)
+          }
+        })
+      },
+
+
+      approveSubmit(val) {
+        approveWorkOrder({
+          workOrderId: this.workOrderDetail.workOrderId,
+          currentNode: this.workOrderDetail.currentNode,
+          workNode: {
+            nodeId: this.workOrderDetail.workNode.nodeId,
+            nodeOperateResult: val,
+            nodeOperateDesc: this.approve.remark
+          },
+          sysDept: {
+            deptId: this.dept.deptId
+          }
+
+        }).then(res => {
+          this.$loading().close()
+          if (res.success) {
+            this.$message({
+              type: 'success',
+              message: '操作成功'
+            })
+            this.dialogVisibleSelectDept = false;
+            this.dialogVisible = false;
+            this.reload()
+          } else {
+            this.$message({
+              type: 'fail',
+              message: '操作失败'
+            })
+          }
+        })
+      },
+      queryDeptList() {
+        querydept({
+          pageNum: 1,
+          pageSize: 1000,
+        }).then(res => {
+          this.$loading().close()
+          if (res.success) {
+            this.deptList = res.result.result
+          }
+        })
+      },
+      onSubmitFinsh() {
+        this.approveSubmit('90')
+      }
     }
+  }
 </script>
 
 <style lang="scss" scoped>
