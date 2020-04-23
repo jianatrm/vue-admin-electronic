@@ -227,7 +227,7 @@
           this.queryWorkOrderList();
         } else if (tab.index == 1) {
           this.queryWorkOrderToMeList();
-        } else if (tab.index == 3) {
+        } else if (tab.index == 2) {
           this.queryWorkOrderHistory();
         }
       },
