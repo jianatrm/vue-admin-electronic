@@ -13,9 +13,9 @@ export function login(data) {
   })
 }
 
-export function getInfo(token) {
+export function getUserInfo(token) {
   return request({
-    url: '/electronic/userInfo',
+    url: '/electronic/user/userInfo',
     method: 'get'
   })
 }
@@ -47,5 +47,13 @@ export function updateuser(data) {
     url: 'electronic/user/adduser',
     method: 'post',
     data:data,
+  })
+}
+
+export function selectCountByMonth(data) {
+  return request({
+    url: '/electronic/user/selectCountByMonth',
+    method: 'get',
+    params:data
   })
 }

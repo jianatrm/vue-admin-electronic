@@ -6,14 +6,14 @@
       </el-col>
       <el-col :span="16">
         <div>
-          <p class="content-title">早安，伽那也是小象，祝你开心每一天！</p>
-          <p class="content">前端开发 | 亚信科技－CMC－SRD平台部－技术</p>
+          <p class="content-title">早安，{{userInfo.userName}}，祝你开心每一天！</p>
+          <p class="content">前端开发 | {{userInfo.companyName}}－{{userInfo.deptName}}</p>
         </div>
       </el-col>
       <el-col :span="2">
         <div>
           <p class="doc-title">我的文档数量</p>
-          <p class="doc-content">12</p>
+          <p class="doc-content">{{userInfo.userCount}}</p>
         </div>
 
       </el-col>
@@ -21,7 +21,7 @@
       <el-col :span="2">
         <div>
           <p class="doc-title">部门文档数量</p>
-          <p class="doc-content">32</p>
+          <p class="doc-content">{{userInfo.deptCount}}</p>
         </div>
 
       </el-col>
@@ -29,7 +29,7 @@
       <el-col :span="2">
         <div>
           <p class="doc-title">公司文档数量</p>
-          <p class="doc-content">122</p>
+          <p class="doc-content">{{userInfo.companyCount}}</p>
         </div>
       </el-col>
     </el-row>
@@ -61,8 +61,8 @@
                   那是一种内在东西，他们到达不了，也无法触及的
                 </div>
                 <div class="content-bottom">
-                  <p>科学搬砖组</p>
-                  <p>9 天前</p>
+                  <p>文档数量</p>
+                  <p>{{imageCount}}</p>
                 </div>
               </el-col>
               <el-col :span="8" class="common-line">
@@ -78,8 +78,8 @@
                   希望是一个好东西，也许是最好的，好东西是不会消亡的
                 </div>
                 <div class="content-bottom">
-                  <p>全组都是吴彦祖</p>
-                  <p>3 年前</p>
+                  <p>文档数量</p>
+                  <p>{{wordCount}}</p>
                 </div>
               </el-col>
               <el-col :span="8">
@@ -95,8 +95,8 @@
                   城镇中有那么多的酒馆，她却偏偏走进了我的酒馆
                 </div>
                 <div class="content-bottom">
-                  <p>中二少女团</p>
-                  <p>9 天前</p>
+                  <p>文档数量</p>
+                  <p>{{excelCount}}</p>
                 </div>
               </el-col>
             </el-row>
@@ -114,8 +114,8 @@
                   那时候我只会想自己想要什么，从不想自己拥有什么
                 </div>
                 <div class="content-bottom">
-                  <p>程序员日常</p>
-                  <p>3 年前</p>
+                  <p>文档数量</p>
+                  <p>{{pdfCount}}</p>
                 </div>
               </el-col>
               <el-col :span="8" class="common-line top-line">
@@ -131,8 +131,8 @@
                   凛冬将至
                 </div>
                 <div class="content-bottom">
-                  <p>高逼格设计天团</p>
-                  <p>3 年前</p>
+                  <p>文档数量</p>
+                  <p>{{pptCount}}</p>
                 </div>
               </el-col>
               <el-col :span="8" class="top-line">
@@ -148,8 +148,8 @@
                   生命就像一盒巧克力，结果往往出人意料
                 </div>
                 <div class="content-bottom">
-                  <p>骗你来学计算机</p>
-                  <p>3 年前</p>
+                  <p>文档数量</p>
+                  <p>{{otherCount}}</p>
                 </div>
               </el-col>
             </el-row>
@@ -170,10 +170,10 @@
           <div slot="header" class="clearfix">
             <span>我的动态</span>
           </div>
-          <div class="card-content2" >
+          <div class="card-content2">
             <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
               <el-tab-pane label="我的申请" name="first">
-                <ul class="infinite-list"  style="overflow:auto">
+                <ul class="infinite-list" style="overflow:auto">
                   <li v-for="i in count" class="infinite-list-item">{{ i }}</li>
                 </ul>
               </el-tab-pane>
@@ -191,75 +191,133 @@
 </template>
 
 <script>
-  import {certificatesCount} from '@/api/server'
+    import {getUserInfo, selectCountByMonth} from '../../api/user'
 
-  export default {
-    name: 'Dashboard',
-    mounted() {
-      this.drawLine()
-    },
-    data() {
-      return {
-        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-        value: new Date(),
-        count: 4,
-        content: '通知 新进公司的全体员工： 经公司领导班子研究决定，新进公司的员工，一年转正定级后，公司给统一办理缴纳社保。现在由员工自己缴纳社保，缴费收据上交到公司人事部门。为保证员工的合法权益，公司将以现金的形式给予补偿，每月每人补人民币180元，体现在个人的工资里。此规定从2010年6月1日起执行。',
-        activeName:'first'
+    export default {
+        name: 'Dashboard',
+        mounted() {
 
-      }
-    },
-    methods: {
+            this.queryUserInfo()
+            this.queryCountByMonth()
+        },
+        data() {
+            return {
+                url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+                value: new Date(),
+                count: 4,
+                content: '通知 新进公司的全体员工： 经公司领导班子研究决定，新进公司的员工，一年转正定级后，公司给统一办理缴纳社保。现在由员工自己缴纳社保，缴费收据上交到公司人事部门。为保证员工的合法权益，公司将以现金的形式给予补偿，每月每人补人民币180元，体现在个人的工资里。此规定从2010年6月1日起执行。',
+                activeName: 'first',
+                userInfo: {},
+                imageCount: 0,
+                wordCount: 0,
+                excelCount: 0,
+                pdfCount: 0,
+                pptCount: 0,
+                otherCount: 0,
+                options:{
+                    title: {
+                        text: '文档数量统计',
+                        x: 'left',
+                        align: 'right',
+                        left: 20
+                    },
+                    color: ['#3398DB'],
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                            axisTick: {
+                                alignWithLabel: true
+                            }
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '直接访问',
+                            type: 'bar',
+                            barWidth: '60%',
+                            data: []
+                        }
+                    ]
+                }
 
-      drawLine() {
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = this.$echarts.init(document.getElementById('myChart'))
-        // 绘制图表
-        myChart.setOption({
-          title: {
-            text: '文档数量统计',
-            x: 'left',
-            align: 'right',
-            left: 20
-          },
-          color: ['#3398DB'],
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-              type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
             }
-          },
-          grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-          },
-          xAxis: [
-            {
-              type: 'category',
-              data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-              axisTick: {
-                alignWithLabel: true
-              }
-            }
-          ],
-          yAxis: [
-            {
-              type: 'value'
-            }
-          ],
-          series: [
-            {
-              name: '直接访问',
-              type: 'bar',
-              barWidth: '60%',
-              data: [10, 52, 200, 334, 390, 330, 220]
-            }
-          ]
-        })
-      },
+        },
+        methods: {
+            queryUserInfo() {
+                getUserInfo({}).then(res => {
+                    this.$loading().close()
+                    if (res.success) {
+                        this.userInfo = res.result
+                        try {
+                            let sUserElectronicDocs = res.result.sUserElectronicDocs;
+                            for (let i = 0; i < sUserElectronicDocs.length; i++) {
+                                let sUserElectronicDoc = sUserElectronicDocs[i];
+                                if ("bmp,jpg,png,tif,gif,pcx,tga,exif,fpx,svg,psd,cdr,pcd,dxf,ufo,eps,ai,raw,WMF,webp,jpeg".indexOf(sUserElectronicDoc.docType) > -1) {
+                                    this.imageCount += sUserElectronicDoc.count
+                                } else if ("doc,docx".indexOf(sUserElectronicDoc.docType) > -1) {
+                                    this.wordCount += sUserElectronicDoc.count
+                                } else if ("xls,xlsx,csv".indexOf(sUserElectronicDoc.docType) > -1) {
+                                    this.excelCount += sUserElectronicDoc.count
+                                } else if ("pdf,dpt,odf".indexOf(sUserElectronicDoc.docType) > -1) {
+                                    this.pdfCount += sUserElectronicDoc.count
+                                } else if ("ppt,pptx,pps,ppsx,pot".indexOf(sUserElectronicDoc.docType) > -1) {
+                                    this.pptCount += sUserElectronicDoc.count
+                                } else {
+                                    this.otherCount += sUserElectronicDoc.count
+                                }
+
+
+                            }
+                        } catch (e) {
+
+                        }
+                    }
+                })
+            },
+
+            queryCountByMonth() {
+                selectCountByMonth({
+                    year: '2020'
+                }).then(res => {
+                    if (res.success) {
+                       let array =  [0,0,0,0,0,0,0,0,0,0,0,0,]
+                        for (let i = 0; i <res.result.length ; i++) {
+                            let resultElement = res.result[i];
+                            array[resultElement.months-1] = resultElement.count
+                        }
+                        this.options.series[0].data = array
+                        this.drawLine()
+                    }
+                })
+            },
+
+            drawLine() {
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = this.$echarts.init(document.getElementById('myChart'))
+                // 绘制图表
+                myChart.setOption(this.options)
+            },
+            handleClick(){}
+        }
     }
-  }
 </script>
 
 <style lang="scss" scoped>
@@ -373,7 +431,8 @@
               line-height: 24px;
               color: rgba(0, 0, 0, 0.65);
             }
-            p:nth-child(2){
+
+            p:nth-child(2) {
               text-align: right;
             }
           }
@@ -383,6 +442,7 @@
           background: #ffffff;
           height: 600px;
           margin-bottom: 20px;
+
           .infinite-list .infinite-list-item {
             display: flex;
             align-items: center;
