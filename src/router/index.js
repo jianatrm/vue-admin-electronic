@@ -114,20 +114,20 @@ export const constantRoutes = [
     ]
   },
 
- /* {
-    path: '/query',
+  {
+    path: '/statistics',
     component: Layout,
-    redirect: '/countquery',
+    redirect: '/statistics',
     meta: { title: '统计查询', icon: 'example',id:401 },
     children: [
       {
-        path: 'countquery',
-        name: 'countquery',
-        component: () => import('@/views/deptmanage/deptmanage'),
-        meta: { title: '统计查询', icon: 'iconfont icon-cz-tjcx',id:404 }
+        path: 'statistics',
+        name: 'statistics',
+        component: () => import('@/views/statistics/index'),
+        meta: { title: '统计查询', icon: 'iconfont icon-cz-tjcx',id:404,level:1 }
       }
     ]
-  },*/
+  },
 
   {
     path: '/pdfPreview',
@@ -140,123 +140,12 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
+  {
+    path: '/401',
+    component: () => import('@/views/401'),
+    hidden: true
+  },
 
-  // {
-  //   path: '/certificate',
-  //   component: Layout,
-  //   redirect: '/certificate/certificatelist',
-  //   meta: { title: '证照管理', icon: 'example',id:101 },
-  //   children: [
-  //     {
-  //       path: 'certificatelist',
-  //       name: 'certificatelist',
-  //       component: () => import('@/views/certificate/certificatelist'),
-  //       meta: { title: '证件列表', icon: 'table',id:102 }
-  //     },
-  //     {
-  //       path: 'fillinglist',
-  //       name: 'fillinglist',
-  //       component: () => import('@/views/certificate/fillinglist'),
-  //       meta: { title: '加注件列表', icon: 'tree',id:103 }
-  //     }
-  //   ]
-  // },
-  //
-  // {
-  //   path: '/directorymanage',
-  //   component: Layout,
-  //   redirect: '/directorymanagelist',
-  //   meta: { title: '目录管理', icon: 'example',id:201 },
-  //   children: [
-  //     {
-  //       path: 'directorymanagelist',
-  //       name: 'directorymanagelist',
-  //       component: () => import('@/views/directorymanage/directorymanagelist'),
-  //       meta: { title: '目录列表', icon: 'form',id:202 }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/electronic',
-  //   component: Layout,
-  //   redirect: '/eleCertificatelist',
-  //   meta: { title: '证照资源库管理', icon: 'example',id:301 },
-  //   children: [
-  //     {
-  //       path: 'eleCertificatelist',
-  //       name: 'eleCertificatelist',
-  //       component: () => import('@/views/electronic/eleCertificatelist'),
-  //       meta: { title: '电子证照目录', icon: 'table',id:302 }
-  //     },
-  //     {
-  //       path: 'electronicinfo',
-  //       name: 'electronicinfo',
-  //       component: () => import('@/views/electronic/eleCertificate'),
-  //       meta: { title: '电子证照', icon: 'tree',id:303 }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/usermanage',
-  //   component: Layout,
-  //   redirect: '/departmanage',
-  //   meta: { title: '部门管理', icon: 'example',id:401 },
-  //   children: [
-  //     // {
-  //     //   path: 'rolemanage',
-  //     //   name: 'rolemanage',
-  //     //   component: () => import('@/views/usermanage/rolemanage'),
-  //     //   meta: { title: '角色管理', icon: 'table',id:402 }
-  //     // },
-  //     // {
-  //     //   path: 'functionmanage',
-  //     //   name: 'functionmanage',
-  //     //   component: () => import('@/views/usermanage/functionmanage'),
-  //     //   meta: { title: '职能管理', icon: 'tree',id:403 }
-  //     // },
-  //     {
-  //       path: 'departmanage',
-  //       name: 'departmanage',
-  //       component: () => import('@/views/usermanage/departmanage'),
-  //       meta: { title: '部门管理', icon: 'tree',id:404 }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/certificatesetting',
-  //   component: Layout,
-  //   redirect: '/certificatetype',
-  //   meta: { title: '证照类型', icon: 'example',id:501 },
-  //   children: [
-  //     {
-  //       path: 'certificatetype',
-  //       name: 'certificatetype',
-  //       component: () => import('@/views/certificatetype/certificatetype'),
-  //       meta: { title: '证照类型设置', icon: 'form',id:502 }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/securitysetting',
-  //   component: Layout,
-  //   redirect: '/passwordrules',
-  //   meta: { title: '安全设置', icon: 'example' },
-  //   children: [
-  //     {
-  //       path: 'passwordrules',
-  //       name: 'passwordrules',
-  //       component: () => import('@/views/certificate/certificatelist'),
-  //       meta: { title: '密码规则', icon: 'table' }
-  //     },
-  //     {
-  //       path: 'logoutsetting',
-  //       name: 'logoutsetting',
-  //       component: () => import('@/views/certificate/fillinglist'),
-  //       meta: { title: '超时登出', icon: 'tree' }
-  //     }
-  //   ]
-  // },
-  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 

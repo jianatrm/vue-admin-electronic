@@ -17,3 +17,9 @@ export function isExternal(path) {
 export function validUsername(str) {
   return true
 }
+
+export function StringIsblank(val) {
+  if (val == '' || val == undefined || val == null || val == 'null'){
+    return true
+  }
+}

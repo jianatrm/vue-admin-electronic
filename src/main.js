@@ -39,7 +39,6 @@ const vm = new Vue({
   render: h => h(App)
 })
 
-
 Date.prototype.format = function(fmt) {
   var o = {
     'M+': this.getMonth() + 1, //月份

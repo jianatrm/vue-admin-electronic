@@ -3,9 +3,8 @@ import {MessageBox, Message} from 'element-ui'
 import store from '@/store'
 import {getToken} from '@/utils/auth'
 import vm from "../main";
-// create an axios instance
 const service = axios.create({
-  baseURL: "http://localhost:8001", // url = base url + request url
+ // baseURL: 'http://localhost:8001', // url = base url + request url//http://localhost:8001
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 50000,
 })

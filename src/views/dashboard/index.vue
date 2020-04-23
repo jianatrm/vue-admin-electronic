@@ -1,13 +1,13 @@
 <template>
-  <div class="dashboard-container" >
+  <div class="dashboard-container">
     <el-row class="header">
       <el-col :span="3" style="text-align: center">
         <el-avatar shape="circle" :size="80" fit="cover" :src="url"></el-avatar>
       </el-col>
       <el-col :span="16">
         <div>
-          <p class="content-title">早安，Serati Ma，祝你开心每一天！</p>
-          <p class="content">交互专家 |蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED</p>
+          <p class="content-title">早安，伽那也是小象，祝你开心每一天！</p>
+          <p class="content">前端开发 | 亚信科技－CMC－SRD平台部－技术</p>
         </div>
       </el-col>
       <el-col :span="2">
@@ -35,10 +35,16 @@
     </el-row>
     <el-row class="middle" :gutter="18">
       <el-col :span="16">
+        <div class="box-left-d">
+          <div style="text-align: right;height: 80px;line-height: 80px;padding-right: 40px"><span>切换日期：</span>
+            <el-date-picker v-model="value" type="year" placeholder="选择年份"></el-date-picker>
+          </div>
+          <div id="myChart" :style="{'width': '95%', height: '400px'}"/>
+        </div>
         <el-card class="box-card box-left-t">
           <div slot="header" class="clearfix">
             <span>我的文档分类</span>
-              <el-button style="float: right; padding: 3px 0" type="text">全部项目</el-button>
+            <el-button style="float: right; padding: 3px 0" type="text">全部项目</el-button>
           </div>
           <div class="card-content">
             <el-row>
@@ -149,39 +155,43 @@
             </el-row>
           </div>
         </el-card>
-        <div class="box-left-d">
-
-        </div>
       </el-col>
       <el-col :span="8">
         <el-card class="box-card box-right-t">
           <div slot="header" class="clearfix">
-            <span>快速开始/便捷导航</span>
+            <span>公司公告</span>
           </div>
           <div class="card-content2" style="display: flex;flex-wrap: wrap;">
-            <p>操作一</p>
-            <p>操作二</p>
-            <p>操作三</p>
-            <p>操作四</p>
-            <p>操作五</p>
-            <p>操作六</p>
-            <div>添加</div>
+            <p>{{content}}</p>
+            <p>{{new Date().format('yyyy-MM-dd')}}</p>
           </div>
         </el-card>
-        <div class="box-right-m">
-          <el-calendar v-model="value">
-          </el-calendar>
-        </div>
-        <div class="box-right-d">
-
-        </div>
+        <el-card class="box-card box-right-m">
+          <div slot="header" class="clearfix">
+            <span>我的动态</span>
+          </div>
+          <div class="card-content2" >
+            <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+              <el-tab-pane label="我的申请" name="first">
+                <ul class="infinite-list"  style="overflow:auto">
+                  <li v-for="i in count" class="infinite-list-item">{{ i }}</li>
+                </ul>
+              </el-tab-pane>
+              <el-tab-pane label="审批申请" name="second">
+                <ul class="infinite-list" style="overflow:auto">
+                  <li v-for="i in count" class="infinite-list-item">{{ i }}</li>
+                </ul>
+              </el-tab-pane>
+            </el-tabs>
+          </div>
+        </el-card>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-  import { certificatesCount } from '@/api/server'
+  import {certificatesCount} from '@/api/server'
 
   export default {
     name: 'Dashboard',
@@ -191,13 +201,63 @@
     data() {
       return {
         url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-          value: new Date()
+        value: new Date(),
+        count: 4,
+        content: '通知 新进公司的全体员工： 经公司领导班子研究决定，新进公司的员工，一年转正定级后，公司给统一办理缴纳社保。现在由员工自己缴纳社保，缴费收据上交到公司人事部门。为保证员工的合法权益，公司将以现金的形式给予补偿，每月每人补人民币180元，体现在个人的工资里。此规定从2010年6月1日起执行。',
+        activeName:'first'
 
       }
     },
     methods: {
 
-
+      drawLine() {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = this.$echarts.init(document.getElementById('myChart'))
+        // 绘制图表
+        myChart.setOption({
+          title: {
+            text: '文档数量统计',
+            x: 'left',
+            align: 'right',
+            left: 20
+          },
+          color: ['#3398DB'],
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+              type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: 'category',
+              data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+              axisTick: {
+                alignWithLabel: true
+              }
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
+          series: [
+            {
+              name: '直接访问',
+              type: 'bar',
+              barWidth: '60%',
+              data: [10, 52, 200, 334, 390, 330, 220]
+            }
+          ]
+        })
+      },
     }
   }
 </script>
@@ -205,110 +265,138 @@
 <style lang="scss" scoped>
   .dashboard {
     &-container {
-     background-color: #f1f2f5;
+      background-color: #f1f2f5;
       overflow: hidden;
       //height: 100vh;
-      .header{
+      .header {
         background-color: #fff;
         height: 120px;
         display: flex;
         align-items: center;
-        .el-col:nth-child(1){
+
+        .el-col:nth-child(1) {
           padding-left: 20px;
         }
-        .el-col:nth-child(2){
-          .content-title{
-            color: rgba(0,0,0,.85);
+
+        .el-col:nth-child(2) {
+          .content-title {
+            color: rgba(0, 0, 0, .85);
             font-weight: 500;
             font-size: 20px;
           }
-          .content{
-            color: rgba(0,0,0,.45);
+
+          .content {
+            color: rgba(0, 0, 0, .45);
             line-height: 22px;
             font-size: 14px;
           }
         }
-        .doc-title{
+
+        .doc-title {
           margin: 10px 0;
           text-align: center;
-          color: rgba(0,0,0,.45);
+          color: rgba(0, 0, 0, .45);
           font-size: 14px;
         }
-        .doc-content{
+
+        .doc-content {
           margin: 10px 0;
-          color: rgba(0,0,0,.85);
+          color: rgba(0, 0, 0, .85);
           font-size: 24px;
           text-align: center;
         }
-        .el-divider{
+
+        .el-divider {
           height: 3em;
         }
       }
-      .middle{
+
+      .middle {
         padding: 0px 20px 0px 20px;
-        .box-left-t{
+
+        .box-left-t {
           background: #ffffff;
           height: 350px;
           margin-bottom: 20px;
-          .common-line{
+
+          .common-line {
             border-right: 1px solid #ebeef5;
           }
-          .top-line{
+
+          .top-line {
             border-top: 1px solid #ebeef5;
           }
-          .content-middle{
+
+          .content-middle {
             font-size: 14px;
-            color: rgba(0,0,0,.45);
+            color: rgba(0, 0, 0, .45);
             margin-top: 10px;
           }
-          .content-bottom{
+
+          .content-bottom {
             display: flex;
             justify-content: space-between;
             font-size: 12px;
-            color: rgba(0,0,0,.45);
+            color: rgba(0, 0, 0, .45);
           }
         }
-        .card-content .el-col{
+
+        .card-content .el-col {
           padding: 20px;
           height: 144px;
         }
-        .card-content .el-col:hover{
+
+        .card-content .el-col:hover {
           box-shadow: 3px 2px 3px 2px gray;
         }
-        .box-left-d{
+
+        .box-left-d {
           background: #ffffff;
-          height: 800px;
-        }
-        .box-right-t{
-          background: #ffffff;
-          height: 150px;
+          height: 500px;
           margin-bottom: 20px;
-          .card-content2{
+
+
+        }
+
+        .box-right-t {
+          background: #ffffff;
+          height: 250px;
+          margin-bottom: 20px;
+
+          .card-content2 {
             padding: 0px 20px 0px 30px;
-            p{
-              width: 25%;
+
+            p {
+              width: 100%;
+              text-indent: 2em;
               font-size: 14px;
-              color: rgba(0,0,0,0.65);
+              line-height: 24px;
+              color: rgba(0, 0, 0, 0.65);
             }
-            div{
-              width: 75px;
-              height:25px;
-              text-align: center;
-              line-height: 23px;
-              color: #1890ff;
-              border: 1px solid #1890ff;
-              margin-top: 8px;
+            p:nth-child(2){
+              text-align: right;
             }
           }
         }
-        .box-right-m{
+
+        .box-right-m {
           background: #ffffff;
           height: 600px;
           margin-bottom: 20px;
+          .infinite-list .infinite-list-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50px;
+            background: #e8f3fe;
+            margin: 10px;
+            color: #7dbcfc;
+          }
         }
-        .box-right-d{
+
+        .box-right-d {
           background: #ffffff;
-          height: 300px;
+          height: 100px;
         }
       }
     }
@@ -317,7 +405,8 @@
   .el-row {
     margin-bottom: 20px;
   }
-  /deep/.el-card__body{
+
+  /deep/ .el-card__body {
     padding: 0;
   }
 </style>
