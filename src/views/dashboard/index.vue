@@ -173,14 +173,28 @@
           <div class="card-content2">
             <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
               <el-tab-pane label="我的申请" name="first">
-                <ul class="infinite-list" style="overflow:auto">
-                  <li v-for="i in count" class="infinite-list-item">{{ i }}</li>
+                <ul v-if="workList.length>0" class="infinite-list" style="overflow:auto">
+                  <li v-for="item in workList" class="infinite-list-item" :key="item.workOrderCode">
+                    <span>{{item.workOrderCode}}</span>
+                    <span>{{item.workOrderDesc}}</span>
+                    <span>{{new Date(item.operateTime).format('yyyy-MM-dd')}}</span>
+                  </li>
                 </ul>
+                <div v-else style="width: 100%;text-align: center;">
+                  <img src="../../assets/images/no-result.png">
+                </div>
               </el-tab-pane>
               <el-tab-pane label="审批申请" name="second">
-                <ul class="infinite-list" style="overflow:auto">
-                  <li v-for="i in count" class="infinite-list-item">{{ i }}</li>
+                <ul v-if="workToMeList.length>0" class="infinite-list" style="overflow:auto">
+                  <li v-for="item in workToMeList" class="infinite-list-item" :key="item.workOrderCode">
+                    <span>{{item.workOrderCode}}</span>
+                    <span>{{item.workOrderDesc}}</span>
+                    <span>{{new Date(item.operateTime).format('yyyy-MM-dd')}}</span>
+                  </li>
                 </ul>
+                <div v-else style="width: 100%;text-align: center;">
+                  <img src="../../assets/images/no-result.png">
+                </div>
               </el-tab-pane>
             </el-tabs>
           </div>
@@ -192,6 +206,7 @@
 
 <script>
     import {getUserInfo, selectCountByMonth} from '../../api/user'
+    import {queryWorkOrder, queryWorkOrderToMe} from "../../api/workOrder";
 
     export default {
         name: 'Dashboard',
@@ -199,6 +214,8 @@
 
             this.queryUserInfo()
             this.queryCountByMonth()
+            this.queryWorkOrderList()
+            this.queryWorkOrderToMeList()
         },
         data() {
             return {
@@ -214,6 +231,10 @@
                 pdfCount: 0,
                 pptCount: 0,
                 otherCount: 0,
+                pageSize:10,
+                pageNum:1,
+                workList:[],
+                workToMeList:[],
                 options:{
                     title: {
                         text: '文档数量统计',
@@ -315,7 +336,32 @@
                 // 绘制图表
                 myChart.setOption(this.options)
             },
-            handleClick(){}
+            handleClick(){},
+            queryWorkOrderList() {
+                queryWorkOrder({
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize,
+                    workOrderStatus:10
+                }).then(res => {
+                    this.$loading().close()
+                    if (res.success) {
+                        this.workList = res.result.result;
+                    }
+                })
+            },
+            queryWorkOrderToMeList() {
+                queryWorkOrderToMe({
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize,
+                    nodeOperateStatus: 1
+                }).then(res => {
+                    this.$loading().close()
+                    if (res.success) {
+                        this.workToMeList = res.result.result;
+                    }
+                })
+            },
+
         }
     }
 </script>
@@ -443,10 +489,15 @@
           height: 600px;
           margin-bottom: 20px;
 
+          .infinite-list{
+            margin: 0;
+            padding: 0;
+          }
           .infinite-list .infinite-list-item {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-around;
+
             height: 50px;
             background: #e8f3fe;
             margin: 10px;
