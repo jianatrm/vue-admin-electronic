@@ -168,8 +168,13 @@
             <div>添加</div>
           </div>
         </el-card>
-        <div class="box-right-m"></div>
-        <div class="box-right-d"></div>
+        <div class="box-right-m">
+          <el-calendar v-model="value">
+          </el-calendar>
+        </div>
+        <div class="box-right-d">
+
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -186,6 +191,8 @@
     data() {
       return {
         url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+          value: new Date()
+
       }
     },
     methods: {
@@ -200,7 +207,7 @@
     &-container {
      background-color: #f1f2f5;
       overflow: hidden;
-      height: 100vh;
+      //height: 100vh;
       .header{
         background-color: #fff;
         height: 120px;
@@ -270,7 +277,7 @@
         }
         .box-left-d{
           background: #ffffff;
-          height: 550px;
+          height: 800px;
         }
         .box-right-t{
           background: #ffffff;
@@ -296,12 +303,12 @@
         }
         .box-right-m{
           background: #ffffff;
-          height: 420px;
+          height: 600px;
           margin-bottom: 20px;
         }
         .box-right-d{
           background: #ffffff;
-          height: 200px;
+          height: 300px;
         }
       }
     }

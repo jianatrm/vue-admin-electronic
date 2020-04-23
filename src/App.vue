@@ -30,6 +30,6 @@ export default {
 <style>
   #app{
     min-width: 1200px;
-    min-height:750px ;
+
   }
 </style>
