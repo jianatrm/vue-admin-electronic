@@ -44,7 +44,7 @@
             <el-row>
               <el-col :span="8" class="common-line">
                 <div class="content-top">
-                  <span>图标</span>&nbsp;
+                  <span><i class="iconfont icon-tupian "></i></span>&nbsp;
                   <span>Alipay</span>
                 </div>
                 <div class="content-middle">
@@ -242,7 +242,8 @@
           height: 144px;
         }
         .card-content .el-col:hover{
-          box-shadow: 3px 2px 3px 2px gray;
+         box-shadow:  1px 0 0 0 #f0f0f0, 0 1px 0 0 #EEF0F2, 1px 1px 0 0 #f0f0f0, inset 1px 0 0 0 #f0f0f0, inset 0 1px 0 0 #f0f0f0;
+          transition: all .3s;
         }
         .box-left-d{
           background: #ffffff;
