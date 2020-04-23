@@ -30,7 +30,7 @@ export function logout() {
 
 export function queryuser(data) {
   return request({
-    url: 'electronic/user/queryuser',
+    url: '/electronic/user/queryuser',
     method: 'post',
     data:data,
   })
@@ -38,13 +38,13 @@ export function queryuser(data) {
 
 export function updateuser(data) {
   return request({
-    url: 'electronic/user/updateuser',
+    url: '/electronic/user/updateuser',
     method: 'post',
     data:data,
   })
 }export function adduser(data) {
   return request({
-    url: 'electronic/user/adduser',
+    url: '/electronic/user/adduser',
     method: 'post',
     data:data,
   })

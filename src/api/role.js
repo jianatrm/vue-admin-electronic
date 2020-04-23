@@ -8,7 +8,7 @@ export function getRoutes() {
 }
 export function getMenuPermission() {
   return request({
-    url: 'electronic/menu/queryMenuAndRoles',
+    url: '/electronic/menu/queryMenuAndRoles',
     method: 'get'
   })
 }
