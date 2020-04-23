@@ -18,6 +18,7 @@ import '@/permission' // permission control
 import echarts from 'echarts'
 
 import '@/assets/ali_icons/iconfont.css'
+import '@/assets/ali_svg/iconfont.js'
 Vue.prototype.$echarts = echarts
 
 import { baseUrl } from './const'

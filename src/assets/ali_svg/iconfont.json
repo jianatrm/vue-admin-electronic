@@ -1,0 +1,72 @@
+{
+  "id": "1765695",
+  "name": "ele",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1265755",
+      "name": "图片",
+      "font_class": "tupian",
+      "unicode": "e744",
+      "unicode_decimal": 59204
+    },
+    {
+      "icon_id": "1276327",
+      "name": "icon_wendang_nor-01",
+      "font_class": "icon_wendang_nor-01",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "3898412",
+      "name": "图片",
+      "font_class": "tupian1",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "3965525",
+      "name": "Microsoft-Excel",
+      "font_class": "Microsoft-Excel",
+      "unicode": "e6d6",
+      "unicode_decimal": 59094
+    },
+    {
+      "icon_id": "4628503",
+      "name": "PPT",
+      "font_class": "PPT",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "4628512",
+      "name": "PDF",
+      "font_class": "PDF",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "1973882",
+      "name": "TXT",
+      "font_class": "TXT",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "4628497",
+      "name": "WORD",
+      "font_class": "WORD",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "12600976",
+      "name": "xls",
+      "font_class": "xls",
+      "unicode": "e678",
+      "unicode_decimal": 59000
+    }
+  ]
+}

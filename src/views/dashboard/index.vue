@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container" >
     <el-row class="header">
-      <el-col :span="2">
+      <el-col :span="3" style="text-align: center">
         <el-avatar shape="circle" :size="80" fit="cover" :src="url"></el-avatar>
       </el-col>
       <el-col :span="16">
@@ -37,15 +37,19 @@
       <el-col :span="16">
         <el-card class="box-card box-left-t">
           <div slot="header" class="clearfix">
-            <span>进行中的项目</span>
+            <span>我的文档分类</span>
               <el-button style="float: right; padding: 3px 0" type="text">全部项目</el-button>
           </div>
           <div class="card-content">
             <el-row>
               <el-col :span="8" class="common-line">
                 <div class="content-top">
-                  <span><i class="iconfont icon-tupian "></i></span>&nbsp;
-                  <span>Alipay</span>
+                  <span>
+                    <svg class="icon" aria-hidden="true">
+                       <use xlink:href="#icon-tupian1"></use>
+                    </svg>
+                  </span>&nbsp;
+                  <span>图片</span>
                 </div>
                 <div class="content-middle">
                   那是一种内在东西，他们到达不了，也无法触及的
@@ -57,8 +61,12 @@
               </el-col>
               <el-col :span="8" class="common-line">
                 <div class="content-top">
-                  <span>图标</span>&nbsp;
-                  <span>Angular</span>
+                  <span>
+                    <svg class="icon" aria-hidden="true">
+                       <use xlink:href="#icon-WORD"></use>
+                    </svg>
+                  </span>&nbsp;
+                  <span>Word</span>
                 </div>
                 <div class="content-middle">
                   希望是一个好东西，也许是最好的，好东西是不会消亡的
@@ -70,8 +78,12 @@
               </el-col>
               <el-col :span="8">
                 <div class="content-top">
-                  <span>图标</span>&nbsp;
-                  <span>Ant Design</span>
+                  <span>
+                    <svg class="icon" aria-hidden="true">
+                       <use xlink:href="#icon-Microsoft-Excel"></use>
+                    </svg>
+                  </span>&nbsp;
+                  <span>Excel</span>
                 </div>
                 <div class="content-middle">
                   城镇中有那么多的酒馆，她却偏偏走进了我的酒馆
@@ -85,8 +97,12 @@
             <el-row style="margin-top: -20px">
               <el-col :span="8" class="common-line top-line">
                 <div class="content-top">
-                  <span>图标</span>&nbsp;
-                  <span>Ant Design Pro</span>
+                  <span>
+                    <svg class="icon" aria-hidden="true">
+                       <use xlink:href="#icon-PDF"></use>
+                    </svg>
+                  </span>&nbsp;
+                  <span>PDF</span>
                 </div>
                 <div class="content-middle">
                   那时候我只会想自己想要什么，从不想自己拥有什么
@@ -98,8 +114,12 @@
               </el-col>
               <el-col :span="8" class="common-line top-line">
                 <div class="content-top">
-                  <span>图标</span>&nbsp;
-                  <span>Bootstrap</span>
+                  <span>
+                    <svg class="icon" aria-hidden="true">
+                       <use xlink:href="#icon-PPT"></use>
+                    </svg>
+                  </span>&nbsp;
+                  <span>PPT</span>
                 </div>
                 <div class="content-middle">
                   凛冬将至
@@ -111,8 +131,12 @@
               </el-col>
               <el-col :span="8" class="top-line">
                 <div class="content-top">
-                  <span>图标</span>&nbsp;
-                  <span>React</span>
+                  <span>
+                    <svg class="icon" aria-hidden="true">
+                       <use xlink:href="#icon-icon_wendang_nor-01"></use>
+                    </svg>
+                  </span>&nbsp;
+                  <span>其他类型</span>
                 </div>
                 <div class="content-middle">
                   生命就像一盒巧克力，结果往往出人意料
@@ -144,8 +168,13 @@
             <div>添加</div>
           </div>
         </el-card>
-        <div class="box-right-m"></div>
-        <div class="box-right-d"></div>
+        <div class="box-right-m">
+          <el-calendar v-model="value">
+          </el-calendar>
+        </div>
+        <div class="box-right-d">
+
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -162,6 +191,8 @@
     data() {
       return {
         url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+          value: new Date()
+
       }
     },
     methods: {
@@ -176,7 +207,7 @@
     &-container {
      background-color: #f1f2f5;
       overflow: hidden;
-      height: 100vh;
+      //height: 100vh;
       .header{
         background-color: #fff;
         height: 120px;
@@ -242,12 +273,11 @@
           height: 144px;
         }
         .card-content .el-col:hover{
-         box-shadow:  1px 0 0 0 #f0f0f0, 0 1px 0 0 #EEF0F2, 1px 1px 0 0 #f0f0f0, inset 1px 0 0 0 #f0f0f0, inset 0 1px 0 0 #f0f0f0;
-          transition: all .3s;
+          box-shadow: 3px 2px 3px 2px gray;
         }
         .box-left-d{
           background: #ffffff;
-          height: 550px;
+          height: 800px;
         }
         .box-right-t{
           background: #ffffff;
@@ -273,12 +303,12 @@
         }
         .box-right-m{
           background: #ffffff;
-          height: 420px;
+          height: 600px;
           margin-bottom: 20px;
         }
         .box-right-d{
           background: #ffffff;
-          height: 200px;
+          height: 300px;
         }
       }
     }
