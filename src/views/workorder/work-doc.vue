@@ -59,10 +59,17 @@
               {{ scope.row.workOrderVO.workOrderStatusDesc }}
             </template>
           </el-table-column>
+          <el-table-column align="center" label="提交人">
+            <template slot-scope="scope">
+              {{ scope.row.userName }}
+            </template>
+          </el-table-column>
 
           <el-table-column align="center" label="操作">
             <template slot-scope="scope">
               <el-button type="primary" size="small" @click="handle(scope.row.workOrderId)">审批</el-button>
+              <el-button type="primary" size="small" @click="queryWorkDetail(scope.row.workOrderId)">详情</el-button>
+
             </template>
           </el-table-column>
         </el-table>
@@ -94,10 +101,16 @@
               {{ scope.row.workOrderVO.workOrderStatusDesc }}
             </template>
           </el-table-column>
+          <el-table-column align="center" label="提交人">
+            <template slot-scope="scope">
+              {{ scope.row.userName }}
+            </template>
+          </el-table-column>
+
 
           <el-table-column align="center" label="操作">
             <template slot-scope="scope">
-              <el-button type="primary" size="small" @click="handle(scope.row.workOrderId)">审批</el-button>
+              <el-button type="primary" size="small" @click="queryWorkDetail(scope.row.workOrderId)">详情</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -115,8 +128,12 @@
       <p style="font-size: 18px;"><span style="color:  #000;font-weight:bold">文件描述</span>：{{workOrderDetail.workOrderDesc}}
       </p>
       <div style="font-size: 18px;"><span style="color:  #000;font-weight:bold">文件列表：</span>
-        <p style="margin-left: 80px" v-for="(item,index) in workOrderDetail.workInfo" :key="index">
-          <a :href="item.docUrl" target="_blank">{{item.docName}}</a>
+        <p style="margin-left: 40px;display: flex;justify-content: space-between;padding-right: 60px" v-for="(item,index) in workOrderDetail.workInfo" :key="index">
+          <span >{{item.docName}}</span>
+          <span>
+            <a :href="item.docUrl" target="_blank"><el-button type="primary" size="small">下载</el-button></a>
+          <el-button type="primary" @click="handlePreview(item.docUrl)"  size="small">预览</el-button>
+          </span>
         </p>
       </div>
 
@@ -125,7 +142,7 @@
         <el-timeline-item
           v-for="(activity, index) in activities"
           :key="index"
-          :color="activity.nodeStatus == '90'?'#3498db':activity.nodeStatus ==70?'red':''"
+          :color="activity.nodeOperateResult == '90'?'#3498db':activity.nodeStatus ==70?'red':''"
           size="large"
           :timestamp="activity.operateTime">
           {{activity.userName}}
@@ -350,7 +367,32 @@
       },
       onSubmitFinsh() {
         this.approveSubmit('90')
-      }
+      },
+      handlePreview(scope) {
+        let number = decodeURI(scope).lastIndexOf('.');
+        let filetype = decodeURI(scope).substring(number + 1);
+        let reg = "pdf swf html ott fodt  sxw doc docx rtf  wpd  txt  ods  ots  fods sxc  xls xlsx  csv  tsv  odp  otp fodp  sxi  ppt pptx  odg  otg fodg  svg  png jpg  tif  gif bmp"
+        if (reg.indexOf(filetype) == -1) {
+          this.$message({
+            showClose: true,
+            message: '该文件不支持预览，请下载后查看',
+            type: 'warning'
+          });
+          return
+        }
+        let filename = decodeURI(scope).substring(scope.lastIndexOf('/') + 1);
+        if ("xls xlsx".indexOf("this.filetype") == -1) {
+          window.open(`http://localhost:8001/electronic/pdf/documentConverterToPdf/${filename}`)
+        }
+        const {href} = this.$router.resolve({
+          path: "/pdfPreview",
+          query: {
+            filename: filename,
+            filetype: filetype
+          }
+        });
+        window.open(href, '_blank');
+      },
     }
   }
 </script>

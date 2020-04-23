@@ -59,9 +59,21 @@
       </el-col>
     </el-row>
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑人员':'新建人员'">
-      <el-form :model="user" label-width="80px" label-position="left" :inline="true" :rules="rules" ref="user">
+      <el-form :model="user" label-width="80px" :inline="true" :rules="rules" ref="user">
         <el-form-item label="用户名" prop="userName">
           <el-input v-model="user.userName" placeholder="姓名"/>
+        </el-form-item>
+        <el-form-item label="昵称" prop="nickName">
+          <el-input v-model="user.nickName" placeholder="昵称"/>
+        </el-form-item>
+        <el-form-item label="真实姓名" prop="staffName">
+          <el-input v-model="user.staffName" placeholder="真实姓名"/>
+        </el-form-item>
+        <el-form-item label="性别">
+          <el-select v-model="user.sex" placeholder="请选择">
+            <el-option label="男" value="1"></el-option>
+            <el-option label="女" value="2"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="邮箱" prop="userEmail">
           <el-input
@@ -76,12 +88,6 @@
           />
         </el-form-item>
 
-        <el-form-item label="管理员">
-          <el-select v-model="user.level" placeholder="请选择">
-            <el-option label="是" value="1"></el-option>
-            <el-option label="否" value="2"></el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item label="密码" prop="password" v-if="dialogType == 'new'">
           <el-input type="password" v-model="user.password" autocomplete="off"></el-input>
         </el-form-item>
@@ -94,6 +100,13 @@
                        :key="index"></el-option>
           </el-select>
         </el-form-item>
+
+        <el-form-item label="管理员" style="margin-left: -15px;">
+          <el-select v-model="user.level" placeholder="请选择">
+            <el-option label="是" value="1"></el-option>
+            <el-option label="否" value="2"></el-option>
+          </el-select>
+        </el-form-item>
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="dialogVisible=false">取消</el-button>
@@ -104,192 +117,194 @@
 </template>
 
 <script>
-    import {queryuser, updateuser, adduser} from "../../api/user";
-    import Pagination from '@/components/Pagination'
-    import {querydept} from "../../api/dept";
+  import {queryuser, updateuser, adduser} from "../../api/user";
+  import Pagination from '@/components/Pagination'
+  import {querydept} from "../../api/dept";
 
-    export default {
-        components: {Pagination},
-        data() {
-            var validatePass = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error('请输入密码'));
-                } else {
-                    if (this.user.checkPass !== '') {
-                        this.$refs.user.validateField('checkPass');
-                    }
-                    callback();
-                }
-            };
-            var validatePass2 = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error('请再次输入密码'));
-                } else if (value !== this.user.password) {
-                    callback(new Error('两次输入密码不一致!'));
-                } else {
-                    callback();
-                }
-            };
-            return {
-                rules: {
-                    userName: [
-                        {required: true, message: '请输入账户', trigger: 'blur'},
-                        {min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur'}
-                    ],
-                    userEmail: [
-                        {required: true, message: '请输入邮箱地址', trigger: 'blur'},
-                        {type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}
-                    ],
-                    userPhone: [
-                        {required: true, message: '请输入手机号', trigger: 'blur'},
-                        //{ type: 'phone', required: true, message: '请输入手机号', trigger: 'change' }
-                    ],
-                    password: [
-                        {validator: validatePass, trigger: 'blur'}
-                    ],
-                    checkPass: [
-                        {validator: validatePass2, trigger: 'blur'}
-                    ],
-                    deptId: [
-                        {required: true, message: '请选择部门', trigger: 'change'}
-                    ]
-                },
-
-                search: '',
-                user: {
-                    userName: '',
-                    userEmail: '',
-                    userPhone: '',
-                    password: '',
-                    checkPass: '',
-                    deptId: ''
-                },
-                deptList: [],
-                userList: [],
-                dialogVisible: false,
-                dialogType: 'new',
-                checkStrictly: false,
-                defaultProps: {
-                    children: 'children',
-                    label: 'title'
-                },
-                pageNum: 1,
-                pageSize: 10,
-                total: 10
-            }
-
-        },
-        mounted() {
-            this.queryUserList()
-        },
-        methods: {
-            queryUserList(val) {
-                queryuser({
-                    pageSize: this.pageSize,
-                    pageNum: this.pageNum,
-                    userName: val
-                }).then(res => {
-                    this.$loading().close()
-                    if (res.success) {
-                        this.userList = res.result.result
-                        this.total = res.result.count
-                    }
-                })
-            },
-            queryDeptList() {
-                querydept({
-                    pageNum: 1,
-                    pageSize: 1000,
-                }).then(res => {
-                    this.$loading().close()
-                    if (res.success) {
-                        this.deptList = res.result.result
-                    }
-                })
-            },
-
-            getList() {
-                this.pageNum++;
-                this.queryUserList();
-            },
-            handleEdit(scope) {
-                this.dialogType = 'edit'
-                this.dialogVisible = true
-                this.user = scope.row;
-                this.user.checkPass = scope.row.password
-
-            },
-            handleDelete({$index, row}) {
-                this.$confirm('确定删除该用户吗?', 'Warning', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(async () => {
-                    await this.deleteRole(row.userId, $index)
-                })
-                    .catch(err => {
-                        console.error(err)
-                    })
-            },
-            handleAddUser() {
-                this.dialogType = 'new'
-                this.dialogVisible = true
-                this.user = {}
-                this.queryDeptList();
-            },
-            deleteRole(userId, $index) {
-                updateuser({
-                    status: 0,
-                    userId: userId
-                }).then(res => {
-                    this.$loading().close()
-                    if (res.success) {
-                        this.$message({
-                            type: 'success',
-                            message: '删除成功'
-                        })
-                        this.pageNum = 1;
-                        this.queryUserList();
-                    }
-                })
-            },
-            submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        if (this.dialogType == 'new') {
-                            adduser(this.user).then(res => {
-
-                                this.$loading().close()
-                                if (res.success) {
-                                    this.$message({
-                                        type: 'success',
-                                        message: '新增成功'
-                                    })
-                                    this.dialogVisible = false
-                                }
-                            })
-                        } else {
-                            updateuser(this.user).then(res => {
-                                this.$loading().close()
-                                if (res.success) {
-                                    this.$message({
-                                        type: 'success',
-                                        message: '修改成功'
-                                    })
-                                    this.dialogVisible = false
-                                }
-                            })
-                        }
-                        this.pageNum = 1;
-                        this.queryUserList();
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
-                });
-            }
+  export default {
+    components: {Pagination},
+    data() {
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'));
+        } else {
+          if (this.user.checkPass !== '') {
+            this.$refs.user.validateField('checkPass');
+          }
+          callback();
         }
+      };
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.user.password) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
+      return {
+        rules: {
+          userName: [
+            {required: true, message: '请输入账户', trigger: 'blur'},
+            {min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur'}
+          ],
+          userEmail: [
+            {required: true, message: '请输入邮箱地址', trigger: 'blur'},
+            {type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}
+          ],
+          userPhone: [
+            {required: true, message: '请输入手机号', trigger: 'blur'},
+            //{ type: 'phone', required: true, message: '请输入手机号', trigger: 'change' }
+          ],
+          password: [
+            {required: true, message: '请输入密码', trigger: 'blur'},
+            {validator: validatePass, trigger: 'blur'}
+          ],
+          checkPass: [
+            {required: true, message: '请再次输入密码', trigger: 'blur'},
+            {validator: validatePass2, trigger: 'blur'}
+          ],
+          deptId: [
+            {required: true, message: '请选择部门', trigger: 'change'}
+          ]
+        },
+
+        search: '',
+        user: {
+          userName: '',
+          userEmail: '',
+          userPhone: '',
+          password: '',
+          checkPass: '',
+          deptId: ''
+        },
+        deptList: [],
+        userList: [],
+        dialogVisible: false,
+        dialogType: 'new',
+        checkStrictly: false,
+        defaultProps: {
+          children: 'children',
+          label: 'title'
+        },
+        pageNum: 1,
+        pageSize: 10,
+        total: 10
+      }
+
+    },
+    mounted() {
+      this.queryUserList()
+    },
+    methods: {
+      queryUserList(val) {
+        queryuser({
+          pageSize: this.pageSize,
+          pageNum: this.pageNum,
+          userName: val
+        }).then(res => {
+          this.$loading().close()
+          if (res.success) {
+            this.userList = res.result.result
+            this.total = res.result.count
+          }
+        })
+      },
+      queryDeptList() {
+        querydept({
+          pageNum: 1,
+          pageSize: 1000,
+        }).then(res => {
+          this.$loading().close()
+          if (res.success) {
+            this.deptList = res.result.result
+          }
+        })
+      },
+
+      getList() {
+        this.pageNum++;
+        this.queryUserList();
+      },
+      handleEdit(scope) {
+        this.dialogType = 'edit'
+        this.dialogVisible = true
+        this.user = scope.row;
+        this.user.checkPass = scope.row.password
+
+      },
+      handleDelete({$index, row}) {
+        this.$confirm('确定删除该用户吗?', 'Warning', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async () => {
+          await this.deleteRole(row.userId, $index)
+        })
+          .catch(err => {
+            console.error(err)
+          })
+      },
+      handleAddUser() {
+        this.dialogType = 'new'
+        this.dialogVisible = true
+        this.user = {}
+        this.queryDeptList();
+      },
+      deleteRole(userId, $index) {
+        updateuser({
+          status: 0,
+          userId: userId
+        }).then(res => {
+          this.$loading().close()
+          if (res.success) {
+            this.$message({
+              type: 'success',
+              message: '删除成功'
+            })
+            this.pageNum = 1;
+            this.queryUserList();
+          }
+        })
+      },
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            if (this.dialogType == 'new') {
+              adduser(this.user).then(res => {
+
+                this.$loading().close()
+                if (res.success) {
+                  this.$message({
+                    type: 'success',
+                    message: '新增成功'
+                  })
+                  this.dialogVisible = false
+                }
+              })
+            } else {
+              updateuser(this.user).then(res => {
+                this.$loading().close()
+                if (res.success) {
+                  this.$message({
+                    type: 'success',
+                    message: '修改成功'
+                  })
+                  this.dialogVisible = false
+                }
+              })
+            }
+            this.pageNum = 1;
+            this.queryUserList();
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      }
     }
+  }
 </script>
 
 <style lang="scss" scoped>

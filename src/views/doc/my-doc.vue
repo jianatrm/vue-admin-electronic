@@ -16,6 +16,24 @@
 
       <el-table-column align="center" label="文档名称">
         <template slot-scope="scope">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-tupian1"></use>
+          </svg>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-WORD"></use>
+          </svg>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-Microsoft-Excel"></use>
+          </svg>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-PDF"></use>
+          </svg>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-PPT"></use>
+          </svg>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-icon_wendang_nor-01"></use>
+          </svg>
           {{ scope.row.docName }}
         </template>
       </el-table-column>
