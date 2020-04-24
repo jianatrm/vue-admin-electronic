@@ -2,12 +2,22 @@
   <div class="app-container">
     <el-tabs v-model="activeName" @tab-click="handleClick" type="card">
       <el-tab-pane label="填写信息" name="first">
-        <el-form :model="doc" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item label="文件名称" prop="docName">
+        <el-form :model="doc" :rules="rules" ref="ruleForm" label-width="110px" class="demo-ruleForm">
+          <el-form-item label="标题" prop="docName">
             <el-input v-model="doc.docName"></el-input>
           </el-form-item>
-          <el-form-item label="文件描述" prop="remark">
-            <el-input type="textarea" v-model="doc.remark"></el-input>
+          <el-form-item label="描述" prop="remark">
+            <el-input type="textarea" v-model="doc.remark" :autosize="{ minRows: 4, maxRows: 4}"></el-input>
+          </el-form-item>
+          <el-form-item label="审批人选择">
+            <el-select v-model="approve.approveList" multiple filterable allow-create default-first-option
+                       placeholder="请选择审批人">
+              <el-option v-for="item in options" :key="item.userId" :label="item.userName" :value="item.userId">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="已选择审批人" prop="approveList">
+            <el-tag v-for="tag in tags" :key="tag.name" closable :type="tag.type" style="margin-right: 10px"  @close="handleClose(tag)">{{tag.name}}</el-tag>
           </el-form-item>
           <el-form-item>
             <el-upload
@@ -19,30 +29,22 @@
               multiple>
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-              <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
-
+              <div class="el-upload__tip" slot="tip">上传文件不超过100MB</div>
             </el-upload>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitUpload('ruleForm')">上传</el-button>
-            <el-button type="primary" @click="submitForm('ruleForm')">提交审批</el-button>
+            <el-button type="primary"  size="small" @click="submitForm('ruleForm')">提交审批</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
     </el-tabs>
     <el-dialog :visible.sync="dialogVisible" title="提交审批">
       <el-form :inline="true" :model="approve" class="demo-form-inline" ref="formInline" :rules="rules">
-        <el-form-item label="审批人" prop="approveList">
-          <el-select v-model="approve.approveList" multiple filterable allow-create default-first-option
-                     placeholder="请选择审批人">
-            <el-option v-for="item in options" :key="item.userId" :label="item.userName" :value="item.userId">
-            </el-option>
-          </el-select>
-        </el-form-item>
+
       </el-form>
       <div style="text-align:right;">
-        <el-button type="danger" @click="dialogVisible=false">取消</el-button>
-        <el-button type="primary" @click="onSubmit('formInline')">提交</el-button>
+        <el-button type="danger" @click="dialogVisible=false"  size="small">取消</el-button>
+        <el-button type="primary" @click="onSubmit('formInline')"  size="small">提交</el-button>
       </div>
     </el-dialog>
   </div>
@@ -76,7 +78,7 @@
                         {required: true, message: '请填写文件描述', trigger: 'blur'}
                     ],
                     approveList: [
-                        {required: true, message: '请选择活动区域', trigger: 'change'}
+                        {required: true, message: '请选择审批人', trigger: 'change'}
                     ],
                 },
                 approve: {
@@ -88,6 +90,13 @@
                 action:'',
                 pageNum: 1,
                 pageSize: 1000,
+                tags: [
+                    { name: '标签一', type: '' },
+                    { name: '标签二', type: 'success' },
+                    { name: '标签三', type: 'info' },
+                    { name: '标签四', type: 'warning' },
+                    { name: '标签五', type: 'danger' }
+                ]
             };
         },
         mounted() {
@@ -184,7 +193,6 @@
 <style lang="scss" scoped>
   .app-container {
     width: 100%;
-    height: 100vh;
     padding: 20px;
 
     .upload {
@@ -192,7 +200,7 @@
     }
 
     .el-select {
-      width: 350%;
+      width: 100%;
     }
   }
 </style>

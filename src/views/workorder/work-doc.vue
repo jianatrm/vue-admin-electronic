@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-tabs v-model="activeName" @tab-click="handleClick" type="card">
       <el-tab-pane label="我的申请" name="first">
-        <el-table :data="workList" style="width: 100%;margin-top:30px;" border>
+        <el-table :data="workList" style="width: 100%;margin-top:30px;" border  size="small">
           <el-table-column align="center" label="工单编码" width="220">
             <template slot-scope="scope">
               {{ scope.row.workOrderCode }}
@@ -30,6 +30,9 @@
               <el-button type="danger" size="small" @click="handleDelete(scope)">取消</el-button>
             </template>
           </el-table-column>
+          <div slot="empty">
+            <span >未查询到数据</span>
+          </div>
         </el-table>
         <el-row :gutter="20">
           <el-col :span="24" style="text-align: right">
@@ -38,7 +41,7 @@
         </el-row>
       </el-tab-pane>
       <el-tab-pane label="审批工单" name="second">
-        <el-table :data="workToMeList" style="width: 100%;margin-top:30px;" border>
+        <el-table :data="workToMeList" style="width: 100%;margin-top:30px;" border  size="small">
           <el-table-column align="center" label="工单编码" width="220">
             <template slot-scope="scope">
               {{ scope.row.workOrderVO.workOrderCode }}
@@ -72,6 +75,9 @@
 
             </template>
           </el-table-column>
+          <div slot="empty">
+            <span >未查询到数据</span>
+          </div>
         </el-table>
         <el-row :gutter="20">
           <el-col :span="24" style="text-align: right">
@@ -80,8 +86,8 @@
         </el-row>
       </el-tab-pane>
       <el-tab-pane label="审批记录" name="three">
-        <el-table :data="workToMeList" style="width: 100%;margin-top:30px;" border>
-          <el-table-column align="center" label="工单编码" width="220">
+        <el-table :data="workToMeList" style="width: 100%;margin-top:30px;" border  size="small">
+          <el-table-column align="center" label="工单编码">
             <template slot-scope="scope">
               {{ scope.row.workOrderVO.workOrderCode }}
             </template>
@@ -110,9 +116,12 @@
 
           <el-table-column align="center" label="操作">
             <template slot-scope="scope">
-              <el-button type="primary" size="small" @click="queryWorkDetail(scope.row.workOrderId)">详情</el-button>
+              <el-button type="primary" size="small" @click="queryWorkDetail(scope.row.workOrderId)" >详情</el-button>
             </template>
           </el-table-column>
+          <div slot="empty">
+            <span >未查询到数据</span>
+          </div>
         </el-table>
         <el-row :gutter="20">
           <el-col :span="24" style="text-align: right">

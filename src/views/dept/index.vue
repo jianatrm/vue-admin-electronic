@@ -2,14 +2,14 @@
   <div class="app-container">
     <el-row :gutter="20">
       <el-col :span="12" style="text-align: left">
-        <el-input v-model="search" placeholder="根据部门搜索" style="width: 30%;"></el-input>
-        <el-button type="primary" @click="querydeptList(search)">查询</el-button>
+        <el-input v-model="search" placeholder="根据部门搜索" style="width: 50%;"  size="small"></el-input>
+        <el-button type="primary" @click="querydeptList(search)"  size="small">查询</el-button>
       </el-col>
       <el-col :span="12" style="text-align: right">
-        <el-button type="primary" @click="handleAdddept">新建部门</el-button>
+        <el-button type="primary" @click="handleAdddept"  size="small">新建部门</el-button>
       </el-col>
     </el-row>
-    <el-table :data="deptList" style="width: 100%;margin-top:30px;" border>
+    <el-table :data="deptList" style="width: 100%;margin-top:30px;" border  size="small">
       <el-table-column type="index" align="center" label="序号" width="220">
 
       </el-table-column>
@@ -36,6 +36,9 @@
           <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button>
         </template>
       </el-table-column>
+      <div slot="empty">
+        <span >未查询到数据</span>
+      </div>
     </el-table>
     <el-row :gutter="20">
       <el-col :span="24" style="text-align: right">

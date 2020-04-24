@@ -4,7 +4,7 @@
       <el-col :span="3" style="text-align: center">
         <el-avatar shape="circle" :size="80" fit="cover" :src="url"></el-avatar>
       </el-col>
-      <el-col :span="16">
+      <el-col :span="18">
         <div>
           <p class="content-title">早安，{{userInfo.userName}}，祝你开心每一天！</p>
           <p class="content">前端开发 | {{userInfo.companyName}}－{{userInfo.deptName}}</p>
@@ -25,13 +25,13 @@
         </div>
 
       </el-col>
-      <el-divider direction="vertical"></el-divider>
+     <!-- <el-divider direction="vertical"></el-divider>
       <el-col :span="2">
         <div>
           <p class="doc-title">公司文档数量</p>
           <p class="doc-content">{{userInfo.companyCount}}</p>
         </div>
-      </el-col>
+      </el-col>-->
     </el-row>
     <el-row class="middle" :gutter="18">
       <el-col :span="16">
@@ -51,9 +51,7 @@
               <el-col :span="8" class="common-line">
                 <div class="content-top">
                   <span>
-                    <svg class="icon" aria-hidden="true">
-                       <use xlink:href="#icon-tupian1"></use>
-                    </svg>
+                      <svg-icon icon-class="image"/>
                   </span>&nbsp;
                   <span>图片</span>
                 </div>
@@ -68,9 +66,7 @@
               <el-col :span="8" class="common-line">
                 <div class="content-top">
                   <span>
-                    <svg class="icon" aria-hidden="true">
-                       <use xlink:href="#icon-WORD"></use>
-                    </svg>
+                    <svg-icon icon-class="WORD"/>
                   </span>&nbsp;
                   <span>Word</span>
                 </div>
@@ -85,9 +81,7 @@
               <el-col :span="8">
                 <div class="content-top">
                   <span>
-                    <svg class="icon" aria-hidden="true">
-                       <use xlink:href="#icon-Microsoft-Excel"></use>
-                    </svg>
+                    <svg-icon icon-class="excel"/>
                   </span>&nbsp;
                   <span>Excel</span>
                 </div>
@@ -104,9 +98,9 @@
               <el-col :span="8" class="common-line top-line">
                 <div class="content-top">
                   <span>
-                    <svg class="icon" aria-hidden="true">
-                       <use xlink:href="#icon-PDF"></use>
-                    </svg>
+
+                   <svg-icon icon-class="PDF"/>
+
                   </span>&nbsp;
                   <span>PDF</span>
                 </div>
@@ -121,9 +115,8 @@
               <el-col :span="8" class="common-line top-line">
                 <div class="content-top">
                   <span>
-                    <svg class="icon" aria-hidden="true">
-                       <use xlink:href="#icon-PPT"></use>
-                    </svg>
+
+                    <svg-icon icon-class="PPT"  />
                   </span>&nbsp;
                   <span>PPT</span>
                 </div>
@@ -138,9 +131,7 @@
               <el-col :span="8" class="top-line">
                 <div class="content-top">
                   <span>
-                    <svg class="icon" aria-hidden="true">
-                       <use xlink:href="#icon-icon_wendang_nor-01"></use>
-                    </svg>
+                    <svg-icon icon-class="wendang"/>
                   </span>&nbsp;
                   <span>其他类型</span>
                 </div>

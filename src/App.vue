@@ -32,4 +32,14 @@ export default {
     min-width: 1200px;
 
   }
+  body .el-table th.gutter{
+    display: table-cell!important;
+  }
+  .svg-icon{
+    width: 2em !important;
+    height: 2em !important;
+    vertical-align: middle !important;
+    fill: currentColor !important;
+    overflow: hidden !important;
+  }
 </style>

@@ -2,20 +2,16 @@
   <div class="app-container">
     <el-row :gutter="20">
       <el-col :span="12" style="text-align: left">
-        <el-input v-model="search" placeholder="根据用户名搜索" style="width: 30%;"></el-input>
-        <el-button type="primary" @click="queryUserList(search)">查询</el-button>
+        <el-input v-model="search" size="small" placeholder="根据用户名搜索" style="width: 50%;"></el-input>
+        <el-button type="primary" size="small" @click="queryUserList(search)">查询</el-button>
       </el-col>
       <el-col :span="12" style="text-align: right">
-        <el-button type="primary" @click="handleAddUser">新建人员</el-button>
+        <el-button type="primary" size="small" @click="handleAddUser">新建人员</el-button>
       </el-col>
     </el-row>
-    <el-table :data="userList" style="width: 100%;margin-top:30px;" border>
-      <el-table-column align="center" label="人员ID" width="220">
-        <template slot-scope="scope">
-          {{ scope.row.userId }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="用户名" width="220">
+    <el-table :data="userList" style="width: 100%;margin-top:30px;" border size="small">
+      <el-table-column type="index" align="center" label="序号" width="100px"></el-table-column>
+      <el-table-column align="center" label="用户名">
         <template slot-scope="scope">
           {{ scope.row.userName }}
         </template>
@@ -46,31 +42,34 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" label="操作" min-width="100">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)">编辑</el-button>
-          <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button>
+          <el-button type="primary" size="mini" @click="handleEdit(scope)">编辑</el-button>
+          <el-button type="danger" size="mini" @click="handleDelete(scope)">删除</el-button>
         </template>
       </el-table-column>
+      <div slot="empty">
+        <span >未查询到数据</span>
+      </div>
     </el-table>
     <el-row :gutter="20">
       <el-col :span="24" style="text-align: right">
         <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize" @pagination="getList"/>
       </el-col>
     </el-row>
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑人员':'新建人员'">
+    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑人员':'新建人员'" width="50%">
       <el-form :model="user" label-width="80px" :inline="true" :rules="rules" ref="user">
         <el-form-item label="用户名" prop="userName">
-          <el-input v-model="user.userName" placeholder="姓名"/>
+          <el-input v-model="user.userName" placeholder="姓名"  />
         </el-form-item>
         <el-form-item label="昵称" prop="nickName">
-          <el-input v-model="user.nickName" placeholder="昵称"/>
+          <el-input v-model="user.nickName" placeholder="昵称"  />
         </el-form-item>
         <el-form-item label="真实姓名" prop="staffName">
           <el-input v-model="user.staffName" placeholder="真实姓名"/>
         </el-form-item>
         <el-form-item label="性别">
-          <el-select v-model="user.sex" placeholder="请选择">
+          <el-select v-model="user.sex" placeholder="请选择" >
             <el-option label="男" value="1"></el-option>
             <el-option label="女" value="2"></el-option>
           </el-select>
@@ -109,8 +108,8 @@
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
-        <el-button type="danger" @click="dialogVisible=false">取消</el-button>
-        <el-button type="primary" @click="submitForm('user')">提交</el-button>
+        <el-button type="danger" size="medium" @click="dialogVisible=false">取消</el-button>
+        <el-button type="primary" size="medium" @click="submitForm('user')">提交</el-button>
       </div>
     </el-dialog>
   </div>
@@ -310,14 +309,13 @@
 <style lang="scss" scoped>
   .app-container {
     .el-form-item {
-      margin-right: 100px;
-
+      margin-right:18px;
       .el-input {
-        width: 120%;
+        width: 108%;
       }
 
       .el-select {
-        width: 110%;
+        width: 100%;
       }
     }
 

@@ -2,32 +2,41 @@
   <div class="app-container">
     <el-row :gutter="20">
       <el-col :span="12" style="text-align: left">
-        <el-input v-model="search" placeholder="文档搜索" style="width: 30%;"></el-input>
-        <el-button type="primary" @click="querydocList(search)">查询</el-button>
+        <el-input v-model="search" placeholder="文档搜索" style="width: 50%;" size="small"></el-input>
+        <el-button type="primary" @click="querydocList(search)" size="small">查询</el-button>
       </el-col>
     </el-row>
-    <el-table :data="docList" style="width: 100%;margin-top:30px;" border>
-      <el-table-column type="index" align="center" label="序号" width="220">
+    <el-table :data="docList" style="width: 100%;margin-top:30px;" border size="small">
+      <el-table-column type="index" align="center" label="序号" width="100">
 
       </el-table-column>
 
-      <el-table-column align="center" label="文档名称" width="220">
+      <el-table-column align="left" label="文档名称" header-align="center">
         <template slot-scope="scope">
+          <svg-icon icon-class="excel"  v-if="'xls,xlsx,csv'.indexOf(scope.row.docType) > -1"/>
+          <svg-icon icon-class="PPT" v-else-if="'ppt,pptx,pps,ppsx,pot'.indexOf(scope.row.docType) > -1" />
+          <svg-icon icon-class="PDF" v-else-if="'pdf,dpt,odf'.indexOf(scope.row.docType) > -1"/>
+          <svg-icon icon-class="WORD" v-else-if="'doc,docx'.indexOf(scope.row.docType) > -1"/>
+          <svg-icon icon-class="image" v-else-if="'bmp,jpg,png,tif,gif,pcx,tga,exif,fpx,svg,psd,cdr,pcd,dxf,ufo,eps,ai,raw,WMF,webp,jpeg'.indexOf(scope.row.docType) > -1"/>
+          <svg-icon icon-class="wendang" v-else/>
           {{ scope.row.docName }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="修改时间">
         <template slot-scope="scope">
-          {{ scope.row.operateTime }}
+          {{scope.row.operateTime&&new Date( scope.row.operateTime).format('yyyy-MM-dd') }}
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button type="primary" size="small" icon="el-icon-download" @click="handleEdit(scope)">下载</el-button>
-          <el-button type="primary" size="small" icon="el-icon-search" @click="handlePreview(scope)">预览</el-button>
+          <el-button type="success" size="small" icon="el-icon-search" @click="handlePreview(scope)">预览</el-button>
         </template>
       </el-table-column>
+      <div slot="empty">
+        <span >未查询到数据</span>
+      </div>
     </el-table>
     <el-row :gutter="20">
       <el-col :span="24" style="text-align: right">
