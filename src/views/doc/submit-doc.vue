@@ -100,7 +100,7 @@
             };
         },
         mounted() {
-            this.action = process.env.VUE_APP_BASE_API+"electronic/file/uploadFile"
+            this.action = window.location.protocol+"//"+window.location.host+"/electronic/file/uploadFile"
         },
         methods: {
             handleClick() {
