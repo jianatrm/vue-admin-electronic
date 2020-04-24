@@ -2,11 +2,32 @@
   <div class="app-container">
     <el-tabs v-model="activeName" @tab-click="handleClick" type="card">
       <el-tab-pane label="员工文档" name="first">
-        <el-row :gutter="20">
-          <el-col :span="12" style="text-align: left">
-            <el-input v-model="search" placeholder="文档搜索" style="width: 30%;"></el-input>
-            <el-button type="primary" @click="querydocList(search)">查询</el-button>
-          </el-col>
+        <el-row :gutter="20" style="margin-left: 0;padding-top: 20px">
+          <el-form :inline="true" :model="formInline" class="demo-form-inline">
+            <el-form-item label="文档名称">
+              <el-input v-model="formInline.docName" placeholder="请输入文档名称"></el-input>
+            </el-form-item>
+
+            <el-form-item label="选择日期">
+              <el-date-picker
+                v-model="value1"
+                type="daterange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期">
+              </el-date-picker>
+            </el-form-item>
+
+            <el-form-item label="提交人">
+              <el-select v-model="formInline.region" placeholder="请选择提交人">
+                <el-option label="区域一" value="shanghai"></el-option>
+                <el-option label="区域二" value="beijing"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="querydocList(search)">查询</el-button>
+            </el-form-item>
+          </el-form>
         </el-row>
         <el-table :data="docList" style="width: 100%;margin-top:30px;" border>
           <el-table-column type="index" align="center" label="序号" width="220">
@@ -43,11 +64,32 @@
         </el-row>
       </el-tab-pane>
       <el-tab-pane label="部门文档" name="second">
-        <el-row :gutter="20">
-          <el-col :span="12" style="text-align: left">
-            <el-input v-model="search" placeholder="文档搜索" style="width: 30%;"></el-input>
-            <el-button type="primary" @click="querydocList(search)">查询</el-button>
-          </el-col>
+        <el-row :gutter="20" style="margin-left: 0;padding-top: 20px">
+          <el-form :inline="true" :model="formInline" class="demo-form-inline">
+            <el-form-item label="文档名称">
+              <el-input v-model="formInline.docName" placeholder="请输入文档名称"></el-input>
+            </el-form-item>
+
+            <el-form-item label="选择日期">
+              <el-date-picker
+                v-model="value1"
+                type="daterange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期">
+              </el-date-picker>
+            </el-form-item>
+
+            <el-form-item label="归属部门">
+              <el-select v-model="formInline.region" placeholder="请选择归属部门">
+                <el-option label="区域一" value="shanghai"></el-option>
+                <el-option label="区域二" value="beijing"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="querydocList(search)">查询</el-button>
+            </el-form-item>
+          </el-form>
         </el-row>
         <el-table :data="docList" style="width: 100%;margin-top:30px;" border>
           <el-table-column type="index" align="center" label="序号" width="220">
@@ -97,13 +139,6 @@
     data() {
       return {
         activeName: 'first',
-        rules: {
-          docName: [
-            {required: true, message: '请输入账户', trigger: 'blur'},
-            {min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur'}
-          ],
-        },
-
         search: '',
         doc: {
           docName: '',
@@ -113,13 +148,11 @@
         dialogVisible: false,
         dialogType: 'new',
         checkStrictly: false,
-        defaultProps: {
-          children: 'children',
-          label: 'title'
-        },
         pageNum: 1,
         pageSize: 10,
-        total: 0
+        total: 0,
+        date:'',
+        formInline:{}
       }
 
     },
@@ -127,7 +160,20 @@
       this.querydocList()
     },
     methods: {
-      querydocList(val) {
+      queryUserdocList(val) {
+        queryDeptElectronicDoc({
+          pageSize: this.pageSize,
+          pageNum: this.pageNum,
+          docName: val
+        }).then(res => {
+          this.$loading().close()
+          if (res.success) {
+            this.docList = res.result.result
+            this.total = res.result.count
+          }
+        })
+      },
+      queryDeptdocList(val) {
         queryDeptElectronicDoc({
           pageSize: this.pageSize,
           pageNum: this.pageNum,
@@ -143,77 +189,6 @@
       getList() {
         this.pageNum++;
         this.querydocList();
-      },
-      handleEdit(scope) {
-        this.dialogType = 'edit'
-        this.dialogVisible = true
-        this.doc = scope.row;
-        this.doc.checkPass = scope.row.password
-
-      },
-      handleDelete({$index, row}) {
-        this.$confirm('确定删除该用户吗?', 'Warning', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(async () => {
-          await this.deleteRole(row.docId, $index)
-        }).catch(err => {
-          console.error(err)
-        })
-      },
-      handleAdddoc() {
-        this.dialogType = 'new'
-        this.dialogVisible = true
-        this.doc = {}
-      },
-      deleteRole(docId, $index) {
-        updatedoc({
-          status: 0,
-          docId: docId
-        }).then(res => {
-          this.$loading().close()
-          if (res.success) {
-            this.$message({
-              type: 'success',
-              message: '删除成功'
-            })
-            this.pageNum = 1;
-            this.querydocList();
-          }
-        })
-      },
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            if (this.dialogType == 'new') {
-              adddoc(this.doc).then(res => {
-                this.$loading().close()
-                if (res.success) {
-                  this.$message({
-                    type: 'success',
-                    message: '新增成功'
-                  })
-                }
-              })
-            } else {
-              updatedoc(this.doc).then(res => {
-                this.$loading().close()
-                if (res.success) {
-                  this.$message({
-                    type: 'success',
-                    message: '修改成功'
-                  })
-                }
-              })
-            }
-            this.pageNum = 1;
-            this.querydocList();
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
       },
       handlePreview(scope) {
         let number = decodeURI(scope.row.docUrl).lastIndexOf('.');

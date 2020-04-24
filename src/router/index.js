@@ -117,12 +117,12 @@ export const constantRoutes = [
   {
     path: '/statistics',
     component: Layout,
-    redirect: '/statistics',
+    redirect: '/statistics/index',
     meta: { title: '统计查询', icon: 'example',id:401 },
     children: [
       {
-        path: 'statistics',
-        name: 'statistics',
+        path: 'index',
+        name: 'index',
         component: () => import('@/views/statistics/index'),
         meta: { title: '统计查询', icon: 'iconfont icon-cz-tjcx',id:404,level:1 }
       }
