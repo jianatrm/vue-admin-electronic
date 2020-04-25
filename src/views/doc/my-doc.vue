@@ -62,8 +62,8 @@
       </el-form>
 
       <div style="text-align:right;">
-        <el-button type="danger" @click="dialogVisible=false">取消</el-button>
-        <el-button type="primary" @click="submitForm()">提交</el-button>
+        <el-button type="danger" @click="dialogVisible=false" size="small">取消</el-button>
+        <el-button type="primary" @click="submitForm()" size="small">提交</el-button>
       </div>
     </el-dialog>
   </div>
@@ -157,11 +157,14 @@
 
             submitForm() {
                 let docList = [];
+                debugger
                 let uploadFiles = this.$refs.upload.uploadFiles;
                 for (let i = 0; i < uploadFiles.length; i++) {
                   docList.push({
-                    docName: uploadFiles[i].response.result.fileName,
-                    docUrl: uploadFiles[i].response.result.fileDownloadUri
+                    docName: uploadFiles[i].response.result.fileName.split("&&")[1],
+                    docUrl: decodeURI(uploadFiles[i].response.result.fileDownloadUri),
+                    docType:uploadFiles[i].response.result.fileType,
+                    docRandomName:uploadFiles[i].response.result.fileName
                   })
                 }
                 adddoc({
@@ -197,6 +200,13 @@
 
     .permission-tree {
       margin-bottom: 30px;
+    }
+    .svg-icon{
+      width: 2em !important;
+      height: 2em !important;
+      vertical-align: middle !important;
+      fill: currentColor !important;
+      overflow: hidden !important;
     }
 
   }

@@ -6,7 +6,7 @@
         <el-button type="primary" size="small" @click="queryUserList(search)">查询</el-button>
       </el-col>
       <el-col :span="12" style="text-align: right">
-        <el-button type="primary" size="small" @click="handleAddUser">新建人员</el-button>
+        <el-button type="primary" size="small" @click="handleAddUser" :disabled="!admin">新建人员</el-button>
       </el-col>
     </el-row>
     <el-table :data="userList" style="width: 100%;margin-top:30px;" border size="small">
@@ -28,24 +28,28 @@
       </el-table-column>
       <el-table-column align="center" label="部门">
         <template slot-scope="scope">
-          {{ scope.row.description }}
+          {{ scope.row.sysDept.deptName }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="管理员">
         <template slot-scope="scope">
-          {{ scope.row.level }}
+          <el-link  type="primary" v-if="scope.row.level==1"  :underline="false">是</el-link>
+          <el-link v-else type="info" :underline="false">否</el-link>
         </template>
       </el-table-column>
       <el-table-column align="center" label="状态">
         <template slot-scope="scope">
-          {{ scope.row.status }}
+          <el-link  type="primary" v-if="scope.row.status==1"  :underline="false">在职</el-link>
+          <el-link v-else type="danger" :underline="false">离职</el-link>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="操作" min-width="100">
+      <el-table-column align="center" label="操作" min-width="200">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleEdit(scope)">编辑</el-button>
-          <el-button type="danger" size="mini" @click="handleDelete(scope)">删除</el-button>
+          <el-button type="primary" size="mini" @click="handleEdit(scope)" :disabled="!admin">编辑</el-button>
+          <el-button type="warning" size="mini" @click="handleEdit(scope)" :disabled="!admin">重置密码</el-button>
+          <el-button type="danger" size="mini" @click="handleDelete(scope)" v-if="scope.row.status==1" :disabled="!admin">离职</el-button>
+          <el-button type="primary" size="mini" @click="handleEdit(scope)" v-if="scope.row.status==0" :disabled="!admin">在职</el-button>
         </template>
       </el-table-column>
       <div slot="empty">
@@ -119,9 +123,15 @@
   import {queryuser, updateuser, adduser} from "../../api/user";
   import Pagination from '@/components/Pagination'
   import {querydept} from "../../api/dept";
+  import { mapGetters } from 'vuex'
 
   export default {
     components: {Pagination},
+      computed: {
+          ...mapGetters([
+              'admin',
+          ])
+      },
     data() {
       var validatePass = (rule, value, callback) => {
         if (value === '') {

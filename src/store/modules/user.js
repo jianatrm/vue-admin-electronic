@@ -10,7 +10,8 @@ const state = {
   name: '',
   avatar: '',
   limit:false,
-  roles: []
+  roles: [],
+  admin:false
 }
 
 const mutations = {
@@ -25,6 +26,10 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_ROLE_TYPE_LIST: (state, admin) => {
+      state.admin = admin
+
   },
   SET_LIMIT: (state, limit) => {
     state.limit = limit
@@ -94,6 +99,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
+        commit('SET_ROLE_TYPE_LIST',false)
         removeToken()
         resetRouter()
         resolve()

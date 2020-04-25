@@ -32,8 +32,8 @@
 
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)">编辑</el-button>
-          <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button>
+          <el-button type="primary" size="small" @click="handleEdit(scope)" :disabled="!admin">编辑</el-button>
+          <el-button type="danger" size="small" @click="handleDelete(scope)" :disabled="!admin">删除</el-button>
         </template>
       </el-table-column>
       <div slot="empty">
@@ -51,12 +51,11 @@
           <el-input v-model="dept.deptCode" placeholder="部门编号"/>
         </el-form-item>
         <el-form-item label="部门名称" prop="deptName">
-          <el-input
-            v-model="dept.deptName"
-            placeholder="邮箱"
-          />
+          <el-input v-model="dept.deptName" placeholder="部门名称"/>
         </el-form-item>
-
+        <el-form-item label="部门描述" prop="remark">
+          <el-input v-model="dept.remark" placeholder="部门名称"/>
+        </el-form-item>
 
       </el-form>
       <div style="text-align:right;">
@@ -70,15 +69,23 @@
 <script>
     import {querydept, updatedept, adddept} from "../../api/dept";
     import Pagination from '@/components/Pagination'
+    import { mapGetters } from 'vuex'
 
     export default {
         components: {Pagination},
+        computed: {
+            ...mapGetters([
+                'admin',
+            ])
+        },
         data() {
             return {
                 rules: {
                     deptName: [
-                        {required: true, message: '请输入账户', trigger: 'blur'},
-                        {min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur'}
+                        {required: true, message: '部门名称', trigger: 'blur'},
+                    ],
+                    deptCode: [
+                        {required: true, message: '部门编号', trigger: 'blur'},
                     ],
                 },
 
@@ -86,6 +93,7 @@
                 dept: {
                     deptName: '',
                     deptCode: '',
+                    remark:''
                 },
                 deptList: [],
                 dialogVisible: false,

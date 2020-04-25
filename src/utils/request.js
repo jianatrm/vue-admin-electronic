@@ -13,7 +13,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    if (config.url.indexOf("/authentication/form") == -1) {
+    if (config.url.indexOf("/authentication/form") == -1&&config.url.indexOf("/electronic/logout") == -1) {
       vm.$loading({
         lock: true,
         text: 'Loading',

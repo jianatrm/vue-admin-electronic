@@ -278,6 +278,15 @@
                     this.$loading().close()
                     if (res.success) {
                         this.userInfo = res.result
+                        let  admin = false;
+                        for (let i = 0; i < res.result.sysRoleList.length; i++) {
+                            if ( res.result.sysRoleList[i].roleType == 1){
+                                admin = true;
+                                break;
+                            }
+                        }
+                        this.$store.commit("user/SET_ROLES",res.result.sysRoleList)
+                        this.$store.commit("user/SET_ROLE_TYPE_LIST",admin)
                         try {
                             let sUserElectronicDocs = res.result.sUserElectronicDocs;
                             for (let i = 0; i < sUserElectronicDocs.length; i++) {
@@ -295,7 +304,6 @@
                                 } else {
                                     this.otherCount += sUserElectronicDoc.count
                                 }
-
 
                             }
                         } catch (e) {

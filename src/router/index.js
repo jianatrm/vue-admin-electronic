@@ -16,18 +16,34 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
+    meta: { title: '首页', icon: 'iconfont icon-shouye',id:401 },
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '首页', icon: 'iconfont icon-shouye' }
+      meta: { title: '首页', icon: 'iconfont icon-shouye',id:404 }
     }]
+  },
+  {
+    path: '/dept',
+    component: Layout,
+    redirect: '/departmanage',
+    meta: { title: '部门管理', icon: 'example',id:401 },
+    children: [
+      {
+        path: 'deptmanage',
+        name: 'deptmanage',
+        component: () => import('@/views/dept/index'),
+        meta: { title: '部门管理', icon: 'iconfont icon-ml',id:404 }
+      }
+    ]
   },
   {
     path: '/user',
     component: Layout,
     redirect: '/usermanage',
     meta: { title: '人员', icon: 'example',id:401 },
+    hidden:false,
     children: [
       {
         path: 'usermanage',
@@ -54,7 +70,20 @@ export const constantRoutes = [
 
     ]
   },
-
+  {
+    path: '/deptdoc',
+    component: Layout,
+    redirect: '/deptdoc',
+    meta: { title: '部门文档', icon: 'example',id:401 },
+    children: [
+      {
+        path: 'deptdoc',
+        name: 'deptdoc',
+        component: () => import('@/views/doc/dept-doc'),
+        meta: { title: '部门文档', icon: 'iconfont icon-wendang',id:404 }
+      }
+    ]
+  },
 
   {
     path: '/submit',
@@ -86,45 +115,16 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/dept',
-    component: Layout,
-    redirect: '/departmanage',
-    meta: { title: '部门管理', icon: 'example',id:401 },
-    children: [
-      {
-        path: 'deptmanage',
-        name: 'deptmanage',
-        component: () => import('@/views/dept/index'),
-        meta: { title: '部门管理', icon: 'iconfont icon-ml',id:404 }
-      }
-    ]
-  },
-  {
-    path: '/deptdoc',
-    component: Layout,
-    redirect: '/deptdoc',
-    meta: { title: '部门文档', icon: 'example',id:401 },
-    children: [
-      {
-        path: 'deptdoc',
-        name: 'deptdoc',
-        component: () => import('@/views/doc/dept-doc'),
-        meta: { title: '部门文档', icon: 'iconfont icon-wendang',id:404 }
-      }
-    ]
-  },
-
-  {
     path: '/statistics',
     component: Layout,
     redirect: '/statistics/index',
-    meta: { title: '统计查询', icon: 'example',id:401 },
+    meta: { title: '统计查询', icon: 'example',id:401,admin:true },
     children: [
       {
         path: 'index',
         name: 'index',
         component: () => import('@/views/statistics/index'),
-        meta: { title: '统计查询', icon: 'iconfont icon-cz-tjcx',id:404,level:1 }
+        meta: { title: '统计查询', icon: 'iconfont icon-cz-tjcx',id:404, }
       }
     ]
   },

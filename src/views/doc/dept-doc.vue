@@ -218,5 +218,12 @@
     .permission-tree {
       margin-bottom: 30px;
     }
+    .svg-icon{
+      width: 2em !important;
+      height: 2em !important;
+      vertical-align: middle !important;
+      fill: currentColor !important;
+      overflow: hidden !important;
+    }
   }
 </style>
