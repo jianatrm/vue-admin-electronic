@@ -98,6 +98,12 @@
 
           <el-table-column align="center" label="文档名称" width="220">
             <template slot-scope="scope">
+              <svg-icon icon-class="excel"  v-if="'xls,xlsx,csv'.indexOf(scope.row.docType) > -1"/>
+              <svg-icon icon-class="PPT" v-else-if="'ppt,pptx,pps,ppsx,pot'.indexOf(scope.row.docType) > -1" />
+              <svg-icon icon-class="PDF" v-else-if="'pdf,dpt,odf'.indexOf(scope.row.docType) > -1"/>
+              <svg-icon icon-class="WORD" v-else-if="'doc,docx'.indexOf(scope.row.docType) > -1"/>
+              <svg-icon icon-class="image" v-else-if="'bmp,jpg,png,tif,gif,pcx,tga,exif,fpx,svg,psd,cdr,pcd,dxf,ufo,eps,ai,raw,WMF,webp,jpeg'.indexOf(scope.row.docType) > -1"/>
+              <svg-icon icon-class="wendang" v-else/>
               {{ scope.row.docName }}
             </template>
           </el-table-column>

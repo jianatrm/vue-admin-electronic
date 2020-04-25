@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <el-row class="header">
       <el-col :span="3" style="text-align: center">
-        <el-avatar shape="circle" :size="80" fit="cover" :src="url"></el-avatar>
+        <el-avatar shape="circle" :size="80" fit="cover" :src="avatar||url"></el-avatar>
       </el-col>
       <el-col :span="18">
         <div>
@@ -198,9 +198,14 @@
 <script>
     import {getUserInfo, selectCountByMonth} from '../../api/user'
     import {queryWorkOrder, queryWorkOrderToMe} from "../../api/workOrder";
-
+    import {mapGetters} from 'vuex'
     export default {
         name: 'Dashboard',
+        computed: {
+            ...mapGetters([
+                'avatar',
+            ])
+        },
         mounted() {
 
             this.queryUserInfo()
@@ -286,6 +291,8 @@
                             }
                         }
                         this.$store.commit("user/SET_ROLES",res.result.sysRoleList)
+                        this.$store.commit("user/SET_AVATAR",res.result.userAvatar)
+                        this.$store.commit("user/SET_USER",res.result)
                         this.$store.commit("user/SET_ROLE_TYPE_LIST",admin)
                         try {
                             let sUserElectronicDocs = res.result.sUserElectronicDocs;

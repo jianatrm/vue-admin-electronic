@@ -16,19 +16,18 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    meta: { title: '首页', icon: 'iconfont icon-shouye',id:401 },
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '首页', icon: 'iconfont icon-shouye',id:404 }
+      meta: { title: '首页', icon: 'iconfont icon-shouye',id:402 }
     }]
   },
   {
     path: '/dept',
     component: Layout,
     redirect: '/departmanage',
-    meta: { title: '部门管理', icon: 'example',id:401 },
+    meta: { title: '部门管理', icon: 'example',id:403},
     children: [
       {
         path: 'deptmanage',
@@ -42,15 +41,15 @@ export const constantRoutes = [
     path: '/user',
     component: Layout,
     redirect: '/usermanage',
-    meta: { title: '人员', icon: 'example',id:401 },
+    meta: { title: '人员', icon: 'example',id:405 },
     hidden:false,
     children: [
       {
         path: 'usermanage',
         name: 'usermanage',
         component: () => import('../views/user/index'),
-        meta: { title: '人员管理', icon: 'iconfont icon-renyuanguanli',id:404 }
-      }
+        meta: { title: '人员管理', icon: 'iconfont icon-renyuanguanli',id:406 }
+      },
     ]
   },
 
@@ -59,13 +58,13 @@ export const constantRoutes = [
     path: '/doc',
     component: Layout,
     redirect: '/mydoc',
-    meta: { title: '我的文档', icon: 'example',id:401 },
+    meta: { title: '我的文档', icon: 'example',id:408 },
     children: [
       {
         path: 'mydoc',
         name: 'mydoc',
         component: () => import('../views/doc/my-doc'),
-        meta: { title: '我的文档', icon: 'iconfont icon-iconset0155',id:404 }
+        meta: { title: '我的文档', icon: 'iconfont icon-iconset0155',id:409 }
       },
 
     ]
@@ -74,13 +73,13 @@ export const constantRoutes = [
     path: '/deptdoc',
     component: Layout,
     redirect: '/deptdoc',
-    meta: { title: '部门文档', icon: 'example',id:401 },
+    meta: { title: '部门文档', icon: 'example',id:410 },
     children: [
       {
         path: 'deptdoc',
         name: 'deptdoc',
         component: () => import('@/views/doc/dept-doc'),
-        meta: { title: '部门文档', icon: 'iconfont icon-wendang',id:404 }
+        meta: { title: '部门文档', icon: 'iconfont icon-wendang',id:411 }
       }
     ]
   },
@@ -89,13 +88,13 @@ export const constantRoutes = [
     path: '/submit',
     component: Layout,
     redirect: '/submitdoc',
-    meta: { title: '提交文档', icon: 'example',id:401 },
+    meta: { title: '提交文档', icon: 'example',id:412 },
     children: [
       {
         path: 'submitdoc',
         name: 'submitdoc',
         component: () => import('../views/doc/submit-doc'),
-        meta: { title: '提交文档', icon: 'iconfont icon-tijiaowendang',id:404 }
+        meta: { title: '提交文档', icon: 'iconfont icon-tijiaowendang',id:413 }
       }
     ]
   },
@@ -104,13 +103,13 @@ export const constantRoutes = [
     path: '/workorder',
     component: Layout,
     redirect: '/workdoc',
-    meta: { title: '文档审批', icon: 'example',id:401 },
+    meta: { title: '文档审批', icon: 'example',id:414 },
     children: [
       {
         path: 'workdoc',
         name: 'workdoc',
         component: () => import('@/views/workorder/work-doc'),
-        meta: { title: '文档审批', icon: 'iconfont icon-shenqingshenpi',id:404 }
+        meta: { title: '文档审批', icon: 'iconfont icon-shenqingshenpi',id:415 }
       }
     ]
   },
@@ -118,13 +117,13 @@ export const constantRoutes = [
     path: '/statistics',
     component: Layout,
     redirect: '/statistics/index',
-    meta: { title: '统计查询', icon: 'example',id:401,admin:true },
+    meta: { title: '统计查询', icon: 'example',id:416,admin:true },
     children: [
       {
         path: 'index',
         name: 'index',
         component: () => import('@/views/statistics/index'),
-        meta: { title: '统计查询', icon: 'iconfont icon-cz-tjcx',id:404, }
+        meta: { title: '统计查询', icon: 'iconfont icon-cz-tjcx',id:417, }
       }
     ]
   },
@@ -144,6 +143,21 @@ export const constantRoutes = [
     path: '/401',
     component: () => import('@/views/401'),
     hidden: true
+  },
+
+  {
+    path: '/personal',
+    component: Layout,
+    redirect: '/personal',
+    meta: { title: '个人中心', icon: 'example',id:405 },
+    hidden:true,
+    children: [
+      {
+        path: 'personalCenter',
+        component: () => import('@/views/user/personal-center'),
+        meta: { title: '个人中心', icon: 'iconfont icon-renyuanguanli',id:407 },
+      },
+    ]
   },
 
 ]

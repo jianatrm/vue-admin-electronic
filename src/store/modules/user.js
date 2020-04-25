@@ -1,9 +1,7 @@
-import { login, logout, getInfo } from '@/api/user'
-import { getMenuPermission } from '@/api/role'
-import { getToken, setToken, removeToken } from '@/utils/auth'
-import { resetRouter } from '@/router'
-import { asyncRoutes, constantRoutes } from '@/router'
-import router from '@/router'
+import {getInfo, login, logout} from '@/api/user'
+import {getMenuPermission} from '@/api/role'
+import {getToken, removeToken, setToken} from '@/utils/auth'
+import {resetRouter} from '@/router'
 
 const state = {
   token: getToken(),
@@ -11,7 +9,8 @@ const state = {
   avatar: '',
   limit:false,
   roles: [],
-  admin:false
+  admin:false,
+  user:{}
 }
 
 const mutations = {
@@ -29,11 +28,14 @@ const mutations = {
   },
   SET_ROLE_TYPE_LIST: (state, admin) => {
       state.admin = admin
-
   },
   SET_LIMIT: (state, limit) => {
     state.limit = limit
-  }
+  },
+  SET_USER: (state, user) => {
+    state.user = user
+  },
+
 
 }
 
@@ -56,8 +58,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       getMenuPermission(state.token).then(response => {
         const  data  = response.result
-        debugger
-      //  menuAndRoles(asyncRoutes,data)
         commit('SET_LIMIT', true)
       }).catch(error => {
         reject(error)
