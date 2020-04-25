@@ -63,7 +63,7 @@
     </el-row>
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑人员':'新建人员'" width="50%">
       <el-form :model="user" label-width="80px" :inline="true" :rules="rules" ref="user">
-        <el-form-item label="用户名" prop="userName">
+        <el-form-item label="登录账户" prop="userName">
           <el-input v-model="user.userName" placeholder="姓名"  />
         </el-form-item>
         <el-form-item label="昵称" prop="nickName">

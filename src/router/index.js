@@ -102,7 +102,7 @@ export const constantRoutes = [
   {
     path: '/workorder',
     component: Layout,
-    redirect: '/workdoc',
+    redirect: 'workdoc',
     meta: { title: '文档审批', icon: 'example',id:414 },
     children: [
       {
@@ -110,7 +110,13 @@ export const constantRoutes = [
         name: 'workdoc',
         component: () => import('@/views/workorder/work-doc'),
         meta: { title: '文档审批', icon: 'iconfont icon-shenqingshenpi',id:415 }
-      }
+      },
+      {
+        path: 'workdocdetail',
+        component: () => import('../views/workorder/work-doc-detail'),
+        meta: { title: '工单详情', icon: 'iconfont icon-renyuanguanli',id:415 },
+        hidden:true,
+      },
     ]
   },
   {
@@ -144,6 +150,24 @@ export const constantRoutes = [
     component: () => import('@/views/401'),
     hidden: true
   },
+
+
+  {
+    path: '/work',
+    component: Layout,
+    redirect: '/workdocdetail',
+    meta: { title: '工单详情', icon: 'example',id:405 },
+    hidden:true,
+    children: [
+      {
+        path: 'workdocdetail',
+        component: () => import('../views/workorder/work-doc-detail'),
+        meta: { title: '工单详情', icon: 'iconfont icon-renyuanguanli',id:415 },
+        hidden:true,
+      },
+    ]
+  },
+
 
   {
     path: '/personal',

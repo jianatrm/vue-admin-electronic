@@ -20,8 +20,9 @@
 
             <el-form-item label="提交人">
               <el-select v-model="userId" placeholder="请选择提交人" size="small">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
+                <el-option v-for="item in options" :key="item.userId" :label="item.userName" :value="item.userId">
+                </el-option>
+
               </el-select>
             </el-form-item>
             <el-form-item>
@@ -34,8 +35,14 @@
 
           </el-table-column>
 
-          <el-table-column align="center" label="文档名称" width="220">
+          <el-table-column algin="left" header-align="center" label="文档名称" >
             <template slot-scope="scope">
+              <svg-icon icon-class="excel"  v-if="'xls,xlsx,csv'.indexOf(scope.row.docType) > -1"/>
+              <svg-icon icon-class="PPT" v-else-if="'ppt,pptx,pps,ppsx,pot'.indexOf(scope.row.docType) > -1" />
+              <svg-icon icon-class="PDF" v-else-if="'pdf,dpt,odf'.indexOf(scope.row.docType) > -1"/>
+              <svg-icon icon-class="WORD" v-else-if="'doc,docx'.indexOf(scope.row.docType) > -1"/>
+              <svg-icon icon-class="image" v-else-if="'bmp,jpg,png,tif,gif,pcx,tga,exif,fpx,svg,psd,cdr,pcd,dxf,ufo,eps,ai,raw,WMF,webp,jpeg'.indexOf(scope.row.docType) > -1"/>
+              <svg-icon icon-class="wendang" v-else/>
               {{ scope.row.docName }}
             </template>
           </el-table-column>
@@ -46,7 +53,7 @@
           </el-table-column>
           <el-table-column align="center" label="提交人">
             <template slot-scope="scope">
-              {{ scope.row.operateTime }}
+              {{ scope.row.userName }}
             </template>
           </el-table-column>
 
@@ -82,8 +89,7 @@
 
             <el-form-item label="归属部门">
               <el-select v-model="deptId" placeholder="请选择归属部门" size="small">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
+                <el-option label="区域一" value="shanghai" v-for="(item ,index) in deptList" :key="index" :label="item.deptName" :value="item.deptId"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item>
@@ -91,12 +97,12 @@
             </el-form-item>
           </el-form>
         </el-row>
-        <el-table :data="docList" style="width: 100%;margin-top:30px;" border size="small">
+        <el-table :data="docList" algin="left" header-align="center" style="width: 100%;margin-top:30px;" border size="small">
           <el-table-column type="index" align="center" label="序号" width="100">
 
           </el-table-column>
 
-          <el-table-column align="center" label="文档名称" width="220">
+          <el-table-column  algin="left" header-align="center" label="文档名称">
             <template slot-scope="scope">
               <svg-icon icon-class="excel"  v-if="'xls,xlsx,csv'.indexOf(scope.row.docType) > -1"/>
               <svg-icon icon-class="PPT" v-else-if="'ppt,pptx,pps,ppsx,pot'.indexOf(scope.row.docType) > -1" />
@@ -114,7 +120,7 @@
           </el-table-column>
           <el-table-column align="center" label="归属部门">
             <template slot-scope="scope">
-              {{ scope.row.operateTime }}
+              {{ scope.row.deptName }}
             </template>
           </el-table-column>
 
@@ -137,7 +143,9 @@
 </template>
 
 <script>
-    import {queryDeptElectronicDoc} from "../../api/dept";
+    import {queryUserDoc,queryDeptDoc} from "../../api/statistics";
+    import {queryuser} from "../../api/user";
+    import {querydept} from "../../api/dept";
     import Pagination from '@/components/Pagination'
 
     export default {
@@ -157,12 +165,16 @@
                 endTime: '',
                 total: 0,
                 date: '',
-                formInline: {}
+                formInline: {},
+                options:[],
+                deptList:[]
             }
 
         },
         mounted() {
             this.queryUserdocList()
+            this.queryUserList()
+            this.queryDeptList()
         },
         methods: {
             handleClick(tab, event) {
@@ -174,18 +186,45 @@
                 this.deptId = '';
                 this.userId = '';
                 this.docList = [];
+                this.total = 0;
                 if (tab.index == 0) {
                     this.queryUserdocList();
                 } else if (tab.index == 1) {
                     this.queryDeptdocList();
                 }
             },
+            queryUserList(val) {
+                queryuser({
+                    pageSize: this.pageSize,
+                    pageNum: this.pageNum,
+                    userName: val
+                }).then(res => {
+                    this.$loading().close()
+                    if (res.success) {
+                        this.options = res.result.result
+                    }
+                })
+            },
+            queryDeptList() {
+                querydept({
+                    pageNum: 1,
+                    pageSize: 1000,
+                }).then(res => {
+                    this.$loading().close()
+                    if (res.success) {
+                        this.deptList = res.result.result
+                    }
+                })
+            },
             queryUserdocList() {
                 if (this.rangeTime) {
                     this.startTime = new Date(this.rangeTime[0]).format('yyyy-MM-dd')
                     this.endTime = new Date(this.rangeTime[1]).format('yyyy-MM-dd')
+                }else {
+                    this.startTime =''
+                    this.endTime = ''
                 }
-                queryDeptElectronicDoc({
+                queryUserDoc({
                     pageSize: this.pageSize,
                     pageNum: this.pageNum,
                     docName: this.docName,
@@ -204,8 +243,12 @@
                 if (this.rangeTime) {
                     this.startTime = new Date(this.rangeTime[0]).format('yyyy-MM-dd')
                     this.endTime = new Date(this.rangeTime[1]).format('yyyy-MM-dd')
+                }else {
+                    this.startTime =''
+                    this.endTime = ''
                 }
-                queryDeptElectronicDoc({
+
+                queryDeptDoc({
                     pageSize: this.pageSize,
                     pageNum: this.pageNum,
                     docName: this.docName,
@@ -262,7 +305,13 @@
         width: 100%;
       }
     }
-
+    .svg-icon{
+      width: 2em !important;
+      height: 2em !important;
+      vertical-align: middle !important;
+      fill: currentColor !important;
+      overflow: hidden !important;
+    }
     .permission-tree {
       margin-bottom: 30px;
     }

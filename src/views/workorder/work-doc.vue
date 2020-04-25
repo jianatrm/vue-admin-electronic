@@ -20,7 +20,10 @@
           </el-table-column>
           <el-table-column align="center" label="状态">
             <template slot-scope="scope">
-              {{ scope.row.workOrderStatusDesc }}
+              <el-link  type="primary" v-if="scope.row.workOrderStatus==10"  :underline="false">{{ scope.row.workOrderStatusDesc }}</el-link>
+              <el-link  type="success" v-if="scope.row.workOrderStatus==90"  :underline="false">{{ scope.row.workOrderStatusDesc }}</el-link>
+              <el-link  type="danger" v-if="scope.row.workOrderStatus==70"  :underline="false">{{ scope.row.workOrderStatusDesc }}</el-link>
+
             </template>
           </el-table-column>
 
@@ -59,7 +62,10 @@
           </el-table-column>
           <el-table-column align="center" label="状态">
             <template slot-scope="scope">
-              {{ scope.row.workOrderVO.workOrderStatusDesc }}
+              <el-link  type="primary" v-if="scope.row.workOrderVO.workOrderStatus==10"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
+              <el-link  type="success" v-if="scope.row.workOrderVO.workOrderStatus==90"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
+              <el-link  type="danger" v-if="scope.row.workOrderVO.workOrderStatus==70"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
+
             </template>
           </el-table-column>
           <el-table-column align="center" label="提交人">
@@ -71,7 +77,7 @@
           <el-table-column align="center" label="操作">
             <template slot-scope="scope">
               <el-button type="primary" size="small" @click="handle(scope.row.workOrderId)">审批</el-button>
-              <el-button type="primary" size="small" @click="queryWorkDetail(scope.row.workOrderId)">详情</el-button>
+              <el-button type="primary" size="small" @click="queryWorkDetail(scope.row.workOrderId,true)">详情</el-button>
 
             </template>
           </el-table-column>
@@ -104,7 +110,10 @@
           </el-table-column>
           <el-table-column align="center" label="状态">
             <template slot-scope="scope">
-              {{ scope.row.workOrderVO.workOrderStatusDesc }}
+              <el-link  type="primary" v-if="scope.row.workOrderVO.workOrderStatus==10"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
+              <el-link  type="success" v-if="scope.row.workOrderVO.workOrderStatus==90"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
+              <el-link  type="danger" v-if="scope.row.workOrderVO.workOrderStatus==70"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
+
             </template>
           </el-table-column>
           <el-table-column align="center" label="提交人">
@@ -162,35 +171,14 @@
       </div>
     </el-dialog>
     <el-dialog :visible.sync="dialogVisible" title="审批处理">
-      <p style="font-size: 18px;"><span style="color:  #000;font-weight:bold">文件名称</span>：{{workOrderDetail.workOrderName}}
-      </p>
-      <p style="font-size: 18px;"><span style="color:  #000;font-weight:bold">文件描述</span>：{{workOrderDetail.workOrderDesc}}
-      </p>
-      <div style="font-size: 18px;"><span style="color:  #000;font-weight:bold">文件列表：</span>
-        <p style="margin-left: 80px" v-for="(item,index) in workOrderDetail.workInfo" :key="index">
-          <a :href="item.docUrl" target="_blank">{{item.docName}}</a>
-        </p>
-      </div>
-
-      <p style="font-size: 18px;"><span style="color:  #000;font-weight:bold">审批记录：</span></p>
-      <el-timeline>
-        <el-timeline-item
-          v-for="(activity, index) in activities"
-          :key="index"
-          :color="activity.nodeStatus == '90'?'#3498db':activity.nodeStatus ==70?'red':''"
-          size="large"
-          :timestamp="activity.operateTime">
-          {{activity.userName}}
-        </el-timeline-item>
-      </el-timeline>
       <el-form class="demo-form-inline">
         <el-form-item label="审批说明" prop="remark">
-          <el-input type="textarea" v-model="approve.remark"></el-input>
+          <el-input type="textarea" v-model="approve.remark" :rows="3"></el-input>
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
-        <el-button type="primary" @click="onSubmit('90')">审批通过</el-button>
-        <el-button type="danger" @click="onSubmit('70')">审批拒绝</el-button>
+        <el-button type="primary" @click="onSubmit('90')" size="small">审批通过</el-button>
+        <el-button type="danger" @click="onSubmit('70')" size="small">审批拒绝</el-button>
       </div>
     </el-dialog>
     <el-dialog :visible.sync="dialogVisibleSelectDept" title="选择文档分配部门">
@@ -317,18 +305,8 @@
 
       },
 
-      queryWorkDetail(workOrderId) {
-        this.dialogVisibleDetail = true
-        queryWorkOrderDetail({
-          workOrderId: workOrderId
-        }).then(res => {
-          this.$loading().close()
-          if (res.success) {
-            this.workOrderDetail = res.result
-            this.activities = JSON.parse(res.result.workNodeList)
-            this.workOrderDetail.workInfo = JSON.parse(res.result.workInfo)
-          }
-        })
+      queryWorkDetail(workOrderId,type) {
+        this.$router.push({path:'/workorder/workdocdetail',query:{workOrderId:workOrderId,type:type}})
       },
 
 
@@ -354,6 +332,7 @@
             })
             this.dialogVisibleSelectDept = false;
             this.dialogVisible = false;
+            this.queryWorkOrderToMeList()
             this.reload()
           } else {
             this.$message({
@@ -377,31 +356,7 @@
       onSubmitFinsh() {
         this.approveSubmit('90')
       },
-      handlePreview(scope) {
-        let number = decodeURI(scope).lastIndexOf('.');
-        let filetype = decodeURI(scope).substring(number + 1);
-        let reg = "pdf swf html ott fodt  sxw doc docx rtf  wpd  txt  ods  ots  fods sxc  xls xlsx  csv  tsv  odp  otp fodp  sxi  ppt pptx  odg  otg fodg  svg  png jpg  tif  gif bmp"
-        if (reg.indexOf(filetype) == -1) {
-          this.$message({
-            showClose: true,
-            message: '该文件不支持预览，请下载后查看',
-            type: 'warning'
-          });
-          return
-        }
-        let filename = decodeURI(scope).substring(scope.lastIndexOf('/') + 1);
-        if ("xls xlsx".indexOf("this.filetype") == -1) {
-          window.open(`http://localhost:8001/electronic/pdf/documentConverterToPdf/${filename}`)
-        }
-        const {href} = this.$router.resolve({
-          path: "/pdfPreview",
-          query: {
-            filename: filename,
-            filetype: filetype
-          }
-        });
-        window.open(href, '_blank');
-      },
+
     }
   }
 </script>

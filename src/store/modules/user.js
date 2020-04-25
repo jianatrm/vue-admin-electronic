@@ -53,17 +53,6 @@ const actions = {
       })
     })
   },
-  //获取菜单的角色
-  getMenuPermission ({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getMenuPermission(state.token).then(response => {
-        const  data  = response.result
-        commit('SET_LIMIT', true)
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
 
   // get user info
   getInfo({ commit, state }) {
@@ -100,6 +89,9 @@ const actions = {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
         commit('SET_ROLE_TYPE_LIST',false)
+        commit('SET_USER',{})
+        commit('SET_ROLES',[])
+        commit('SET_AVATAR','')
         removeToken()
         resetRouter()
         resolve()

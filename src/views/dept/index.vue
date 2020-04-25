@@ -6,7 +6,7 @@
         <el-button type="primary" @click="querydeptList(search)"  size="small">查询</el-button>
       </el-col>
       <el-col :span="12" style="text-align: right">
-        <el-button type="primary" @click="handleAdddept"  size="small">新建部门</el-button>
+        <el-button type="primary" @click="handleAdddept"  size="small" :disabled="!admin">新建部门</el-button>
       </el-col>
     </el-row>
     <el-table :data="deptList" style="width: 100%;margin-top:30px;" border  size="small">

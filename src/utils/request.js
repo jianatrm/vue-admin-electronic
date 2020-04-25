@@ -28,6 +28,7 @@ service.interceptors.request.use(
     return config
   },
   error => {
+    vm.$loading().close()
     return Promise.reject(error)
   }
 )
@@ -42,7 +43,9 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
+      vm.$loading().close()
       return Promise.reject(new Error(res.resultMessage || '系统异常'))
+
     } else {
       return res
     }
