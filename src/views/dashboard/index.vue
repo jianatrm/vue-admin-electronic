@@ -37,7 +37,7 @@
       <el-col :span="16">
         <div class="box-left-d">
           <div style="text-align: right;height: 80px;line-height: 80px;padding-right: 40px"><span>切换日期：</span>
-            <el-date-picker v-model="value" type="month" placeholder="选择月份"></el-date-picker>
+            <el-date-picker v-model="value" value-format="yyyyMM" type="month" placeholder="选择月份" @change="change()"></el-date-picker>
           </div>
           <div id="myChart" :style="{'width': '95%', height: '400px'}"/>
         </div>
@@ -241,7 +241,7 @@
                 url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
                 value: new Date(),
                 count: 4,
-                content: '通知 新进公司的全体员工： 经公司领导班子研究决定，新进公司的员工，一年转正定级后，公司给统一办理缴纳社保。现在由员工自己缴纳社保，缴费收据上交到公司人事部门。为保证员工的合法权益，公司将以现金的形式给予补偿，每月每人补人民币180元，体现在个人的工资里。此规定从2010年6月1日起执行。',
+                content: '',//'通知 新进公司的全体员工： 经公司领导班子研究决定，新进公司的员工，一年转正定级后，公司给统一办理缴纳社保。现在由员工自己缴纳社保，缴费收据上交到公司人事部门。为保证员工的合法权益，公司将以现金的形式给予补偿，每月每人补人民币180元，体现在个人的工资里。此规定从2010年6月1日起执行。',
                 activeName: 'first',
                 userInfo: {},
                 imageCount: 0,
@@ -302,6 +302,9 @@
             }
         },
         methods: {
+            change(){
+                this.queryCountByMonth()
+            },
             queryUserInfo() {
                 getUserInfo({},false).then(res => {
                     this.$loading().close()
@@ -335,10 +338,10 @@
 
             queryCountByMonth() {
                 selectCountByMonth({
-                    year: '2020'
+                    year:this.value
                 },false).then(res => {
                     if (res.success) {
-                       let array =  [0,0,0,0,0,0,0,0,0,0,0,0,]
+                       let array =  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
                         for (let i = 0; i <res.result.length ; i++) {
                             let resultElement = res.result[i];
                             array[resultElement.months-1] = resultElement.count
