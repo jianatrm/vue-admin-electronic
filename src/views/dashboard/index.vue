@@ -279,7 +279,7 @@
         },
         methods: {
             queryUserInfo() {
-                getUserInfo({}).then(res => {
+                getUserInfo({},false).then(res => {
                     this.$loading().close()
                     if (res.success) {
                         this.userInfo = res.result
@@ -312,7 +312,7 @@
             queryCountByMonth() {
                 selectCountByMonth({
                     year: '2020'
-                }).then(res => {
+                },false).then(res => {
                     if (res.success) {
                        let array =  [0,0,0,0,0,0,0,0,0,0,0,0,]
                         for (let i = 0; i <res.result.length ; i++) {
@@ -337,7 +337,7 @@
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                     workOrderStatus:10
-                }).then(res => {
+                },false).then(res => {
                     this.$loading().close()
                     if (res.success) {
                         this.workList = res.result.result;
@@ -349,7 +349,7 @@
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                     nodeOperateStatus: 1
-                }).then(res => {
+                },false).then(res => {
                     this.$loading().close()
                     if (res.success) {
                         this.workToMeList = res.result.result;

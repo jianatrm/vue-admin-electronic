@@ -1,53 +1,60 @@
 import request from '@/utils/request'
 
-export function querydept(data) {
+export function querydept(data,loading =true) {
   return request({
     url: '/electronic/dept/queryDept',
     method: 'post',
+    loading:loading,
     data:data,
   })
 }
 
-export function updatedept(data) {
+export function updatedept(data,loading =true) {
   return request({
     url: '/electronic/dept/updateDept',
     method: 'post',
+    loading:loading,
     data:data,
   })
 }
-export function startWorkOrder(data) {
+export function startWorkOrder(data,loading =true) {
   return request({
     url: '/electronic/workOrder/startWorkOrder',
     method: 'post',
+    loading:loading,
     data:data,
   })
 }
-export function queryWorkOrder(data) {
+export function queryWorkOrder(data,loading =true) {
   return request({
     url: '/electronic/workOrder/queryWorkOrder',
     method: 'post',
+    loading:loading,
     data:data,
   })
 }
-export function queryWorkOrderToMe(data) {
+export function queryWorkOrderToMe(data,loading =true) {
   return request({
     url: '/electronic/workOrder/queryWorkOrderToMe',
     method: 'post',
+    loading:loading,
     data:data,
   })
 }
-export function queryWorkOrderDetail(data) {
+export function queryWorkOrderDetail(ldata,loading =true) {
   return request({
     url: '/electronic/workOrder/queryWorkOrderDetail',
     method: 'post',
+    loading:loading,
     data:data,
   })
 }
 
-export function approveWorkOrder(data) {
+export function approveWorkOrder(data,loading =true) {
   return request({
     url: '/electronic/workOrder/approveWorkOrder',
     method: 'post',
+    loading:loading,
     data:data,
   })
 }

@@ -30,7 +30,7 @@
             })
         },
         queryUserInfo() {
-            getUserInfo({}).then(res => {
+            getUserInfo({},false).then(res => {
                 this.$loading().close()
                 if (res.success) {
 
