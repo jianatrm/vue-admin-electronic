@@ -37,7 +37,7 @@
       <el-col :span="16">
         <div class="box-left-d">
           <div style="text-align: right;height: 80px;line-height: 80px;padding-right: 40px"><span>切换日期：</span>
-            <el-date-picker v-model="value" type="month" placeholder="选择月份"></el-date-picker>
+            <el-date-picker v-model="value" type="month" placeholder="选择月份" @change="change()"></el-date-picker>
           </div>
           <div id="myChart" :style="{'width': '95%', height: '400px'}"/>
         </div>
@@ -302,6 +302,9 @@
             }
         },
         methods: {
+            change(){
+                this.queryCountByMonth()
+            },
             queryUserInfo() {
                 getUserInfo({},false).then(res => {
                     this.$loading().close()
@@ -335,10 +338,10 @@
 
             queryCountByMonth() {
                 selectCountByMonth({
-                    year: '2020'
+                    year: new Date(this.value).format("yyyyMM")
                 },false).then(res => {
                     if (res.success) {
-                       let array =  [0,0,0,0,0,0,0,0,0,0,0,0,]
+                       let array =  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
                         for (let i = 0; i <res.result.length ; i++) {
                             let resultElement = res.result[i];
                             array[resultElement.months-1] = resultElement.count
