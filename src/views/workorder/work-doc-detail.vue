@@ -2,17 +2,22 @@
   <div class="contianer">
     <p class="detail-title"><span>工单单号</span>：{{workOrderDetail.workOrderCode}}</p>
     <el-row>
+      <el-col :span="24">
+        <div class="grid-content bg-purple-light">
+          <p class="detail-lable">标题：<span class="detail-content">{{workOrderDetail.workOrderName}}</span></p>
+        </div>
+      </el-col>
+    </el-row>
+    <el-row>
       <el-col :span="8">
         <div class="grid-content bg-purple">
           <p class="detail-lable">创建人：<span class="detail-content">{{workOrderDetail.userName}}</span></p>
-          <p class="detail-lable">创建时间：<span class="detail-content">{{workOrderDetail.operateTime&&new Date(workOrderDetail.operateTime).format("yyyy-MM-dd:hh:mm:ss")}}</span>
-          </p>
         </div>
       </el-col>
       <el-col :span="8">
-        <div class="grid-content bg-purple-light">
-          <p class="detail-lable">标题：<span class="detail-content">{{workOrderDetail.workOrderName}}</span></p>
-          <p class="detail-lable">描述：<span class="detail-content">{{workOrderDetail.workOrderDesc}}</span></p>
+        <div class="grid-content bg-purple">
+          <p class="detail-lable">创建时间：<span class="detail-content">{{workOrderDetail.operateTime&&new Date(workOrderDetail.operateTime).format("yyyy-MM-dd:hh:mm:ss")}}</span>
+          </p>
         </div>
       </el-col>
       <el-col :span="8">
@@ -27,6 +32,13 @@
           <el-link class="deatil-state" type="danger" v-if="workOrderDetail.workOrderStatus==70" :underline="false">{{
             workOrderDetail.workOrderStatusDesc }}
           </el-link>
+        </div>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="24">
+        <div class="grid-content bg-purple-light">
+          <p class="detail-lable">描述：<span class="detail-content">{{workOrderDetail.workOrderDesc}}</span></p>
         </div>
       </el-col>
     </el-row>

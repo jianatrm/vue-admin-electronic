@@ -11,7 +11,7 @@
         </div>
       </el-col>
       <el-col :span="2">
-        <div>
+        <div @click="toMyFile">
           <p class="doc-title">我的文档数量</p>
           <p class="doc-content">{{userInfo.userCount}}</p>
         </div>
@@ -19,7 +19,7 @@
       </el-col>
       <el-divider direction="vertical"></el-divider>
       <el-col :span="2">
-        <div>
+        <div @click="toPartFile">
           <p class="doc-title">部门文档数量</p>
           <p class="doc-content">{{userInfo.deptCount}}</p>
         </div>
@@ -44,12 +44,12 @@
         <el-card class="box-card box-left-t">
           <div slot="header" class="clearfix">
             <span>我的文档分类</span>
-            <el-button style="float: right; padding: 3px 0" type="text">全部项目</el-button>
+            <el-button style="float: right; padding: 3px 0" type="text" @click="toMyFile">全部文档</el-button>
           </div>
           <div class="card-content">
             <el-row>
               <el-col :span="8" class="common-line">
-                <div class="content-top">
+                <div class="content-top" @click="toMyFile">
                   <span>
                       <svg-icon icon-class="image"/>
                   </span>&nbsp;
@@ -63,7 +63,7 @@
                   <p>{{imageCount}}</p>
                 </div>
               </el-col>
-              <el-col :span="8" class="common-line">
+              <el-col :span="8" class="common-line" @click="toMyFile">
                 <div class="content-top">
                   <span>
                     <svg-icon icon-class="WORD"/>
@@ -78,7 +78,7 @@
                   <p>{{wordCount}}</p>
                 </div>
               </el-col>
-              <el-col :span="8">
+              <el-col :span="8" @click="toMyFile">
                 <div class="content-top">
                   <span>
                     <svg-icon icon-class="excel"/>
@@ -95,7 +95,7 @@
               </el-col>
             </el-row>
             <el-row style="margin-top: -20px">
-              <el-col :span="8" class="common-line top-line">
+              <el-col :span="8" class="common-line top-line" @click="toMyFile">
                 <div class="content-top">
                   <span>
 
@@ -112,7 +112,7 @@
                   <p>{{pdfCount}}</p>
                 </div>
               </el-col>
-              <el-col :span="8" class="common-line top-line">
+              <el-col :span="8" class="common-line top-line" @click="toMyFile">
                 <div class="content-top">
                   <span>
 
@@ -128,7 +128,7 @@
                   <p>{{pptCount}}</p>
                 </div>
               </el-col>
-              <el-col :span="8" class="top-line">
+              <el-col :span="8" class="top-line" @click="toMyFile">
                 <div class="content-top">
                   <span>
                     <svg-icon icon-class="wendang"/>
@@ -148,15 +148,15 @@
         </el-card>
       </el-col>
       <el-col :span="8">
-        <el-card class="box-card box-right-t">
-          <div slot="header" class="clearfix">
-            <span>公司公告</span>
-          </div>
-          <div class="card-content2" style="display: flex;flex-wrap: wrap;">
-            <p>{{content}}</p>
-            <p>{{new Date().format('yyyy-MM-dd')}}</p>
-          </div>
-        </el-card>
+<!--        <el-card class="box-card box-right-t">-->
+<!--          <div slot="header" class="clearfix">-->
+<!--            <span>公司公告</span>-->
+<!--          </div>-->
+<!--          <div class="card-content2" style="display: flex;flex-wrap: wrap;">-->
+<!--            <p>{{content}}</p>-->
+<!--            <p>{{new Date().format('yyyy-MM-dd')}}</p>-->
+<!--          </div>-->
+<!--        </el-card>-->
         <el-card class="box-card box-right-m">
           <div slot="header" class="clearfix">
             <span>我的动态</span>
@@ -164,11 +164,24 @@
           <div class="card-content2">
             <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
               <el-tab-pane label="我的申请" name="first">
+<!--                <el-table :data="workList" border size="small" v-if="workList.length>0">-->
+<!--                  <el-table-column align="center" label="申请单号">-->
+<!--                    <template slot-scope="scope">-->
+<!--                      {{ scope.row.workOrderCode }}-->
+<!--                    </template>-->
+<!--                  </el-table-column>-->
+<!--                  <el-table-column align="center" label="申请状态">-->
+<!--                  <template slot-scope="scope">-->
+<!--                    {{ scope.row.workOrderStatusDesc }}-->
+<!--                  </template>-->
+<!--                </el-table-column>-->
+<!--                </el-table>-->
                 <ul v-if="workList.length>0" class="infinite-list" style="overflow:auto">
-                  <li v-for="item in workList" class="infinite-list-item" :key="item.workOrderCode">
+                  <li v-for="item in workList" class="infinite-list-item" :key="item.workOrderCode" @click="toApprovePage">
                     <span>{{item.workOrderCode}}</span>
-                    <span>{{item.workOrderDesc}}</span>
-                    <span>{{new Date(item.operateTime).format('yyyy-MM-dd')}}</span>
+                    <span>{{item.workOrderStatusDesc}}</span>
+<!--                    <span>{{item.workOrderDesc}}</span>-->
+<!--                    <span>{{new Date(item.operateTime).format('yyyy-MM-dd')}}</span>-->
                   </li>
                 </ul>
                 <div v-else style="width: 100%;text-align: center;">
@@ -177,10 +190,10 @@
               </el-tab-pane>
               <el-tab-pane label="审批申请" name="second">
                 <ul v-if="workToMeList.length>0" class="infinite-list" style="overflow:auto">
-                  <li v-for="item in workToMeList" class="infinite-list-item" :key="item.workOrderCode">
+                  <li v-for="item in workToMeList" class="infinite-list-item" :key="item.workOrderCode" @click="toApprovePage(1)">
                     <span>{{item.workOrderCode}}</span>
-                    <span>{{item.workOrderDesc}}</span>
-                    <span>{{new Date(item.operateTime).format('yyyy-MM-dd')}}</span>
+<!--                    <span>{{item.workOrderDesc}}</span>-->
+<!--                    <span>{{new Date(item.operateTime).format('yyyy-MM-dd')}}</span>-->
                   </li>
                 </ul>
                 <div v-else style="width: 100%;text-align: center;">
@@ -357,6 +370,15 @@
                     }
                 })
             },
+            toApprovePage(val){
+                this.$router.push({path:'workorder/workdoc',query:{isOrder:val==1?true:false}});
+            },
+            toMyFile(){
+                this.$router.push({path:'doc/mydoc'});
+            },
+            toPartFile(){
+              this.$router.push({path:'deptdoc/deptdoc'});
+            }
 
         }
     }

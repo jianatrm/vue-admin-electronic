@@ -6,7 +6,8 @@
         <el-button type="primary" @click="querydeptList(search)"  size="small">查询</el-button>
       </el-col>
       <el-col :span="12" style="text-align: right">
-        <el-button type="primary" @click="handleAdddept"  size="small" :disabled="!admin">新建部门</el-button>
+        <el-button type="primary" @click="handleAdddept"  size="small">新建部门</el-button>
+<!--        :disabled="!admin"-->
       </el-col>
     </el-row>
     <el-table :data="deptList" style="width: 100%;margin-top:30px;" border  size="small">
@@ -16,24 +17,24 @@
 
       <el-table-column align="center" label="部门名称" width="220">
         <template slot-scope="scope">
-          {{ scope.row.deptName }}
+          {{ scope.row.deptName? scope.row.deptName:'暂无设置'}}
         </template>
       </el-table-column>
       <el-table-column align="center" label="部门编码">
         <template slot-scope="scope">
-          {{ scope.row.deptCode }}
+          {{ scope.row.deptCode?scope.row.deptCode:'暂无设置'}}
         </template>
       </el-table-column>
       <el-table-column align="center" label="部门描述">
         <template slot-scope="scope">
-          {{ scope.row.remark }}
+          {{ scope.row.remark?scope.row.remark:'暂无设置'}}
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)" :disabled="!admin">编辑</el-button>
-          <el-button type="danger" size="small" @click="handleDelete(scope)" :disabled="!admin">删除</el-button>
+          <el-button type="primary" size="small" @click="handleEdit(scope)">编辑</el-button>
+          <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button>
         </template>
       </el-table-column>
       <div slot="empty">
@@ -46,15 +47,15 @@
       </el-col>
     </el-row>
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑部门':'新建部门'">
-      <el-form :model="dept" label-width="80px" label-position="left" :inline="true" :rules="rules" ref="dept">
-        <el-form-item label="部门编号" prop="deptCode">
-          <el-input v-model="dept.deptCode" placeholder="部门编号"/>
-        </el-form-item>
+      <el-form :model="dept" label-width="80px" label-position="middle" :inline="true" :rules="rules" ref="dept" style="margin-left: 40px">
         <el-form-item label="部门名称" prop="deptName">
           <el-input v-model="dept.deptName" placeholder="部门名称"/>
         </el-form-item>
+        <el-form-item label="部门编号">
+          <el-input v-model="dept.deptCode" placeholder="部门编号"/>
+        </el-form-item>
         <el-form-item label="部门描述" prop="remark">
-          <el-input v-model="dept.remark" placeholder="部门名称"/>
+          <el-input type="textarea" v-model="dept.remark" :autosize="{ minRows: 4, maxRows: 4}" style="width: 350px;" placeholder="部门描述..."/>
         </el-form-item>
 
       </el-form>
@@ -83,10 +84,7 @@
                 rules: {
                     deptName: [
                         {required: true, message: '部门名称', trigger: 'blur'},
-                    ],
-                    deptCode: [
-                        {required: true, message: '部门编号', trigger: 'blur'},
-                    ],
+                    ]
                 },
 
                 search: '',
@@ -138,7 +136,7 @@
 
             },
             handleDelete({$index, row}) {
-                this.$confirm('确定删除该用户吗?', 'Warning', {
+                this.$confirm('确定删除该部门吗?', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'

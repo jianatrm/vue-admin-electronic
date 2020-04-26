@@ -156,7 +156,7 @@
         rules: {
           userName: [
             {required: true, message: '请输入账户', trigger: 'blur'},
-            {min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur'}
+            {min: 1, max: 10, message: '长度在 1 到 10 个字符', trigger: 'blur'}
           ],
           userEmail: [
             {required: true, message: '请输入邮箱地址', trigger: 'blur'},

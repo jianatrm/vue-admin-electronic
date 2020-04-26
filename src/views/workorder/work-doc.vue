@@ -30,7 +30,7 @@
           <el-table-column align="center" label="操作">
             <template slot-scope="scope">
               <el-button type="primary" size="small" @click="queryWorkDetail(scope.row.workOrderId)">详情</el-button>
-              <el-button type="danger" size="small" @click="handleDelete(scope)">取消</el-button>
+<!--              <el-button type="danger" size="small" @click="handleDelete(scope)">取消</el-button>-->
             </template>
           </el-table-column>
           <div slot="empty">
@@ -232,6 +232,7 @@
       }
     },
     mounted() {
+      this.activeName = this.$route.query.isOrder?'second':this.activeName;
       this.queryWorkOrderList();
 
     },
