@@ -49,99 +49,111 @@
           <div class="card-content">
             <el-row>
               <el-col :span="8" class="common-line">
-                <div class="content-top" @click="toMyFile">
+                <router-link :to="{path:'doc/mydoc'}">
+                  <div class="content-top">
                   <span>
                       <svg-icon icon-class="image"/>
                   </span>&nbsp;
-                  <span>图片</span>
-                </div>
-                <div class="content-middle">
-                  那是一种内在东西，他们到达不了，也无法触及的
-                </div>
-                <div class="content-bottom">
-                  <p>文档数量</p>
-                  <p>{{imageCount}}</p>
-                </div>
+                    <span>图片</span>
+                  </div>
+                  <div class="content-middle">
+                    那是一种内在东西，他们到达不了，也无法触及的
+                  </div>
+                  <div class="content-bottom">
+                    <p>文档数量</p>
+                    <p>{{imageCount}}</p>
+                  </div>
+                </router-link>
               </el-col>
-              <el-col :span="8" class="common-line" @click="toMyFile">
-                <div class="content-top">
-                  <span>
-                    <svg-icon icon-class="WORD"/>
-                  </span>&nbsp;
-                  <span>Word</span>
-                </div>
-                <div class="content-middle">
-                  希望是一个好东西，也许是最好的，好东西是不会消亡的
-                </div>
-                <div class="content-bottom">
-                  <p>文档数量</p>
-                  <p>{{wordCount}}</p>
-                </div>
+              <el-col :span="8" class="common-line">
+                <router-link :to="{path:'doc/mydoc'}">
+                  <div class="content-top">
+                    <span>
+                      <svg-icon icon-class="WORD"/>
+                    </span>&nbsp;
+                    <span>Word</span>
+                  </div>
+                  <div class="content-middle">
+                    希望是一个好东西，也许是最好的，好东西是不会消亡的
+                  </div>
+                  <div class="content-bottom">
+                    <p>文档数量</p>
+                    <p>{{wordCount}}</p>
+                  </div>
+                </router-link>
               </el-col>
-              <el-col :span="8" @click="toMyFile">
-                <div class="content-top">
-                  <span>
-                    <svg-icon icon-class="excel"/>
-                  </span>&nbsp;
-                  <span>Excel</span>
-                </div>
-                <div class="content-middle">
-                  城镇中有那么多的酒馆，她却偏偏走进了我的酒馆
-                </div>
-                <div class="content-bottom">
-                  <p>文档数量</p>
-                  <p>{{excelCount}}</p>
-                </div>
+              <el-col :span="8">
+                <router-link :to="{path:'doc/mydoc'}">
+                  <div class="content-top">
+                    <span>
+                      <svg-icon icon-class="excel"/>
+                    </span>&nbsp;
+                    <span>Excel</span>
+                  </div>
+                  <div class="content-middle">
+                    城镇中有那么多的酒馆，她却偏偏走进了我的酒馆
+                  </div>
+                  <div class="content-bottom">
+                    <p>文档数量</p>
+                    <p>{{excelCount}}</p>
+                  </div>
+                </router-link>
               </el-col>
             </el-row>
             <el-row style="margin-top: -20px">
-              <el-col :span="8" class="common-line top-line" @click="toMyFile">
-                <div class="content-top">
-                  <span>
+              <el-col :span="8" class="common-line top-line">
+                <router-link :to="{path:'doc/mydoc'}">
+                  <div class="content-top">
+                    <span>
 
-                   <svg-icon icon-class="PDF"/>
+                     <svg-icon icon-class="PDF"/>
 
-                  </span>&nbsp;
-                  <span>PDF</span>
-                </div>
-                <div class="content-middle">
-                  那时候我只会想自己想要什么，从不想自己拥有什么
-                </div>
-                <div class="content-bottom">
-                  <p>文档数量</p>
-                  <p>{{pdfCount}}</p>
-                </div>
+                    </span>&nbsp;
+                    <span>PDF</span>
+                  </div>
+                  <div class="content-middle">
+                    那时候我只会想自己想要什么，从不想自己拥有什么
+                  </div>
+                  <div class="content-bottom">
+                    <p>文档数量</p>
+                    <p>{{pdfCount}}</p>
+                  </div>
+                </router-link>
               </el-col>
-              <el-col :span="8" class="common-line top-line" @click="toMyFile">
-                <div class="content-top">
-                  <span>
+              <el-col :span="8" class="common-line top-line">
+                <router-link :to="{path:'doc/mydoc'}">
+                  <div class="content-top">
+                    <span>
 
-                    <svg-icon icon-class="PPT"  />
-                  </span>&nbsp;
-                  <span>PPT</span>
-                </div>
-                <div class="content-middle">
-                  凛冬将至
-                </div>
-                <div class="content-bottom">
-                  <p>文档数量</p>
-                  <p>{{pptCount}}</p>
-                </div>
+                      <svg-icon icon-class="PPT"  />
+                    </span>&nbsp;
+                    <span>PPT</span>
+                  </div>
+                  <div class="content-middle">
+                    凛冬将至
+                  </div>
+                  <div class="content-bottom">
+                    <p>文档数量</p>
+                    <p>{{pptCount}}</p>
+                  </div>
+                </router-link>
               </el-col>
-              <el-col :span="8" class="top-line" @click="toMyFile">
-                <div class="content-top">
-                  <span>
-                    <svg-icon icon-class="wendang"/>
-                  </span>&nbsp;
-                  <span>其他类型</span>
-                </div>
-                <div class="content-middle">
-                  生命就像一盒巧克力，结果往往出人意料
-                </div>
-                <div class="content-bottom">
-                  <p>文档数量</p>
-                  <p>{{otherCount}}</p>
-                </div>
+              <el-col :span="8" class="top-line">
+                <router-link :to="{path:'doc/mydoc'}">
+                  <div class="content-top">
+                    <span>
+                      <svg-icon icon-class="wendang"/>
+                    </span>&nbsp;
+                    <span>其他类型</span>
+                  </div>
+                  <div class="content-middle">
+                    生命就像一盒巧克力，结果往往出人意料
+                  </div>
+                  <div class="content-bottom">
+                    <p>文档数量</p>
+                    <p>{{otherCount}}</p>
+                  </div>
+                </router-link>
               </el-col>
             </el-row>
           </div>
@@ -164,24 +176,18 @@
           <div class="card-content2">
             <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
               <el-tab-pane label="我的申请" name="first">
-<!--                <el-table :data="workList" border size="small" v-if="workList.length>0">-->
-<!--                  <el-table-column align="center" label="申请单号">-->
-<!--                    <template slot-scope="scope">-->
-<!--                      {{ scope.row.workOrderCode }}-->
-<!--                    </template>-->
-<!--                  </el-table-column>-->
-<!--                  <el-table-column align="center" label="申请状态">-->
-<!--                  <template slot-scope="scope">-->
-<!--                    {{ scope.row.workOrderStatusDesc }}-->
-<!--                  </template>-->
-<!--                </el-table-column>-->
-<!--                </el-table>-->
                 <ul v-if="workList.length>0" class="infinite-list" style="overflow:auto">
+                  <li class="infinite-list-item" style="font-weight: bold">
+                    <span>申请单号</span>
+                    <span>审批状态</span>
+                  </li>
                   <li v-for="item in workList" class="infinite-list-item" :key="item.workOrderCode" @click="toApprovePage">
                     <span>{{item.workOrderCode}}</span>
-                    <span>{{item.workOrderStatusDesc}}</span>
-<!--                    <span>{{item.workOrderDesc}}</span>-->
-<!--                    <span>{{new Date(item.operateTime).format('yyyy-MM-dd')}}</span>-->
+                    <span>
+                      <el-link  type="primary" v-if="item.workOrderStatus==10"  :underline="false">{{ item.workOrderStatusDesc }}</el-link>
+                      <el-link  type="success" v-if="item.workOrderStatus==90"  :underline="false">{{ item.workOrderStatusDesc }}</el-link>
+                      <el-link  type="danger" v-if="item.workOrderStatus==70"  :underline="false">{{ item.workOrderStatusDesc }}</el-link>
+                    </span>
                   </li>
                 </ul>
                 <div v-else style="width: 100%;text-align: center;">
@@ -190,9 +196,13 @@
               </el-tab-pane>
               <el-tab-pane label="审批申请" name="second">
                 <ul v-if="workToMeList.length>0" class="infinite-list" style="overflow:auto">
+                  <li class="infinite-list-item" style="font-weight: bold">
+                    <span>申请单号</span>
+                    <span>提交人</span>
+                  </li>
                   <li v-for="item in workToMeList" class="infinite-list-item" :key="item.workOrderCode" @click="toApprovePage(1)">
-                    <span>{{item.workOrderCode}}</span>
-<!--                    <span>{{item.workOrderDesc}}</span>-->
+                    <span>{{item.workOrderVO.workOrderCode}}</span>
+                    <span>{{item.userName}}</span>
 <!--                    <span>{{new Date(item.operateTime).format('yyyy-MM-dd')}}</span>-->
                   </li>
                 </ul>
@@ -466,11 +476,12 @@
         .card-content .el-col {
           padding: 20px;
           height: 144px;
+          cursor: pointer;
         }
 
-        .card-content .el-col:hover {
-          box-shadow: 3px 2px 3px 2px gray;
-        }
+        /*.card-content .el-col:hover {*/
+        /*  box-shadow: 3px 2px 3px 2px gray;*/
+        /*}*/
 
         .box-left-d {
           background: #ffffff;
@@ -515,11 +526,17 @@
             display: flex;
             align-items: center;
             justify-content: space-around;
-
-            height: 50px;
+            /*height: 50px;*/
+            /*background: #e8f3fe;*/
+            /*margin: 10px;*/
+            /*color: #7dbcfc;*/
+            font-size: 14px;
+            border-bottom: 1px solid #ececec;
+            cursor: pointer;
+            line-height: 55px;
+          }
+          .infinite-list-item:hover{
             background: #e8f3fe;
-            margin: 10px;
-            color: #7dbcfc;
           }
         }
 
