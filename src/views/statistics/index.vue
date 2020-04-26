@@ -198,8 +198,7 @@
                     pageSize: this.pageSize,
                     pageNum: this.pageNum,
                     userName: val
-                }).then(res => {
-                    this.$loading().close()
+                },false).then(res => {
                     if (res.success) {
                         this.options = res.result.result
                     }
@@ -209,8 +208,7 @@
                 querydept({
                     pageNum: 1,
                     pageSize: 1000,
-                }).then(res => {
-                    this.$loading().close()
+                },false).then(res => {
                     if (res.success) {
                         this.deptList = res.result.result
                     }

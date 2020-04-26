@@ -47,7 +47,7 @@
       <el-table-column align="center" label="操作" min-width="200">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleEdit(scope)" :disabled="!admin">编辑</el-button>
-          <el-button type="warning" size="mini" @click="handleReset(scope)" :disabled="!admin">重置密码</el-button>
+          <el-button type="warning" size="mini" @click="handleReset(scope.row.userId)" :disabled="!admin">重置密码</el-button>
           <el-button type="danger" size="mini" @click="handleDelete(scope)" v-if="scope.row.status==1" :disabled="!admin">离职</el-button>
           <el-button type="primary" size="mini" @click="handleEdit(scope)" v-if="scope.row.status==0" :disabled="!admin">在职</el-button>
         </template>
@@ -120,7 +120,7 @@
 </template>
 
 <script>
-  import {queryuser, updateuser, adduser} from "../../api/user";
+  import {queryuser, updateuser, adduser,restpassword} from "../../api/user";
   import Pagination from '@/components/Pagination'
   import {querydept} from "../../api/dept";
   import { mapGetters } from 'vuex'
@@ -249,7 +249,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(async () => {
-          await this.resetPwd();
+          await this.resetPwd(data);
         })
           .catch(err => {
             console.error(err)
@@ -289,8 +289,18 @@
           }
         })
       },
-      resetPwd(){
-
+      resetPwd(userId){
+        restpassword({
+          userId:userId
+        }).then(res=>{
+          if (res.success) {
+            this.$loading().close()
+            this.$message({
+              type: 'success',
+              message: '重置成功'
+            })
+          }
+        })
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {

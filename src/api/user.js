@@ -46,9 +46,20 @@ export function updateuser(data,loading =true) {
     loading:loading,
     data:data,
   })
-}export function adduser(data,loading =true) {
+}
+export function adduser(data,loading =true) {
   return request({
     url: '/electronic/user/adduser',
+    method: 'post',
+    loading:loading,
+    data:data,
+  })
+}
+
+
+export function restpassword(data,loading =true) {
+  return request({
+    url: '/electronic/user/restPassword',
     method: 'post',
     loading:loading,
     data:data,

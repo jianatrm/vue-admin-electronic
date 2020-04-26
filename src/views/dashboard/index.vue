@@ -307,7 +307,6 @@
             },
             queryUserInfo() {
                 getUserInfo({},false).then(res => {
-                    this.$loading().close()
                     if (res.success) {
                         this.userInfo = res.result
                         try {
@@ -365,7 +364,6 @@
                     pageSize: this.pageSize,
                     workOrderStatus:10
                 },false).then(res => {
-                    this.$loading().close()
                     if (res.success) {
                         this.workList = res.result.result;
                     }
@@ -377,7 +375,6 @@
                     pageSize: this.pageSize,
                     nodeOperateStatus: 1
                 },false).then(res => {
-                    this.$loading().close()
                     if (res.success) {
                         this.workToMeList = res.result.result;
                     }
