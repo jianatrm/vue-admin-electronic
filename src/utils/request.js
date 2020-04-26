@@ -13,7 +13,6 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    debugger
     if (config.loading) {
       vm.$loading({
         lock: true,

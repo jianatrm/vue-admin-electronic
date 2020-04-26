@@ -53,6 +53,7 @@
 
 <script>
     import {validUsername} from '@/utils/validate'
+    import {getUserInfo} from "../../api/user";
 
     export default {
         name: 'Login',
@@ -112,6 +113,7 @@
                         this.$store.dispatch('user/login', this.loginForm).then((res) => {
                             this.loading = false
                             if (res.success) {
+                                this.queryUserInfo();
                                 this.$router.push({path: this.redirect || '/'})
                             } else {
                                 return false
@@ -124,7 +126,26 @@
                         return false
                     }
                 })
-            }
+            },
+         async queryUserInfo() {
+           await getUserInfo({},false).then(res => {
+              this.$loading().close()
+              if (res.success) {
+
+                let  admin = false;
+                for (let i = 0; i < res.result.sysRoleList.length; i++) {
+                  if ( res.result.sysRoleList[i].roleType == 1){
+                    admin = true;
+                    break;
+                  }
+                }
+                this.$store.commit("user/SET_ROLES",res.result.sysRoleList)
+                this.$store.commit("user/SET_AVATAR",res.result.userAvatar)
+                this.$store.commit("user/SET_USER",res.result)
+                this.$store.commit("user/SET_ROLE_TYPE_LIST",admin)
+              }
+            })
+          },
         }
     }
 </script>

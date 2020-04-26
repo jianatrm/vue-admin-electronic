@@ -6,7 +6,7 @@
         <el-button type="primary" @click="querydeptList(search)"  size="small">查询</el-button>
       </el-col>
       <el-col :span="12" style="text-align: right">
-        <el-button type="primary" @click="handleAdddept"  size="small">新建部门</el-button>
+        <el-button type="primary" @click="handleAdddept"  size="small" :disabled="!admin">新建部门</el-button>
 <!--        :disabled="!admin"-->
       </el-col>
     </el-row>
@@ -33,8 +33,8 @@
 
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)">编辑</el-button>
-          <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button>
+          <el-button type="primary" size="small" @click="handleEdit(scope)" :disabled="!admin">编辑</el-button>
+          <el-button type="danger" size="small" @click="handleDelete(scope)" :disabled="!admin">删除</el-button>
         </template>
       </el-table-column>
       <div slot="empty">
