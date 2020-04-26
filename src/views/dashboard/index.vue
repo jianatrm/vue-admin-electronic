@@ -37,7 +37,7 @@
       <el-col :span="16">
         <div class="box-left-d">
           <div style="text-align: right;height: 80px;line-height: 80px;padding-right: 40px"><span>切换日期：</span>
-            <el-date-picker v-model="value" type="year" placeholder="选择年份"></el-date-picker>
+            <el-date-picker v-model="value" type="month" placeholder="选择月份"></el-date-picker>
           </div>
           <div id="myChart" :style="{'width': '95%', height: '400px'}"/>
         </div>
@@ -253,9 +253,10 @@
                     },
                     xAxis: [
                         {
-                            type: 'category',
-                            data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-                            axisTick: {
+                          type: 'category',
+                          // data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                          data: ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日','13日','14日','15日','16日','17日','18日','19日','20日','21日','22日','23日','24日','25日','26日','27日','28日','29日','30日','31日'],
+                          axisTick: {
                                 alignWithLabel: true
                             }
                         }
@@ -267,7 +268,7 @@
                     ],
                     series: [
                         {
-                            name: '直接访问',
+                            name: '文档数量',
                             type: 'bar',
                             barWidth: '60%',
                             data: []
