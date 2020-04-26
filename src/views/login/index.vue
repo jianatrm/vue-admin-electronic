@@ -4,7 +4,7 @@
              label-position="left">
 
       <div class="title-container">
-        <h3 class="title">电子证照管理平台</h3>
+        <h3 class="title">电子文档管理系统</h3>
       </div>
 
       <el-form-item prop="username">
@@ -43,7 +43,7 @@
       </el-form-item>
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
-                 @click.native.prevent="handleLogin">Login
+                 @click.native.prevent="handleLogin">登录
       </el-button>
 
 

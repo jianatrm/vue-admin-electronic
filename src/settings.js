@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '电子档案',
+  title: '电子文档管理',
 
   /**
    * @type {boolean} true | false
