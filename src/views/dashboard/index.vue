@@ -533,7 +533,7 @@
             font-size: 14px;
             border-bottom: 1px solid #ececec;
             cursor: pointer;
-            line-height: 55px;
+            line-height: 50px;
           }
           .infinite-list-item:hover{
             background: #e8f3fe;

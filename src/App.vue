@@ -44,7 +44,7 @@
                     this.$store.commit("user/SET_ROLES",res.result.sysRoleList)
                     this.$store.commit("user/SET_AVATAR",res.result.userAvatar)
                     this.$store.commit("user/SET_USER",res.result)
-                    this.$store.commit("user/SET_ROLE_TYPE_LIST",admin)
+                    // this.$store.commit("user/SET_ROLE_TYPE_LIST",admin)
                 }
             })
         },

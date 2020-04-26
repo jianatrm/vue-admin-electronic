@@ -47,7 +47,7 @@
       <el-table-column align="center" label="操作" min-width="200">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleEdit(scope)" :disabled="!admin">编辑</el-button>
-          <el-button type="warning" size="mini" @click="handleEdit(scope)" :disabled="!admin">重置密码</el-button>
+          <el-button type="warning" size="mini" @click="handleReset(scope)" :disabled="!admin">重置密码</el-button>
           <el-button type="danger" size="mini" @click="handleDelete(scope)" v-if="scope.row.status==1" :disabled="!admin">离职</el-button>
           <el-button type="primary" size="mini" @click="handleEdit(scope)" v-if="scope.row.status==0" :disabled="!admin">在职</el-button>
         </template>
@@ -243,8 +243,20 @@
         this.user.checkPass = scope.row.password
 
       },
+      handleReset(data){
+        this.$confirm('确定重置密码吗?',{
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async () => {
+          await this.resetPwd();
+        })
+          .catch(err => {
+            console.error(err)
+          })
+      },
       handleDelete({$index, row}) {
-        this.$confirm('确定删除该用户吗?', 'Warning', {
+        this.$confirm('确定删除该用户吗?',{
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -276,6 +288,9 @@
             this.queryUserList();
           }
         })
+      },
+      resetPwd(){
+
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {

@@ -31,7 +31,7 @@
 
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" icon="el-icon-download" @click="handleEdit(scope)">下载</el-button>
+          <a :href="scope.row.docUrl" target="_blank"><el-button type="primary" size="small" icon="el-icon-download">下载</el-button></a>
           <el-button type="success" size="small" icon="el-icon-search" @click="handlePreview(scope)">预览</el-button>
         </template>
       </el-table-column>

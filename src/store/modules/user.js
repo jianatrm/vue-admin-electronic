@@ -9,7 +9,7 @@ const state = {
   avatar: '',
   limit:false,
   roles: [],
-  admin:false,
+  admin:true,
   user:{}
 }
 

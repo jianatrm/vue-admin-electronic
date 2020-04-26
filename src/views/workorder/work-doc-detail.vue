@@ -1,49 +1,55 @@
 <template>
   <div class="contianer">
-    <p class="detail-title"><span>工单单号</span>：{{workOrderDetail.workOrderCode}}</p>
-    <el-row>
-      <el-col :span="24">
-        <div class="grid-content bg-purple-light">
-          <p class="detail-lable">标题：<span class="detail-content">{{workOrderDetail.workOrderName}}</span></p>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="8">
-        <div class="grid-content bg-purple">
-          <p class="detail-lable">创建人：<span class="detail-content">{{workOrderDetail.userName}}</span></p>
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content bg-purple">
-          <p class="detail-lable">创建时间：<span class="detail-content">{{workOrderDetail.operateTime&&new Date(workOrderDetail.operateTime).format("yyyy-MM-dd:hh:mm:ss")}}</span>
-          </p>
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content bg-purple-light">
-          <p class="detail-lable">状态：</p>
-          <el-link class="deatil-state" type="primary" v-if="workOrderDetail.workOrderStatus==10" :underline="false">{{
-            workOrderDetail.workOrderStatusDesc }}
-          </el-link>
-          <el-link class="deatil-state" type="success" v-if="workOrderDetail.workOrderStatus==90" :underline="false">{{
-            workOrderDetail.workOrderStatusDesc }}
-          </el-link>
-          <el-link class="deatil-state" type="danger" v-if="workOrderDetail.workOrderStatus==70" :underline="false">{{
-            workOrderDetail.workOrderStatusDesc }}
-          </el-link>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="24">
-        <div class="grid-content bg-purple-light">
-          <p class="detail-lable">描述：<span class="detail-content">{{workOrderDetail.workOrderDesc}}</span></p>
-        </div>
-      </el-col>
-    </el-row>
-
-
+    <div>
+      <p class="detail-title"><span>工单信息</span></p>
+      <el-row>
+        <el-col :span="8">
+          <div class="grid-content bg-purple-light">
+            <p class="detail-lable">工单编号：<span class="detail-content">{{workOrderDetail.workOrderCode}}</span></p>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple-light">
+            <p class="detail-lable">工单标题：<span class="detail-content">{{workOrderDetail.workOrderName}}</span></p>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <p class="detail-lable">创建人：<span class="detail-content">{{workOrderDetail.userName}}</span></p>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <p class="detail-lable">创建时间：<span class="detail-content">{{workOrderDetail.operateTime&&new Date(workOrderDetail.operateTime).format("yyyy-MM-dd:hh:mm:ss")}}</span>
+            </p>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple-light">
+            <p class="detail-lable">状态：<span class="detail-content">{{workOrderDetail.workOrderStatusDesc}}</span></p>
+<!--            <el-link class="deatil-state" type="primary" v-if="workOrderDetail.workOrderStatus==10" :underline="false">{{-->
+<!--              workOrderDetail.workOrderStatusDesc }}-->
+<!--            </el-link>-->
+<!--            <el-link class="deatil-state" type="success" v-if="workOrderDetail.workOrderStatus==90" :underline="false">{{-->
+<!--              workOrderDetail.workOrderStatusDesc }}-->
+<!--            </el-link>-->
+<!--            <el-link class="deatil-state" type="danger" v-if="workOrderDetail.workOrderStatus==70" :underline="false">{{-->
+<!--              workOrderDetail.workOrderStatusDesc }}-->
+<!--            </el-link>-->
+          </div>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <div class="grid-content bg-purple-light">
+            <p class="detail-lable">描述：{{workOrderDetail.workOrderDesc}}</p>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+    <el-divider></el-divider>
     <div class="detail-title"><p>文件列表：</p>
       <el-row>
         <div v-for="(item,index) in workOrderDetail.workInfo">
@@ -66,7 +72,7 @@
         </div>
       </el-row>
     </div>
-
+    <el-divider></el-divider>
     <div>
       <p class="detail-title"><span>审批记录：</span></p>
       <el-timeline>
@@ -75,13 +81,19 @@
           :key="index"
           :color="workOrderDetail.workNode.nodeId >=activity.nodeId?(activity.nodeOperateResult == '90'?'#67C23A':activity.nodeOperateResult ==70?'#F56C6C':'#3498db'):''"
           size="large"
-          :timestamp="new Date(activity.nodeOperateTime).format('yyyy-MM-dd:hh:mm:ss')">
-          {{activity.userName}}
+          :timestamp="new Date(activity.nodeOperateTime).format('yyyy-MM-dd:hh:mm:ss')" placement="top">
+          <p>审批人：{{activity.userName}}</p>
+          <p class="approve-suggest">审批意见：{{activity.nodeOperateDesc}}</p>
+          <p>审批结果：
+            <el-link  type="primary" v-if="activity.nodeOperateResult==10"  :underline="false">审批中</el-link>
+            <el-link  type="success" v-if="activity.nodeOperateResult==90"  :underline="false">审批通过</el-link>
+            <el-link  type="danger" v-if="activity.nodeOperateResult==70"  :underline="false">审批驳回</el-link>
+          </p>
         </el-timeline-item>
       </el-timeline>
     </div>
 
-    <div style="text-align:right;padding-right: 50px">
+    <div class="bottom-btn">
       <el-button type="primary" @click="handle('90')" size="small" v-if="type">审批通过</el-button>
       <el-button type="danger" @click="handle('70')" size="small"  v-if="type">审批拒绝</el-button>
       <el-button type="primary" size="small" @click="goback()">返回</el-button>
@@ -252,14 +264,13 @@
 
 <style lang="scss" scoped>
   .contianer {
-    padding: 20px;
-
+    padding: 5px 20px 20px 20px;
     .detail-title {
       margin-right: 12px;
       margin-bottom: 0;
       color: rgba(0, 0, 0, .85);
       font-weight: 600;
-      font-size: 20px;
+      font-size: 14px;
       line-height: 32px;
       overflow: hidden;
       white-space: nowrap;
@@ -270,7 +281,11 @@
       color: rgba(0, 0, 0, .85);
       font-weight: 400;
       font-size: 14px;
-      line-height: 1.5715;
+      /*line-height: 1.5715;*/
+      width: 520px;
+      padding-left: 2.6rem;
+      text-indent: -2.6rem;
+      line-height: 22px;
     }
 
     .detail-content {
@@ -284,7 +299,6 @@
       font-family: -apple-system,
       BlinkMacSystemFont, segoe ui, Roboto, helvetica neue, Arial, noto sans, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol, noto color emoji;
     }
-
     .el-row {
       padding-left: 40px;
     }
@@ -292,7 +306,17 @@
     .el-timeline {
       margin-top: 20px;
     }
-
+    .approve-suggest{
+      width: 550px;
+      padding-left: 4.3rem;
+      text-indent: -4.3rem;
+      line-height: 20px;
+    }
+    .bottom-btn{
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
     .el-link {
       span:nth-child(1){
         display: inline-block;
@@ -302,5 +326,8 @@
         margin-left: 300px;
       }
     }
-  }
+    .el-divider--horizontal {
+      height: 0.5px;
+    }
+    }
 </style>

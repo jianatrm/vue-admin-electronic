@@ -41,7 +41,7 @@ export function queryWorkOrderToMe(data,loading =true) {
     data:data,
   })
 }
-export function queryWorkOrderDetail(ldata,loading =true) {
+export function queryWorkOrderDetail(data,loading =true) {
   return request({
     url: '/electronic/workOrder/queryWorkOrderDetail',
     method: 'post',
