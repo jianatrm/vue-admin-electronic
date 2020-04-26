@@ -130,7 +130,7 @@
                     <span>PPT</span>
                   </div>
                   <div class="content-middle">
-                    凛冬将至
+                    人的价值并不取决于是否掌握真理或者自认为真理在握，决定人的价值的是追求真理的孜孜不倦的精神
                   </div>
                   <div class="content-bottom">
                     <p>文档数量</p>

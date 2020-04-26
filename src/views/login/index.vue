@@ -166,6 +166,10 @@
 
   /* reset element-ui css */
   .login-container {
+    background:url("../../assets/images/login-back.jpg") no-repeat;
+    //object-fit:cover;
+    background-size: cover;
+
     .el-input {
       display: inline-block;
       height: 47px;
