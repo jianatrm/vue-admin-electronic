@@ -190,7 +190,7 @@
                 }
                 let filename = decodeURI(scope.row.docUrl).substring(scope.row.docUrl.lastIndexOf('/') + 1);
                 if ("xls xlsx".indexOf("this.filetype") == -1) {
-                    window.open(`http://localhost:8001/electronic/pdf/documentConverterToPdf/${filename}`)
+                    window.open(`${window.location.protocol+"//"+window.location.host}/electronic/pdf/documentConverterToPdf/${filename}`)
                 }
                 const {href} = this.$router.resolve({
                     path: "/pdfPreview",
