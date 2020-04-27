@@ -8,5 +8,6 @@ const getters = {
   limit: state => state.user.limit,
   admin: state => state.user.admin,
   user: state => state.user.user,
+  verified: state => state.user.verified,
 }
 export default getters

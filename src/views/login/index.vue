@@ -52,10 +52,12 @@
 </template>
 
 <script>
-    import {validUsername} from '@/utils/validate'
-    import {getUserInfo} from "../../api/user";
+  import {constantRoutes,resetRouter} from "../../router";
+  import {validUsername} from '@/utils/validate'
+  import {getUserInfo} from "../../api/user";
+  import {asyncRouter} from "../../router/asyncRouter";
 
-    export default {
+  export default {
         name: 'Login',
         data() {
             const validateUsername = (rule, value, callback) => {
@@ -114,7 +116,7 @@
                             this.loading = false
                             if (res.success) {
                                 this.queryUserInfo();
-                                this.$router.push({path: '/'})
+
                               // this.redirect ||
                             } else {
                                 return false
@@ -140,10 +142,18 @@
                     break;
                   }
                 }
+                resetRouter()
+                if(admin){
+                  console.log("constantRoutes",constantRoutes)
+                  constantRoutes.push(...asyncRouter)
+                  this.$router.addRoutes(constantRoutes)
+                }
                 this.$store.commit("user/SET_ROLES",res.result.sysRoleList)
                 this.$store.commit("user/SET_AVATAR",res.result.userAvatar)
                 this.$store.commit("user/SET_USER",res.result)
                 this.$store.commit("user/SET_ROLE_TYPE_LIST",admin)
+
+                this.$router.push({path: '/'})
               }
             })
           },
