@@ -275,17 +275,18 @@
                     return
                 }
                 let filename = decodeURI(scope.row.docUrl).substring(scope.row.docUrl.lastIndexOf('/') + 1);
-                if ("xls xlsx".indexOf("this.filetype") == -1) {
+                if ("xls xlsx".indexOf(filetype) == -1) {
                     window.open(`${window.location.protocol+"//"+window.location.host}/electronic/pdf/documentConverterToPdf/${filename}`)
-                }
-                const {href} = this.$router.resolve({
+                }else{
+                  const {href} = this.$router.resolve({
                     path: "/pdfPreview",
                     query: {
-                        filename: filename,
-                        filetype: filetype
+                      filename: filename,
+                      filetype: filetype
                     }
-                });
-                window.open(href, '_blank');
+                  });
+                  window.open(href, '_blank');
+                }
             },
             showNodeList(val){
               this.$router.push({path:'/work/worknodedetail',query:{workOrderId:val.row.workOrderId||12,route:this.$route.fullPath}})

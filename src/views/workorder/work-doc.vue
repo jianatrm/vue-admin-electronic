@@ -184,7 +184,7 @@
     <el-dialog :visible.sync="dialogVisibleSelectDept" title="选择文档分配部门">
       <el-form :model="dept" :rules="rules" ref="dept" label-width="80px">
         <el-form-item label="部门" prop="deptId">
-          <el-select v-model="dept.deptId" placeholder="请选择部门">
+          <el-select multiple v-model="sysDeptList" placeholder="请选择部门">
             <el-option :label="item.deptName" :value="item.deptId" v-for="(item,index) in deptList"
                        :key="index"></el-option>
           </el-select>
@@ -222,8 +222,9 @@
         activities: [],
         deptList: [],
         dept: {
-          deptId: ''
+          deptId: []
         },
+        sysDeptList:[],
         rules: {
           deptId: [
             {required: true, message: '请选择部门', trigger: 'change'}
@@ -312,6 +313,13 @@
 
 
       approveSubmit(val) {
+        let array = [];
+        for (let i = 0; i <this.sysDeptList ; i++) {
+          let temp = {
+            deptId:this.sysDeptList[i]
+          };
+          array.push(temp)
+        }
         approveWorkOrder({
           workOrderId: this.workOrderDetail.workOrderId,
           currentNode: this.workOrderDetail.currentNode,
@@ -320,10 +328,7 @@
             nodeOperateResult: val,
             nodeOperateDesc: this.approve.remark
           },
-          sysDept: {
-            deptId: this.dept.deptId
-          }
-
+          sysDeptList: JSON.stringify(array)
         }).then(res => {
           this.$loading().close()
           if (res.success) {
