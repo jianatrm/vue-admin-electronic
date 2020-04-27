@@ -56,6 +56,7 @@
             async logout() {
                 await this.$store.dispatch('user/logout')
                 this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+                window.location.reload()
             },
             toPersonal() {
                 this.$router.push({path:'/personal/personalCenter'})

@@ -10,6 +10,7 @@ const state = {
   limit:false,
   roles: [],
   admin:false,
+  verified:false,
   user:{}
 }
 
@@ -34,6 +35,10 @@ const mutations = {
   },
   SET_USER: (state, user) => {
     state.user = user
+  },
+
+  SET_VERIFIED :(state, verified) => {
+    state.verified = verified
   },
 
 
@@ -92,6 +97,7 @@ const actions = {
         commit('SET_USER',{})
         commit('SET_ROLES',[])
         commit('SET_AVATAR','')
+        commit('SET_VERIFIED', false)
         removeToken()
         resetRouter()
         resolve()
@@ -105,7 +111,14 @@ const actions = {
   resetToken({ commit }) {
     return new Promise(resolve => {
       commit('SET_TOKEN', '')
+      commit('SET_VERIFIED', false)
       removeToken()
+      resolve()
+    })
+  },
+  verified({ commit }) {
+    return new Promise(resolve => {
+      commit('SET_VERIFIED', true)
       resolve()
     })
   }
