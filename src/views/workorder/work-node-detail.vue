@@ -1,6 +1,6 @@
 <template>
   <div class="contianer">
-    <div>
+    <div class="approve-record">
       <p class="detail-title"><span>审批记录：</span></p>
       <el-timeline>
         <el-timeline-item
@@ -21,40 +21,24 @@
     </div>
 
     <div class="bottom-btn">
-      <el-button type="primary" size="small" @click="goback()">返回</el-button>
+      <el-button type="primary" size="small" @click="goback">返回</el-button>
     </div>
   </div>
 </template>
 
 <script>
-  import {queryWorkOrderDetail,approveWorkOrder} from "../../api/workOrder";
-  import {querydept} from "../../api/dept";
+  import {queryWorkOrderDetail} from "../../api/workOrder";
   export default {
     name: "work-node-detail",
     data() {
       return {
         workOrderId: '',
-        type:false,
-        activities: [],
-        workOrderDetail: {},
-        dialogVisible:false,
-        dialogVisibleSelectDept:false,
-        operateStatus:'',
-        approve: {},
-        deptList: [],
-        dept: {
-          deptId: ''
-        },
-        rules: {
-          deptId: [
-            {required: true, message: '请选择部门', trigger: 'change'}
-          ],
-        }
+        workOrderDetail:{},
+        activities: []
       }
     },
     created() {
       this.workOrderId = this.$route.query.workOrderId;
-
     },
     mounted() {
       this.queryWorkDetail();
@@ -68,96 +52,12 @@
           if (res.success) {
             this.workOrderDetail = res.result
             this.activities = JSON.parse(res.result.workNodeList)
-            this.workOrderDetail.workInfo = JSON.parse(res.result.workInfo)
           }
         })
-      },
-      handlePreview(scope) {
-        let number = decodeURI(scope).lastIndexOf('.');
-        let filetype = decodeURI(scope).substring(number + 1);
-        let reg = "pdf swf html ott fodt  sxw doc docx rtf  wpd  txt  ods  ots  fods sxc  xls xlsx  csv  tsv  odp  otp fodp  sxi  ppt pptx  odg  otg fodg  svg  png jpg  tif  gif bmp"
-        if (reg.indexOf(filetype) == -1) {
-          this.$message({
-            showClose: true,
-            message: '该文件不支持预览，请下载后查看',
-            type: 'warning'
-          });
-          return
-        }
-        let filename = decodeURI(scope).substring(scope.lastIndexOf('/') + 1);
-        if ("xls xlsx".indexOf("this.filetype") == -1) {
-          window.open(`http://localhost:8001/electronic/pdf/documentConverterToPdf/${filename}`)
-        }
-        const {href} = this.$router.resolve({
-          path: "/pdfPreview",
-          query: {
-            filename: filename,
-            filetype: filetype
-          }
-        });
-        window.open(href, '_blank');
       },
       goback(val) {
         this.$router.go(-1)
-      },
-      handle(val) {
-        this.dialogVisible = true;
-        this.operateStatus = val;
-      },
-      onSubmit(val) {
-        if (this.workOrderDetail.nodeCount == this.workOrderDetail.workNode.nodeOrder && val == '90') {
-          this.dialogVisibleSelectDept = true
-          this.queryDeptList()
-        } else {
-          this.approveSubmit(val);
-        }
-
-      },
-      queryDeptList() {
-        querydept({
-          pageNum: 1,
-          pageSize: 1000,
-        }).then(res => {
-          this.$loading().close()
-          if (res.success) {
-            this.deptList = res.result.result
-          }
-        })
-      },
-      onSubmitFinsh() {
-        this.approveSubmit('90')
-      },
-      approveSubmit(val) {
-        approveWorkOrder({
-          workOrderId: this.workOrderDetail.workOrderId,
-          currentNode: this.workOrderDetail.currentNode,
-          workNode: {
-            nodeId: this.workOrderDetail.workNode.nodeId,
-            nodeOperateResult: val,
-            nodeOperateDesc: this.approve.remark
-          },
-          sysDept: {
-            deptId: this.dept.deptId
-          }
-
-        }).then(res => {
-          this.$loading().close()
-          if (res.success) {
-            this.$message({
-              type: 'success',
-              message: '操作成功'
-            })
-            this.dialogVisibleSelectDept = false;
-            this.dialogVisible = false;
-            this.$router.go(-1)
-          } else {
-            this.$message({
-              type: 'fail',
-              message: '操作失败'
-            })
-          }
-        })
-      },
+      }
     }
   }
 </script>
@@ -165,6 +65,15 @@
 <style lang="scss" scoped>
   .contianer {
     padding: 5px 20px 20px 20px;
+    .approve-record{
+      margin-left: 30px;
+      .approve-suggest{
+        width: 850px;
+        padding-left: 4.4rem;
+        text-indent: -4.4rem;
+        line-height: 23px;
+      }
+    }
     .detail-title {
       margin-right: 12px;
       margin-bottom: 0;
@@ -176,46 +85,19 @@
       white-space: nowrap;
       text-overflow: ellipsis;
     }
-
-    .detail-lable {
-      color: rgba(0, 0, 0, .85);
-      font-weight: 400;
-      font-size: 14px;
-      /*line-height: 1.5715;*/
-      width: 520px;
-      padding-left: 2.6rem;
-      text-indent: -2.6rem;
-      line-height: 22px;
-    }
-
-    .detail-content {
-      color: rgba(0, 0, 0, .65);
-      font-size: 14px;
-      line-height: 1.5715;
-    }
-
-    .deatil-state {
-      font-size: 24px;
-      font-family: -apple-system,
-      BlinkMacSystemFont, segoe ui, Roboto, helvetica neue, Arial, noto sans, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol, noto color emoji;
-    }
     .el-row {
       padding-left: 40px;
     }
-
     .el-timeline {
       margin-top: 20px;
-    }
-    .approve-suggest{
-      width: 550px;
-      padding-left: 4.3rem;
-      text-indent: -4.3rem;
-      line-height: 20px;
     }
     .bottom-btn{
       display: flex;
       justify-content: center;
-      margin-top: 20px;
+      /*margin-top: 20px;*/
+      position: absolute;
+      left: 48%;
+      bottom: 5%;
     }
     .el-link {
       span:nth-child(1){

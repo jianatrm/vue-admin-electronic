@@ -57,7 +57,7 @@
                     <span>图片</span>
                   </div>
                   <div class="content-middle">
-                    那是一种内在东西，他们到达不了，也无法触及的
+                    由图形、图像等构成的平面媒体。图片的格式很多，我们常用的为jpg、png、jpeg等。
                   </div>
                   <div class="content-bottom">
                     <p>文档数量</p>
@@ -74,7 +74,7 @@
                     <span>Word</span>
                   </div>
                   <div class="content-middle">
-                    希望是一个好东西，也许是最好的，好东西是不会消亡的
+                    微软公司的一个文字处理器应用程序。Word给用户提供了用于创建专业而优雅的文档工具，帮助用户...
                   </div>
                   <div class="content-bottom">
                     <p>文档数量</p>
@@ -91,7 +91,7 @@
                     <span>Excel</span>
                   </div>
                   <div class="content-middle">
-                    城镇中有那么多的酒馆，她却偏偏走进了我的酒馆
+                    是Microsoft为使用Windows和Apple Macintosh操作系统的电脑编写的一款电子表格软件。
                   </div>
                   <div class="content-bottom">
                     <p>文档数量</p>
@@ -112,7 +112,7 @@
                     <span>PDF</span>
                   </div>
                   <div class="content-middle">
-                    那时候我只会想自己想要什么，从不想自己拥有什么
+                    Portable Document Format的简称，意为“便携式文档格式”。
                   </div>
                   <div class="content-bottom">
                     <p>文档数量</p>
@@ -130,7 +130,7 @@
                     <span>PPT</span>
                   </div>
                   <div class="content-middle">
-                    人的价值并不取决于是否掌握真理或者自认为真理在握，决定人的价值的是追求真理的孜孜不倦的精神
+                    微软公司的演示文稿软件,用户可以在投影仪或者计算机上进行演示，也可以将演示文稿打印出来...
                   </div>
                   <div class="content-bottom">
                     <p>文档数量</p>
@@ -147,7 +147,7 @@
                     <span>其他类型</span>
                   </div>
                   <div class="content-middle">
-                    生命就像一盒巧克力，结果往往出人意料
+                    文档类型是一种特殊文档，它规定、约束符合SGML或XML规则的定义和陈述。
                   </div>
                   <div class="content-bottom">
                     <p>文档数量</p>
@@ -190,8 +190,9 @@
                     </span>
                   </li>
                 </ul>
-                <div v-else style="width: 100%;text-align: center;">
+                <div class="no-result" v-else>
                   <img src="../../assets/images/no-result.png">
+                  <p>暂无数据</p>
                 </div>
               </el-tab-pane>
               <el-tab-pane label="审批申请" name="second">
@@ -206,8 +207,9 @@
 <!--                    <span>{{new Date(item.operateTime).format('yyyy-MM-dd')}}</span>-->
                   </li>
                 </ul>
-                <div v-else style="width: 100%;text-align: center;">
+                <div class="no-result" v-else>
                   <img src="../../assets/images/no-result.png">
+                  <p>暂无数据</p>
                 </div>
               </el-tab-pane>
             </el-tabs>
@@ -479,9 +481,9 @@
           cursor: pointer;
         }
 
-        /*.card-content .el-col:hover {*/
-        /*  box-shadow: 3px 2px 3px 2px gray;*/
-        /*}*/
+        .card-content .el-col:hover {
+          box-shadow: 0 4px 6px 5px rgba(230, 230, 230, 0.5);
+        }
 
         .box-left-d {
           background: #ffffff;
@@ -537,6 +539,17 @@
           }
           .infinite-list-item:hover{
             background: #e8f3fe;
+          }
+          .no-result{
+            width: 100%;
+            text-align: center;
+            img{
+              width: 280px;
+              margin-top: 50px;
+            }
+            p{
+              color: #666666;
+            }
           }
         }
 

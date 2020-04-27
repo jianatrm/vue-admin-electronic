@@ -114,7 +114,8 @@
                             this.loading = false
                             if (res.success) {
                                 this.queryUserInfo();
-                                this.$router.push({path: this.redirect || '/'})
+                                this.$router.push({path: '/'})
+                              // this.redirect ||
                             } else {
                                 return false
                             }

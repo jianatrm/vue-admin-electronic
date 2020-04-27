@@ -120,8 +120,8 @@
                     console.error(err)
                 })
             },
-            showNodeList(){
-                this.$router.push({path:'/work/worknodedetail'})
+            showNodeList(val){
+                this.$router.push({path:'/work/worknodedetail',query:{workOrderId:val.row.workOrderId||12}})
             },
             handleAdddoc() {
                 this.dialogType = 'new'
