@@ -84,7 +84,7 @@
           :timestamp="new Date(activity.nodeOperateTime).format('yyyy-MM-dd:hh:mm:ss')" placement="top">
           <p>审批人：{{activity.userName}}</p>
           <p class="approve-suggest">审批意见：{{activity.nodeOperateDesc}}</p>
-          <p>审批结果：
+          <p>审批批注：
             <el-link  type="primary" v-if="activity.nodeOperateResult==10"  :underline="false">审批中</el-link>
             <el-link  type="success" v-if="activity.nodeOperateResult==90"  :underline="false">审批通过</el-link>
             <el-link  type="danger" v-if="activity.nodeOperateResult==70"  :underline="false">审批驳回</el-link>
@@ -101,7 +101,7 @@
 
     <el-dialog :visible.sync="dialogVisible" title="审批处理">
       <el-form class="demo-form-inline">
-        <el-form-item label="审批说明" prop="remark">
+        <el-form-item label="审批批注" prop="remark">
           <el-input type="textarea" v-model="approve.remark" :rows="3"></el-input>
         </el-form-item>
       </el-form>

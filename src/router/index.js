@@ -184,6 +184,22 @@ export const constantRoutes = [
     ]
   },
 
+  {
+    path: '/work',
+    component: Layout,
+    redirect: '/worknodedetail',
+    meta: { title: '审批批注', icon: 'example',id:467 },
+    hidden:true,
+    children: [
+      {
+        path: 'worknodedetail',
+        component: () => import('../views/workorder/work-node-detail'),
+        meta: { title: '审批批注', icon: 'iconfont icon-renyuanguanli',id:428 },
+        hidden:true,
+      },
+    ]
+  },
+
 ]
 
 

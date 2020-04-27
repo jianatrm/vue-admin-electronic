@@ -32,6 +32,7 @@
         <template slot-scope="scope">
           <el-button type="primary" size="small" icon="el-icon-download" @click="handleEdit(scope)">下载</el-button>
           <el-button type="success" size="small" icon="el-icon-search" @click="handlePreview(scope)">预览</el-button>
+          <el-button type="info" size="small" icon="el-icon-search" @click="showNodeList(scope)">审批批注</el-button>
         </template>
       </el-table-column>
       <div slot="empty">
@@ -118,6 +119,9 @@
                 }).catch(err => {
                     console.error(err)
                 })
+            },
+            showNodeList(){
+                this.$router.push({path:'/work/worknodedetail'})
             },
             handleAdddoc() {
                 this.dialogType = 'new'
