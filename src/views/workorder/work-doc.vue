@@ -314,7 +314,7 @@
 
       approveSubmit(val) {
         let array = [];
-        for (let i = 0; i <this.sysDeptList ; i++) {
+        for (let i = 0; i <this.sysDeptList.length ; i++) {
           let temp = {
             deptId:this.sysDeptList[i]
           };

@@ -228,6 +228,13 @@
                 this.approveSubmit('90')
             },
             approveSubmit(val) {
+              let array = [];
+              for (let i = 0; i <this.sysDeptList.length ; i++) {
+                let temp = {
+                  deptId:this.sysDeptList[i]
+                };
+                array.push(temp)
+              }
                 approveWorkOrder({
                     workOrderId: this.workOrderDetail.workOrderId,
                     currentNode: this.workOrderDetail.currentNode,
@@ -236,9 +243,7 @@
                         nodeOperateResult: val,
                         nodeOperateDesc: this.approve.remark
                     },
-                    sysDept: {
-                        deptId: this.dept.deptId
-                    }
+                  sysDeptList: JSON.stringify(array)
 
                 }).then(res => {
                     this.$loading().close()
