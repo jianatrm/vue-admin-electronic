@@ -142,18 +142,17 @@
                     break;
                   }
                 }
-                resetRouter()
+               /* resetRouter()
                 if(admin){
                   console.log("constantRoutes",constantRoutes)
                   constantRoutes.push(...asyncRouter)
                   this.$router.addRoutes(constantRoutes)
-                }
+                }*/
                 this.$store.commit("user/SET_ROLES",res.result.sysRoleList)
                 this.$store.commit("user/SET_AVATAR",res.result.userAvatar)
                 this.$store.commit("user/SET_USER",res.result)
                 this.$store.commit("user/SET_ROLE_TYPE_LIST",admin)
-
-                this.$router.push({path: '/'})
+                this.$router.push({path: '/',query:{islogin:1}})
               }
             })
           },
