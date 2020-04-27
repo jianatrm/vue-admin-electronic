@@ -48,8 +48,8 @@
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleEdit(scope)" :disabled="!admin">编辑</el-button>
           <el-button type="warning" size="mini" @click="handleReset(scope.row.userId)" :disabled="!admin">重置密码</el-button>
-          <el-button type="danger" size="mini" @click="handleDelete(scope)" v-if="scope.row.status==1" :disabled="!admin">离职</el-button>
-          <el-button type="primary" size="mini" @click="handleEdit(scope)" v-if="scope.row.status==0" :disabled="!admin">在职</el-button>
+          <el-button type="danger" size="mini" @click="handleJob(scope,0)" v-if="scope.row.status==1" :disabled="!admin">离职</el-button>
+          <el-button type="primary" size="mini" @click="handleJob(scope,1)" v-if="scope.row.status==0" :disabled="!admin">在职</el-button>
         </template>
       </el-table-column>
       <div slot="empty">
@@ -246,7 +246,7 @@
         this.queryUserList();
       },
       handleEdit(scope) {
-        this.dialogType = 'onjob'
+        this.dialogType = 'edit'
         this.dialogVisible = true
         this.user = scope.row;
         this.user.checkPass = scope.row.password
@@ -264,13 +264,13 @@
             console.error(err)
           })
       },
-      handleDelete({$index, row}) {
-        this.$confirm('确定离职吗?',{
+      handleJob({$index, row},val) {
+        this.$confirm(val==0?'确定修改为离职吗?':'确定修改为在职吗?',{
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(async () => {
-          await this.deleteRole(row.userId, $index)
+          await this.deleteRole(row.userId, $index,val)
         })
           .catch(err => {
             console.error(err)
@@ -282,16 +282,16 @@
         this.user = {}
         this.queryDeptList();
       },
-      deleteRole(userId, $index) {
+      deleteRole(userId, $index,val) {
         updateuser({
-          status: 0,
+          status: val,
           userId: userId
         }).then(res => {
           this.$loading().close()
           if (res.success) {
             this.$message({
               type: 'success',
-              message: '提交成功'
+              message: '修改成功'
             })
             this.pageNum = 1;
             this.queryUserList();
@@ -324,6 +324,7 @@
                     message: '新增成功'
                   })
                   this.dialogVisible = false
+                  this.queryUserList();
                 }
               })
             } else {
