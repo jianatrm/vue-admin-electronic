@@ -152,20 +152,20 @@
           callback();
         }
       };
-      // var validateUser = (rule, value, callback) => {
-      //   var reg = /^(?![0-9]*$)(?![a-zA-Z]*$){1,10}$/;
-      //  if(!reg.test(value)){
-      //    callback(new Error('登录账号必须为1-10位字母或数字组合'));
-      //   }else{
-      //    callback();
-      //   }
-      // }
+      var validateUser = (rule, value, callback) => {
+        var reg = /^[0-9a-zA-Z]+$/;
+       if(!reg.test(value)){
+         callback(new Error('登录账号必须为字母或数字组合'));
+        }else{
+         callback();
+        }
+      }
       return {
         rules: {
           userName: [
             {required: true, message: '请输入账户', trigger: 'blur'},
             {min: 1, max: 10, message: '长度在 1 到 10 个字符', trigger: 'blur'},
-            // {validator: validateUser,trigger: 'blur'}
+            {validator: validateUser,trigger: 'blur'}
           ],
           userEmail: [
             {required: true, message: '请输入邮箱地址', trigger: 'blur'},
