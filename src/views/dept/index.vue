@@ -83,7 +83,7 @@
             return {
                 rules: {
                     deptName: [
-                        {required: true, message: '部门名称', trigger: 'blur'},
+                        {required: true, message: '部门名称不能为空', trigger: 'blur'},
                     ]
                 },
 
@@ -174,10 +174,12 @@
                             this.$loading().close()
                             adddept(this.dept).then(res => {
                                 if (res.success) {
+                                    this.dialogVisible=false;
                                     this.$message({
                                         type: 'success',
                                         message: '新增成功'
                                     })
+                                    this.querydeptList();
                                 }
                             })
                         } else {

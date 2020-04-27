@@ -61,7 +61,7 @@
         <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize" @pagination="getList"/>
       </el-col>
     </el-row>
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑人员':'新建人员'" width="50%">
+    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑人员':(dialogType==='onjob'?'在职编辑':'新建人员')" width="50%">
       <el-form :model="user" label-width="80px" :inline="true" :rules="rules" ref="user">
         <el-form-item label="登录账户" prop="userName">
           <el-input v-model="user.userName" placeholder="姓名"  />
@@ -246,7 +246,7 @@
         this.queryUserList();
       },
       handleEdit(scope) {
-        this.dialogType = 'edit'
+        this.dialogType = 'onjob'
         this.dialogVisible = true
         this.user = scope.row;
         this.user.checkPass = scope.row.password
@@ -265,7 +265,7 @@
           })
       },
       handleDelete({$index, row}) {
-        this.$confirm('确定删除该用户吗?',{
+        this.$confirm('确定离职吗?',{
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -291,7 +291,7 @@
           if (res.success) {
             this.$message({
               type: 'success',
-              message: '删除成功'
+              message: '提交成功'
             })
             this.pageNum = 1;
             this.queryUserList();

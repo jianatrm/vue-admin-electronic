@@ -24,7 +24,7 @@
       </el-table-column>
       <el-table-column align="center" label="修改时间">
         <template slot-scope="scope">
-          {{scope.row.operateTime&&new Date( scope.row.operateTime).format('yyyy-MM-dd') }}
+          {{scope.row.operateTime&&new Date(scope.row.operateTime).format('yyyy-MM-dd') }}
         </template>
       </el-table-column>
 
@@ -121,7 +121,7 @@
                 })
             },
             showNodeList(val){
-                this.$router.push({path:'/work/worknodedetail',query:{workOrderId:val.row.workOrderId||12}})
+                this.$router.push({path:'/work/worknodedetail',query:{workOrderId:val.row.workOrderId||12,route:this.$route.fullPath}})
             },
             handleAdddoc() {
                 this.dialogType = 'new'
