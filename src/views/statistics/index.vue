@@ -35,7 +35,7 @@
 
           </el-table-column>
 
-          <el-table-column algin="left" header-align="center" label="文档名称" >
+          <el-table-column algin="left" header-align="center" label="文档名称" width="400">
             <template slot-scope="scope">
               <svg-icon icon-class="excel"  v-if="'xls,xlsx,csv'.indexOf(scope.row.docType) > -1"/>
               <svg-icon icon-class="PPT" v-else-if="'ppt,pptx,pps,ppsx,pot'.indexOf(scope.row.docType) > -1" />
@@ -46,18 +46,18 @@
               {{ scope.row.docName }}
             </template>
           </el-table-column>
-          <el-table-column align="center" label="修改时间">
-            <template slot-scope="scope" width="200">
+          <el-table-column align="center" label="修改时间" width="150">
+            <template slot-scope="scope" >
               {{ scope.row.operateTime&&new Date(scope.row.operateTime).format('yyyy-MM-dd') }}
             </template>
           </el-table-column>
-          <el-table-column align="center" label="提交人">
+          <el-table-column align="center" label="提交人"  width="150">
             <template slot-scope="scope">
               {{ scope.row.userName }}
             </template>
           </el-table-column>
 
-          <el-table-column align="center" width="300" label="操作">
+          <el-table-column align="center" min-width="300" label="操作">
             <template slot-scope="scope">
               <el-button type="primary" size="small" icon="el-icon-download" @click="handleEdit(scope)">下载</el-button>
               <el-button type="success" size="small" icon="el-icon-search" @click="handlePreview(scope)">预览</el-button>
@@ -104,7 +104,7 @@
 
           </el-table-column>
 
-          <el-table-column  algin="left" header-align="center" label="文档名称">
+          <el-table-column  algin="left" header-align="center" label="文档名称" width="400">
             <template slot-scope="scope">
               <svg-icon icon-class="excel"  v-if="'xls,xlsx,csv'.indexOf(scope.row.docType) > -1"/>
               <svg-icon icon-class="PPT" v-else-if="'ppt,pptx,pps,ppsx,pot'.indexOf(scope.row.docType) > -1" />
@@ -115,18 +115,18 @@
               {{ scope.row.docName }}
             </template>
           </el-table-column>
-          <el-table-column align="center" label="修改时间">
+          <el-table-column align="center" label="修改时间" width="150">
             <template slot-scope="scope">
               {{ scope.row.operateTime&&new Date(scope.row.operateTime).format('yyyy-MM-dd') }}
             </template>
           </el-table-column>
-          <el-table-column align="center" label="归属部门">
+          <el-table-column align="center" label="归属部门" width="150">
             <template slot-scope="scope">
               {{ scope.row.deptName }}
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="操作">
+          <el-table-column align="center" label="操作" min-width="400">
             <template slot-scope="scope">
               <el-button type="primary" size="small" icon="el-icon-download" @click="handleEdit(scope)">下载</el-button>
               <el-button type="success" size="small" icon="el-icon-search" @click="handlePreview(scope)">预览</el-button>
