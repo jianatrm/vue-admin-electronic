@@ -60,8 +60,8 @@
 
       </el-form>
       <div style="text-align:right;">
-        <el-button type="danger" @click="dialogVisible=false">取消</el-button>
-        <el-button type="primary" @click="submitForm('dept')">提交</el-button>
+        <el-button type="danger" @click="dialogVisible=false" size="small">取消</el-button>
+        <el-button type="primary" @click="submitForm('dept')" size="small">提交</el-button>
       </div>
     </el-dialog>
   </div>
@@ -132,7 +132,6 @@
                 this.dialogType = 'edit'
                 this.dialogVisible = true
                 this.dept = scope.row;
-                this.dept.checkPass = scope.row.password
 
             },
             handleDelete({$index, row}) {
@@ -186,6 +185,7 @@
                             this.$loading().close()
                             updatedept(this.dept).then(res => {
                                 if (res.success) {
+                                  this.dialogVisible=false;
                                     this.$message({
                                         type: 'success',
                                         message: '修改成功'
@@ -194,7 +194,9 @@
                             })
                         }
                         this.pageNum = 1;
-                        this.querydeptList();
+                        setTimeout(()=>{
+                          this.querydeptList();
+                        },1000)
                     } else {
                         console.log('error submit!!');
                         return false;

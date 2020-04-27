@@ -111,7 +111,7 @@
     <el-dialog :visible.sync="dialogVisibleSelectDept" title="选择文档分配部门">
       <el-form :model="dept" :rules="rules" ref="dept" label-width="80px">
         <el-form-item label="部门" prop="deptId">
-          <el-select v-model="dept.deptId" placeholder="请选择部门">
+          <el-select  multiple v-model="sysDeptList" placeholder="请选择部门">
             <el-option :label="item.deptName" :value="item.deptId" v-for="(item,index) in deptList"
                        :key="index"></el-option>
           </el-select>
@@ -140,6 +140,7 @@
                 operateStatus:'',
                 approve: {},
                 deptList: [],
+                sysDeptList:[],
                 dept: {
                     deptId: ''
                 },

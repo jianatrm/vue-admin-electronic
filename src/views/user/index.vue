@@ -16,7 +16,7 @@
           {{ scope.row.userName }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="邮箱">
+      <el-table-column align="center" label="邮箱"  min-width="100">
         <template slot-scope="scope">
           {{ scope.row.userEmail }}
         </template>
@@ -31,7 +31,7 @@
           {{ scope.row.sysDept.deptName }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="管理员">
+      <el-table-column align="center" label="管理员" width="100">
         <template slot-scope="scope">
           <el-link  type="primary" v-if="scope.row.level==1"  :underline="false">是</el-link>
           <el-link v-else type="info" :underline="false">否</el-link>
@@ -324,7 +324,6 @@
                     message: '新增成功'
                   })
                   this.dialogVisible = false
-                  this.queryUserList();
                 }
               })
             } else {
@@ -340,7 +339,9 @@
               })
             }
             this.pageNum = 1;
-            this.queryUserList();
+            setTimeout(()=>{
+              this.queryUserList();
+            },1000)
           } else {
             console.log('error submit!!');
             return false;

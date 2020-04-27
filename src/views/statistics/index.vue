@@ -59,7 +59,7 @@
 
           <el-table-column align="center" min-width="300" label="操作">
             <template slot-scope="scope">
-              <el-button type="primary" size="small" icon="el-icon-download" @click="handleEdit(scope)">下载</el-button>
+              <a :href="scope.row.docUrl" target="_blank"><el-button type="primary" size="small" icon="el-icon-download" >下载</el-button></a>
               <el-button type="success" size="small" icon="el-icon-search" @click="handlePreview(scope)">预览</el-button>
 
 <!--              2`1331313-->
@@ -128,7 +128,7 @@
 
           <el-table-column align="center" label="操作" min-width="400">
             <template slot-scope="scope">
-              <el-button type="primary" size="small" icon="el-icon-download" @click="handleEdit(scope)">下载</el-button>
+              <a :href="scope.row.docUrl" target="_blank"><el-button type="primary" size="small" icon="el-icon-download" >下载</el-button></a>
               <el-button type="success" size="small" icon="el-icon-search" @click="handlePreview(scope)">预览</el-button>
               <el-button type="info" size="small" icon="el-icon-edit-outline" @click="showNodeList(scope)">审批批注</el-button>
             </template>
