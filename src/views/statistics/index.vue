@@ -57,10 +57,11 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="操作">
+          <el-table-column align="center" width="300" label="操作">
             <template slot-scope="scope">
               <el-button type="primary" size="small" icon="el-icon-download" @click="handleEdit(scope)">下载</el-button>
               <el-button type="success" size="small" icon="el-icon-search" @click="handlePreview(scope)">预览</el-button>
+              <el-button type="info" size="small" icon="el-icon-edit-outline" @click="showNodeList(scope)">审批批注</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -286,6 +287,9 @@
                 });
                 window.open(href, '_blank');
             },
+            showNodeList(val){
+              this.$router.push({path:'/work/worknodedetail',query:{workOrderId:val.row.workOrderId||12,route:this.$route.fullPath}})
+            }
         }
     }
 </script>

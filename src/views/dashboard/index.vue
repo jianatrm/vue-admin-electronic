@@ -7,7 +7,7 @@
       <el-col :span="18">
         <div>
           <p class="content-title">早安，{{userInfo.userName}}，祝你开心每一天！</p>
-          <p class="content">前端开发 | {{userInfo.companyName}}－{{userInfo.deptName}}</p>
+          <p class="content">{{userInfo.companyName?userInfo.companyName:'暂无设置'}}{{userInfo.deptName?'-':''}}{{userInfo.deptName?userInfo.deptName:'暂无设置'}}</p>
         </div>
       </el-col>
       <el-col :span="2">

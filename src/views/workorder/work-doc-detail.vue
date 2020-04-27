@@ -1,6 +1,11 @@
 <template>
   <div class="contianer">
     <div>
+      <div style="float: right">
+        <el-button type="primary" @click="handle('90')" size="small" v-if="type">审批通过</el-button>
+        <el-button type="danger" @click="handle('70')" size="small"  v-if="type">审批拒绝</el-button>
+        <el-button type="primary" size="small" @click="goback()">返回</el-button>
+      </div>
       <p class="detail-title"><span>工单信息</span></p>
       <el-row>
         <el-col :span="8">
@@ -83,20 +88,14 @@
           size="large"
           :timestamp="new Date(activity.nodeOperateTime).format('yyyy-MM-dd:hh:mm:ss')" placement="top">
           <p>审批人：{{activity.userName}}</p>
-          <p class="approve-suggest">审批意见：{{activity.nodeOperateDesc}}</p>
-          <p>审批批注：
+          <p class="approve-suggest">审批批注：{{activity.nodeOperateDesc}}</p>
+          <p>审批结果：
             <el-link  type="primary" v-if="activity.nodeOperateResult==10"  :underline="false">审批中</el-link>
             <el-link  type="success" v-if="activity.nodeOperateResult==90"  :underline="false">审批通过</el-link>
             <el-link  type="danger" v-if="activity.nodeOperateResult==70"  :underline="false">审批驳回</el-link>
           </p>
         </el-timeline-item>
       </el-timeline>
-    </div>
-
-    <div class="bottom-btn">
-      <el-button type="primary" @click="handle('90')" size="small" v-if="type">审批通过</el-button>
-      <el-button type="danger" @click="handle('70')" size="small"  v-if="type">审批拒绝</el-button>
-      <el-button type="primary" size="small" @click="goback()">返回</el-button>
     </div>
 
     <el-dialog :visible.sync="dialogVisible" title="审批处理">
@@ -307,15 +306,10 @@
       margin-top: 20px;
     }
     .approve-suggest{
-      width: 550px;
+      width: 85%;
       padding-left: 4.3rem;
       text-indent: -4.3rem;
       line-height: 20px;
-    }
-    .bottom-btn{
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
     }
     .el-link {
       span:nth-child(1){
