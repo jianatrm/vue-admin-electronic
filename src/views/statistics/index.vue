@@ -291,7 +291,7 @@
                 }
             },
             showNodeList(val){
-              this.$router.push({path:'/work/worknodedetail',query:{workOrderId:val.row.workOrderId||12,route:this.$route.fullPath}})
+              this.$router.push({path:'/workorder/worknodedetail',query:{workOrderId:val.row.workOrderId||12,route:this.$route.fullPath}})
             }
         }
     }

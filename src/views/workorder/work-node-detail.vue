@@ -56,7 +56,8 @@
         })
       },
       goback(val) {
-        this.$router.push({path:this.$route.query.route});
+        // this.$router.push({path:this.$route.query.route});
+        this.$router.go(-1)
       }
     }
   }
