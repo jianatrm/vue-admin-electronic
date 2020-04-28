@@ -176,7 +176,7 @@
 
   /* reset element-ui css */
   .login-container {
-    background:url("../../assets/images/1f33260db53abfcf834c97154c6f2344.jpg") no-repeat;
+    background:url("../../assets/images/bj.png") no-repeat;
     //object-fit:cover;
     background-size: cover;
 
