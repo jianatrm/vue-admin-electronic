@@ -277,7 +277,7 @@
                     return
                 }
                 let filename = decodeURI(scope.row.docUrl).substring(scope.row.docUrl.lastIndexOf('/') + 1);
-                if ("xls xlsx".indexOf(filetype) == -1) {
+                if ("xls xlsx".indexOf(filetype) > -1) {
                     window.open(`${window.location.protocol+"//"+window.location.host}/electronic/pdf/documentConverterToPdf/${filename}`)
                 }else{
                   const {href} = this.$router.resolve({

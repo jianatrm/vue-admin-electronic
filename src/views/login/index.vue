@@ -42,7 +42,7 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
+      <el-button :loading="loading"  style="width:100%;margin-bottom:30px;background-color: #046993;opacity: 0.8;color: #fff"
                  @click.native.prevent="handleLogin">登录
       </el-button>
 

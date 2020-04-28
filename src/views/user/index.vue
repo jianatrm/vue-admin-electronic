@@ -33,7 +33,7 @@
       </el-table-column>
       <el-table-column align="center" label="部门">
         <template slot-scope="scope">
-          {{ scope.row.sysDept.deptName }}
+          {{ scope.row.sysDept&&scope.row.sysDept.deptName }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="管理员" width="100">
@@ -285,7 +285,7 @@
         },
         pageNum: 1,
         pageSize: 10,
-        total: 10
+        total: 0
       }
 
     },

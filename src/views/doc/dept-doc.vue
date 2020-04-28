@@ -180,7 +180,7 @@
                 let number = decodeURI(scope.row.docUrl).lastIndexOf('.');
                 let filetype = decodeURI(scope.row.docUrl).substring(number + 1);
                 let reg = "pdf swf html ott fodt  sxw doc docx rtf  wpd  txt  ods  ots  fods sxc  xls xlsx  csv  tsv  odp  otp fodp  sxi  ppt pptx  odg  otg fodg  svg  png jpg  tif  gif bmp"
-                if (reg.indexOf(filetype) == -1) {
+                if (reg.indexOf(filetype) > -1) {
                     this.$message({
                         showClose: true,
                         message: '该文件不支持预览，请下载后查看',
