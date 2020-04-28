@@ -183,15 +183,15 @@
     </el-dialog>
     <el-dialog :visible.sync="dialogVisibleSelectDept" title="选择文档分配部门">
       <el-form :model="dept" :rules="rules" ref="dept" label-width="80px">
-        <el-form-item label="部门" prop="deptId">
-          <el-select multiple v-model="sysDeptList" placeholder="请选择部门">
+        <el-form-item label="部门" prop="sysDeptList">
+          <el-select multiple v-model="dept.sysDeptList" placeholder="请选择部门" style="width: 100%">
             <el-option :label="item.deptName" :value="item.deptId" v-for="(item,index) in deptList"
                        :key="index"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
-        <el-button type="primary" @click="onSubmitFinsh()">提交</el-button>
+        <el-button type="primary" @click="onSubmitFinsh('dept')">提交</el-button>
       </div>
     </el-dialog>
   </div>
@@ -222,11 +222,12 @@
         activities: [],
         deptList: [],
         dept: {
-          deptId: []
+          deptId: [],
+          sysDeptList:[],
         },
-        sysDeptList:[],
+
         rules: {
-          deptId: [
+          sysDeptList: [
             {required: true, message: '请选择部门', trigger: 'change'}
           ],
         }
@@ -314,9 +315,9 @@
 
       approveSubmit(val) {
         let array = [];
-        for (let i = 0; i <this.sysDeptList.length ; i++) {
+        for (let i = 0; i <this.dept.sysDeptList.length ; i++) {
           let temp = {
-            deptId:this.sysDeptList[i]
+            deptId:this.dept.sysDeptList[i]
           };
           array.push(temp)
         }
@@ -359,8 +360,16 @@
           }
         })
       },
-      onSubmitFinsh() {
-        this.approveSubmit('90')
+      onSubmitFinsh(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.approveSubmit('90')
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+
       },
 
     }

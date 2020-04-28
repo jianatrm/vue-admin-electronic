@@ -56,7 +56,7 @@
             async logout() {
                 await this.$store.dispatch('user/logout')
                 this.$router.push(`/login`)
-                window.location.reload()
+                localStorage.removeItem('vuex')
             },
             toPersonal() {
                 this.$router.push({path:'/personal/personalCenter'})

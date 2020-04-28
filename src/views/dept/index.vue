@@ -47,7 +47,7 @@
       </el-col>
     </el-row>
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑部门':'新建部门'">
-      <el-form :model="dept" label-width="80px" label-position="middle" :inline="true" :rules="rules" ref="dept" style="margin-left: 40px">
+      <el-form :model="dept" label-width="80px" label-position="middle"  :rules="rules" ref="dept" style="margin-left: 40px">
         <el-form-item label="部门名称" prop="deptName">
           <el-input v-model="dept.deptName" placeholder="部门名称"/>
         </el-form-item>
@@ -55,7 +55,7 @@
           <el-input v-model="dept.deptCode" placeholder="部门编号"/>
         </el-form-item>
         <el-form-item label="部门描述" prop="remark">
-          <el-input type="textarea" v-model="dept.remark" :autosize="{ minRows: 4, maxRows: 4}" style="width: 350px;" placeholder="部门描述..."/>
+          <el-input type="textarea" v-model="dept.remark" :autosize="{ minRows: 4, maxRows: 4}" placeholder="部门描述..."/>
         </el-form-item>
 
       </el-form>
@@ -210,15 +210,15 @@
 <style lang="scss" scoped>
   .app-container {
     .el-form-item {
-      margin-right: 100px;
+      //margin-right: 100px;
 
-      .el-input {
-        width: 120%;
-      }
+      /*.el-input {*/
+      /*  width: 120%;*/
+      /*}*/
 
-      .el-select {
-        width: 110%;
-      }
+      /*.el-select {*/
+      /*  width: 110%;*/
+      /*}*/
     }
 
     .permission-tree {

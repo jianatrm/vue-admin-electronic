@@ -57,7 +57,7 @@
     <el-divider></el-divider>
     <div class="detail-title"><p>文件列表：</p>
       <el-row>
-        <div v-for="(item,index) in workOrderDetail.workInfo">
+        <div v-for="(item,index) in workOrderDetail.workInfo" class="fileList">
           <el-link :underline="false" :key="index" >
         <span>
           <svg-icon icon-class="excel" v-if="'xls,xlsx,csv'.indexOf(item.docType) > -1"/>
@@ -69,11 +69,12 @@
           <svg-icon icon-class="wendang" v-else/>
           {{item.docName}}
         </span>
+          </el-link>
             <span>
             <a :href="item.docUrl" target="_blank"><el-button type="primary" size="mini">下载</el-button></a>
             <el-button type="success" @click="handlePreview(item.docUrl)" size="mini">预览</el-button>
           </span>
-          </el-link>
+
         </div>
       </el-row>
     </div>
@@ -110,15 +111,15 @@
     </el-dialog>
     <el-dialog :visible.sync="dialogVisibleSelectDept" title="选择文档分配部门">
       <el-form :model="dept" :rules="rules" ref="dept" label-width="80px">
-        <el-form-item label="部门" prop="deptId">
-          <el-select  multiple v-model="sysDeptList" placeholder="请选择部门">
+        <el-form-item label="部门" prop="sysDeptList">
+          <el-select  multiple v-model="dept.sysDeptList" placeholder="请选择部门" style="width: 100%">
             <el-option :label="item.deptName" :value="item.deptId" v-for="(item,index) in deptList"
                        :key="index"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
-        <el-button type="primary" @click="onSubmitFinsh()">提交</el-button>
+        <el-button type="primary" @click="onSubmitFinsh('dept')">提交</el-button>
       </div>
     </el-dialog>
   </div>
@@ -140,12 +141,13 @@
                 operateStatus:'',
                 approve: {},
                 deptList: [],
-                sysDeptList:[],
+
                 dept: {
+                  sysDeptList:[],
                     deptId: ''
                 },
                 rules: {
-                    deptId: [
+                  sysDeptList: [
                         {required: true, message: '请选择部门', trigger: 'change'}
                     ],
                 }
@@ -225,14 +227,22 @@
                     }
                 })
             },
-            onSubmitFinsh() {
-                this.approveSubmit('90')
+            onSubmitFinsh(formName) {
+                this.$refs[formName].validate((valid) => {
+                  if (valid) {
+                    this.approveSubmit('90')
+                  } else {
+                    console.log('error submit!!');
+                    return false;
+                  }
+                });
+
             },
             approveSubmit(val) {
               let array = [];
-              for (let i = 0; i <this.sysDeptList.length ; i++) {
+              for (let i = 0; i <this.dept.sysDeptList.length ; i++) {
                 let temp = {
-                  deptId:this.sysDeptList[i]
+                  deptId:this.dept.sysDeptList[i]
                 };
                 array.push(temp)
               }
@@ -288,7 +298,7 @@
       font-weight: 400;
       font-size: 14px;
       /*line-height: 1.5715;*/
-      width: 520px;
+      //width: 520px;
       padding-left: 2.6rem;
       text-indent: -2.6rem;
       line-height: 22px;
@@ -323,12 +333,14 @@
         display: inline-block;
         width: 300px;
       }
-      span:nth-child(2) {
-        margin-left: 300px;
-      }
+
     }
     .el-divider--horizontal {
       height: 0.5px;
+    }
+    .fileList{
+      display: flex;
+      justify-content: space-between;
     }
     }
 </style>

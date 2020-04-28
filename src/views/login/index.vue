@@ -135,19 +135,15 @@
               this.$loading().close()
               if (res.success) {
 
-                let  admin = false;
-                for (let i = 0; i < res.result.sysRoleList.length; i++) {
-                  if ( res.result.sysRoleList[i].roleType == 1){
-                    admin = true;
-                    break;
+                let  admin = true;
+                try {
+                  if (res.result.level == '1'){
+                      admin = true;
                   }
+                }catch (e) {
+
                 }
-               /* resetRouter()
-                if(admin){
-                  console.log("constantRoutes",constantRoutes)
-                  constantRoutes.push(...asyncRouter)
-                  this.$router.addRoutes(constantRoutes)
-                }*/
+
                 this.$store.commit("user/SET_ROLES",res.result.sysRoleList)
                 this.$store.commit("user/SET_AVATAR",res.result.userAvatar)
                 this.$store.commit("user/SET_USER",res.result)
@@ -176,7 +172,7 @@
 
   /* reset element-ui css */
   .login-container {
-    background:url("../../assets/images/bj.png") no-repeat;
+    background:url("../../assets/images/pic_hd.jpg") no-repeat;
     //object-fit:cover;
     background-size: cover;
 
@@ -203,8 +199,8 @@
     }
 
     .el-form-item {
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      background: rgba(0, 0, 0, 0.6);
       border-radius: 5px;
       color: #454545;
     }

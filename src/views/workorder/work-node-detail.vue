@@ -1,7 +1,7 @@
 <template>
   <div class="contianer">
     <div class="approve-record">
-      <p class="detail-title"><span>审批记录：</span></p>
+      <p class="detail-title"><span>审批记录：</span> <el-button type="primary" size="small" @click="goback">返回</el-button></p>
       <el-timeline>
         <el-timeline-item
           v-for="(activity, index) in activities"
@@ -18,10 +18,6 @@
           </p>
         </el-timeline-item>
       </el-timeline>
-    </div>
-
-    <div class="bottom-btn">
-      <el-button type="primary" size="small" @click="goback">返回</el-button>
     </div>
   </div>
 </template>
@@ -85,6 +81,8 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      display: flex;
+      justify-content: space-between;
     }
     .el-row {
       padding-left: 40px;

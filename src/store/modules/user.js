@@ -98,6 +98,8 @@ const actions = {
         commit('SET_ROLES',[])
         commit('SET_AVATAR','')
         commit('SET_VERIFIED', false)
+        commit('SET_ROLE_TYPE_LIST', false)
+        commit('SET_LIMIT', false)
         removeToken()
         resetRouter()
         resolve()

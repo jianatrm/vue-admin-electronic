@@ -8,7 +8,7 @@ function resolve(dir) {
 
 const name = defaultSettings.title || 'vue Admin Template' // page title
 
-const port = process.env.port || process.env.npm_config_port || 8080 // dev port
+const port = process.env.port || process.env.npm_config_port || 80 // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -19,7 +19,7 @@ module.exports = {
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
-    port: port,
+    port: 80,
     open: true,
     overlay: {
       warnings: false,
@@ -29,7 +29,7 @@ module.exports = {
       // change xxx-api/login => mock/login   39.106.93.170
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       ['/electronic']: {
-        target: 'http://39.106.93.170:8001/electronic/',
+        target: 'http://47.92.246.61/electronic/',
         changeOrigin: true,
         ws: true,
         pathRewrite: {
