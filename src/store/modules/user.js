@@ -49,7 +49,7 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password}).then(response => {
+      login({ username: username.trim(), password: password},false).then(response => {
         commit('SET_TOKEN', response.result.value)
         setToken(response.result.value)
         resolve(response)
