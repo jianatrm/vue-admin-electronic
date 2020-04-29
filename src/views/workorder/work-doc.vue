@@ -39,7 +39,7 @@
         </el-table>
         <el-row :gutter="20">
           <el-col :span="24" style="text-align: right">
-            <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize" @pagination="getList"/>
+            <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize" @pagination="queryWorkOrderList()"/>
           </el-col>
         </el-row>
       </el-tab-pane>
@@ -87,7 +87,7 @@
         </el-table>
         <el-row :gutter="20">
           <el-col :span="24" style="text-align: right">
-            <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize" @pagination="getList"/>
+            <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize" @pagination="queryWorkOrderToMeList()"/>
           </el-col>
         </el-row>
       </el-tab-pane>
@@ -134,7 +134,7 @@
         </el-table>
         <el-row :gutter="20">
           <el-col :span="24" style="text-align: right">
-            <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize" @pagination="getList"/>
+            <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize" @pagination="queryWorkOrderHistory()"/>
           </el-col>
         </el-row>
       </el-tab-pane>
@@ -240,6 +240,8 @@
     },
     methods: {
       handleClick(tab, event) {
+        this.total = 0
+        this.pageNum = 1
         if (tab.index == 0) {
           this.queryWorkOrderList();
         } else if (tab.index == 1) {
@@ -258,6 +260,7 @@
           this.$loading().close()
           if (res.success) {
             this.workList = res.result.result;
+            this.total= res.result.count
           }
         })
       },
@@ -270,6 +273,7 @@
           this.$loading().close()
           if (res.success) {
             this.workToMeList = res.result.result;
+            this.total= res.result.count
           }
         })
       },
@@ -282,6 +286,7 @@
           this.$loading().close()
           if (res.success) {
             this.workToMeList = res.result.result;
+            this.total= res.result.count
           }
         })
       },

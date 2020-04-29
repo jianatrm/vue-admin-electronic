@@ -27,7 +27,8 @@
     import {mapGetters} from 'vuex'
     import Breadcrumb from '@/components/Breadcrumb'
     import Hamburger from '@/components/Hamburger'
-
+    import router, {constantRoutes} from "../../router";
+    import {resetRouter} from "../../router";
 
     export default {
         components: {
@@ -54,9 +55,13 @@
                 this.$store.dispatch('app/toggleSideBar')
             },
             async logout() {
-                await this.$store.dispatch('user/logout')
+              await this.$store.dispatch('user/logout')
+              resetRouter()
+              constantRoutes.pop()
+              this.$router.addRoutes(constantRoutes)
+              localStorage.removeItem('vuex')
                 this.$router.push(`/login`)
-                localStorage.removeItem('vuex')
+
             },
             toPersonal() {
                 this.$router.push({path:'/personal/personalCenter'})

@@ -135,7 +135,7 @@
               this.$loading().close()
               if (res.success) {
 
-                let  admin = true;
+                let  admin = false;
                 try {
                   if (res.result.level == '1'){
                       admin = true;
@@ -143,12 +143,12 @@
                 }catch (e) {
 
                 }
-
                 this.$store.commit("user/SET_ROLES",res.result.sysRoleList)
                 this.$store.commit("user/SET_AVATAR",res.result.userAvatar)
                 this.$store.commit("user/SET_USER",res.result)
                 this.$store.commit("user/SET_ROLE_TYPE_LIST",admin)
-                this.$router.push({path: '/',query:{islogin:1}})
+                localStorage.setItem('new', 'new');
+                this.$router.push({path: '/'})
               }
             })
           },
