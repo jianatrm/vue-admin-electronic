@@ -19,10 +19,11 @@ router.beforeEach(async(to, from, next) => {
   NProgress.start()
 
   if (localStorage.getItem('new')&&store.getters.admin) {
+    localStorage.removeItem('new')
     constantRoutes.push(...asyncRouter);
     router.addRoutes(constantRoutes)
     next({ ...to, replace: true })
-    localStorage.removeItem('new')
+
   }
 
   document.title = getPageTitle(to.meta.title)
