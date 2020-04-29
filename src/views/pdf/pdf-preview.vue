@@ -21,7 +21,7 @@
         },
         created() {
             this.filename = this.$route.query.filename
-            this.pdfUrl = pdf.createLoadingTask(`http://localhost:8001/electronic/pdf/documentConverterToPdf/${this.filename}`)
+            this.pdfUrl = pdf.createLoadingTask(`${window.location.protocol+"//"+window.location.host}/electronic/pdf/documentConverterToPdf/${this.filename}`)
 
 
         },

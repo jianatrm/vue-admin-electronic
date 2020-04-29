@@ -27,7 +27,7 @@
         </el-col>
         <el-col :span="8">
           <div class="grid-content bg-purple">
-            <p class="detail-lable">创建时间：<span class="detail-content">{{workOrderDetail.operateTime&&new Date(workOrderDetail.operateTime).format("yyyy-MM-dd:hh:mm:ss")}}</span>
+            <p class="detail-lable">创建时间：<span class="detail-content">{{workOrderDetail.operateTime}}</span>
             </p>
           </div>
         </el-col>
@@ -87,7 +87,7 @@
           :key="index"
           :color="workOrderDetail.workNode.nodeId >=activity.nodeId?(activity.nodeOperateResult == '90'?'#67C23A':activity.nodeOperateResult ==70?'#F56C6C':'#3498db'):''"
           size="large"
-          :timestamp="new Date(activity.nodeOperateTime).format('yyyy-MM-dd:hh:mm:ss')" placement="top">
+          :timestamp="activity.nodeOperateTime" placement="top">
           <p>审批人：{{activity.userName}}</p>
           <p class="approve-suggest">审批批注：{{activity.nodeOperateDesc}}</p>
           <p>审批结果：

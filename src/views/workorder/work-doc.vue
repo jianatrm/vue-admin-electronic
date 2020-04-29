@@ -15,7 +15,7 @@
           </el-table-column>
           <el-table-column align="center" label="申请时间">
             <template slot-scope="scope">
-              {{ new Date(scope.row.createTime ).format("yyyy-MM-dd")}}
+              {{scope.row.createTime}}
             </template>
           </el-table-column>
           <el-table-column align="center" label="状态">
@@ -57,7 +57,7 @@
           </el-table-column>
           <el-table-column align="center" label="申请时间">
             <template slot-scope="scope">
-              {{ new Date(scope.row.workOrderVO.createTime ).format("yyyy-MM-dd")}}
+              {{ scope.row.workOrderVO.createTime}}
             </template>
           </el-table-column>
           <el-table-column align="center" label="状态">
@@ -105,7 +105,7 @@
           </el-table-column>
           <el-table-column align="center" label="申请时间">
             <template slot-scope="scope">
-              {{ new Date(scope.row.workOrderVO.createTime ).format("yyyy-MM-dd")}}
+              {{ scope.row.workOrderVO.createTime }}
             </template>
           </el-table-column>
           <el-table-column align="center" label="状态">

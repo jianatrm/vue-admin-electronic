@@ -48,7 +48,7 @@
           </el-table-column>
           <el-table-column align="center" label="修改时间" width="150">
             <template slot-scope="scope" >
-              {{ scope.row.operateTime&&new Date(scope.row.operateTime).format('yyyy-MM-dd') }}
+              {{ scope.row.operateTime}}
             </template>
           </el-table-column>
           <el-table-column align="center" label="提交人"  width="150">
@@ -117,7 +117,7 @@
           </el-table-column>
           <el-table-column align="center" label="修改时间" width="150">
             <template slot-scope="scope">
-              {{ scope.row.operateTime&&new Date(scope.row.operateTime).format('yyyy-MM-dd') }}
+              {{ scope.row.operateTime}}
             </template>
           </el-table-column>
           <el-table-column align="center" label="归属部门" width="150">
