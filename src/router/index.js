@@ -145,22 +145,6 @@ export const constantRoutes = [
   },
 
 
-  // {
-  //   path: '/work',
-  //   component: Layout,
-  //   redirect: '/workdocdetail',
-  //   meta: { title: '工单详情', icon: 'example',id:405 },
-  //   hidden:true,
-  //   children: [
-  //     {
-  //       path: 'workdocdetail',
-  //       component: () => import('../views/workorder/work-doc-detail'),
-  //       meta: { title: '工单详情', icon: 'iconfont icon-renyuanguanli',id:415 },
-  //       hidden:true,
-  //     },
-  //   ]
-  // },
-
 
   {
     path: '/personal',
@@ -176,23 +160,6 @@ export const constantRoutes = [
       },
     ]
   },
-
-  // {
-  //   path: '/work',
-  //   component: Layout,
-  //   redirect: '/worknodedetail',
-  //   meta: { title: '审批批注', icon: 'example',id:467 },
-  //   hidden:true,
-  //   children: [
-  //     {
-  //       path: 'worknodedetail',
-  //       component: () => import('../views/workorder/work-node-detail'),
-  //       meta: { title: '审批批注', icon: 'iconfont icon-renyuanguanli',id:428 },
-  //       hidden:true,
-  //     },
-  //   ]
-  // },
-
 ]
 
 
