@@ -29,7 +29,7 @@ module.exports = {
       // change xxx-api/login => mock/login   39.106.93.170
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       ['/electronic']: {
-        target: 'http://47.92.246.61/electronic/',
+        target: 'http://localhost/electronic/',
         changeOrigin: true,
         ws: true,
         pathRewrite: {

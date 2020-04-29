@@ -7,7 +7,7 @@ export const asyncRouter = [
     children: [
       {
         path: 'index',
-        name: 'index',
+        name: 'index1',
         component: () => import('@/views/statistics/index'),
         meta: {title: '统计查询', icon: 'iconfont icon-cz-tjcx', id: 417,}
       }

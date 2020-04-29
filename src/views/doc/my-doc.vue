@@ -25,7 +25,7 @@
       </el-table-column>
       <el-table-column align="center" label="修改时间">
         <template slot-scope="scope">
-          {{ scope.row.operateTime&&new Date(scope.row.operateTime).format('yyyy-MM-dd') }}
+          {{ scope.row.operateTime }}
         </template>
       </el-table-column>
 

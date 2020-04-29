@@ -21,11 +21,10 @@ router.beforeEach(async(to, from, next) => {
   if (localStorage.getItem('new')&&store.getters.admin) {
     constantRoutes.push(...asyncRouter);
     router.addRoutes(constantRoutes)
-    localStorage.removeItem('new')
     next({ ...to, replace: true })
-
+    localStorage.removeItem('new')
   }
-  localStorage.removeItem("islogin")
+
   document.title = getPageTitle(to.meta.title)
 
   const hasToken = getToken()
