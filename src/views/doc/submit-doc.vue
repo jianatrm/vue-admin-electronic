@@ -10,7 +10,7 @@
             <el-input type="textarea" v-model="doc.remark" :autosize="{ minRows: 4, maxRows: 4}"></el-input>
           </el-form-item>
           <el-form-item label="审批人选择">
-            <el-select v-model="doc.approve"  placeholder="请选择审批人" @change="selectApprove()">
+            <el-select v-model="doc.approve"  placeholder="请选择审批人" @change="selectApprove()" filterable>
               <el-option v-for="item in options" :key="item.userId" :label="item.userName" :value="item">
               </el-option>
             </el-select>
