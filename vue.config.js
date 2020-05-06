@@ -10,7 +10,7 @@ const name = defaultSettings.title || 'vue Admin Template' // page title
 
 const port = process.env.port || process.env.npm_config_port || 80 // dev port
 
-// All configuration item explanations can be find in https://cli.vuejs.org/config/
+// All configuration item explanations can be find in https://cli.vuejs.org/config/  39.106.93.170
 module.exports = {
   transpileDependencies: ['vuex-persist'],
   publicPath: './',
@@ -26,8 +26,6 @@ module.exports = {
       errors: true
     },
     proxy: {
-      // change xxx-api/login => mock/login   39.106.93.170
-      // detail: https://cli.vuejs.org/config/#devserver-proxy
       ['/electronic']: {
         target: 'http://localhost/electronic/',
         changeOrigin: true,

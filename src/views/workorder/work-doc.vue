@@ -138,6 +138,54 @@
           </el-col>
         </el-row>
       </el-tab-pane>
+      <el-tab-pane label="我的抄送" name="four">
+        <el-table :data="carbonListResult" style="width: 100%;margin-top:30px;" border  size="small">
+          <el-table-column align="center" label="工单编码">
+            <template slot-scope="scope">
+              {{ scope.row.workOrderVO.workOrderCode }}
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="工单名称">
+            <template slot-scope="scope">
+              {{ scope.row.workOrderVO.workOrderName }}
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="申请时间">
+            <template slot-scope="scope">
+              {{ scope.row.workOrderVO.createTime }}
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="状态">
+            <template slot-scope="scope">
+              <el-link  type="primary" v-if="scope.row.workOrderVO.workOrderStatus==10"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
+              <el-link  type="success" v-if="scope.row.workOrderVO.workOrderStatus==90"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
+              <el-link  type="danger" v-if="scope.row.workOrderVO.workOrderStatus==70"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
+
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="提交人">
+            <template slot-scope="scope">
+              {{ scope.row.workOrderVO.userName }}
+            </template>
+          </el-table-column>
+
+
+          <el-table-column align="center" label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary" size="small" @click="queryWorkDetail(scope.row.workOrderId)" >详情</el-button>
+            </template>
+          </el-table-column>
+          <div slot="empty">
+            <span >未查询到数据</span>
+          </div>
+        </el-table>
+        <el-row :gutter="20">
+          <el-col :span="24" style="text-align: right">
+            <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize" @pagination="queryCarbonList()"/>
+          </el-col>
+        </el-row>
+      </el-tab-pane>
+
     </el-tabs>
 
     <el-dialog :visible.sync="dialogVisibleDetail" title="审批详情">
@@ -179,6 +227,7 @@
       <div style="text-align:right;">
         <el-button type="primary" @click="onSubmit('90')" size="small">审批通过</el-button>
         <el-button type="danger" @click="onSubmit('70')" size="small">审批拒绝</el-button>
+        <el-button style="background-color: #e67e22;color: #fff" @click="onSubmitNextApprove()" size="small" v-if="workOrderDetail.workNode&&workOrderDetail.nodeCount == workOrderDetail.workNode.nodeOrder">下级审批</el-button>
       </div>
     </el-dialog>
     <el-dialog :visible.sync="dialogVisibleSelectDept" title="选择文档分配部门">
@@ -194,13 +243,31 @@
         <el-button type="primary" @click="onSubmitFinsh('dept')">提交</el-button>
       </div>
     </el-dialog>
+    <el-dialog :visible.sync="dialogVisibleNextApprove" title="选择下一级审批人">
+      <el-form  ref="dept" label-width="80px">
+        <el-form-item label="审批人" prop="">
+          <el-select v-model="nextApprove" placeholder="请选择下一级审批人" style="width: 100%">
+            <el-option v-for="item in nextApproveList" :key="item.userId" :label="item.userName" :value="item.userId"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="抄送人" prop="">
+          <el-select multiple v-model="carbonList" placeholder="请选择抄送人" style="width: 100%">
+            <el-option v-for="item in nextApproveList" :key="item.userId" :label="item.userName" :value="item.userId"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div style="text-align:right;">
+        <el-button type="primary" @click="submitNextApprove()">提交</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-  import {queryWorkOrder, queryWorkOrderToMe, queryWorkOrderDetail, approveWorkOrder} from "../../api/workOrder";
+  import {queryWorkOrder, queryWorkOrderToMe, queryWorkOrderDetail, approveWorkOrder,approverCarbonCopy,queryApproverCarbonCopy} from "../../api/workOrder";
   import {querydept} from "../../api/dept";
   import Pagination from '@/components/Pagination'
+  import {queryuser} from "../../api/user";
 
   export default {
     components: {Pagination},
@@ -211,9 +278,11 @@
         dialogVisible: false,
         dialogVisibleDetail: false,
         dialogVisibleSelectDept: false,
+        dialogVisibleNextApprove:false,
         activeName: 'first',
         workList: [],
         workToMeList: [],
+        carbonListResult: [],
         workOrderDetail: {},
         pageNum: 1,
         pageSize: 10,
@@ -221,6 +290,9 @@
         approve: {},
         activities: [],
         deptList: [],
+        nextApproveList:[],
+        nextApprove:'',
+        carbonList:'',
         dept: {
           deptId: [],
           sysDeptList:[],
@@ -248,6 +320,8 @@
           this.queryWorkOrderToMeList();
         } else if (tab.index == 2) {
           this.queryWorkOrderHistory();
+        }else if (tab.index == 3){
+          this.queryCarbonList()
         }
       },
       getList() {
@@ -286,6 +360,18 @@
           this.$loading().close()
           if (res.success) {
             this.workToMeList = res.result.result;
+            this.total= res.result.count
+          }
+        })
+      },
+      queryCarbonList(){
+        queryApproverCarbonCopy({
+          pageNum: this.pageNum,
+          pageSize: this.pageSize
+        }).then(res=>{
+          this.$loading().close()
+          if (res.success){
+            this.carbonListResult = res.result.result
             this.total= res.result.count
           }
         })
@@ -376,6 +462,53 @@
         });
 
       },
+
+      onSubmitNextApprove(){
+        this.queryUserList();
+        this.dialogVisibleNextApprove = true;
+
+      },
+      queryUserList(val) {
+        queryuser({
+          pageSize: this.pageSize,
+          pageNum: this.pageNum,
+          userName: val
+        },false).then(res => {
+          if (res.success) {
+            this.nextApproveList = res.result.result
+          }
+        })
+      },
+      submitNextApprove(){
+        let array = [];
+        for (let i = 0; i <this.carbonList.length ; i++) {
+          let temp ={};
+          temp.userId = this.carbonList[i];
+          array.push(temp)
+        }
+        approverCarbonCopy({
+          workOrderId: this.workOrderDetail.workOrderId,
+          currentNode: this.workOrderDetail.currentNode,
+          workNode: {
+            userId:this.nextApprove,
+            nodeId: this.workOrderDetail.workNode.nodeId,
+            nodeOperateResult: '90',
+            nodeOperateDesc: this.approve.remark
+          },
+          workCarbonList: JSON.stringify(array)
+        }).then(res=>{
+          this.$loading().close()
+          if (res.success){
+            this.$message({
+              type: 'success',
+              message: '操作成功'
+            })
+            this.dialogVisible = false;
+            this.dialogVisibleNextApprove = false;
+            this.reload();
+          }
+        })
+      }
 
     }
   }

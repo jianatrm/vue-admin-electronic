@@ -90,6 +90,9 @@
           :timestamp="activity.nodeOperateTime" placement="top">
           <p>审批人：{{activity.userName}}</p>
           <p class="approve-suggest">审批批注：{{activity.nodeOperateDesc}}</p>
+          <p class="approve-suggest">抄送人员：
+            <el-link  type="primary" v-for="(item,m) in activity.workCarbonVOList" :key="m"  :underline="false">{{item.userName}}、</el-link>
+          </p>
           <p>审批结果：
             <el-link  type="primary" v-if="activity.nodeOperateResult==10"  :underline="false">审批中</el-link>
             <el-link  type="success" v-if="activity.nodeOperateResult==90"  :underline="false">审批通过</el-link>
@@ -323,10 +326,15 @@
       margin-top: 20px;
     }
     .approve-suggest{
-      width: 85%;
+      //width: 85%;
       padding-left: 4.3rem;
       text-indent: -4.3rem;
       line-height: 20px;
+      display: flex;
+
+      .el-link{
+        text-indent: initial;
+      }
     }
     .el-link {
       span:nth-child(1){

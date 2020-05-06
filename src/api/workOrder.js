@@ -58,3 +58,19 @@ export function approveWorkOrder(data,loading =true) {
     data:data,
   })
 }
+export function approverCarbonCopy(data,loading =true) {
+  return request({
+    url: '/electronic/workOrder/approverCarbonCopy',
+    method: 'post',
+    loading:loading,
+    data:data,
+  })
+}
+export function queryApproverCarbonCopy(data,loading =true) {
+  return request({
+    url: '/electronic/workOrder/queryApproverCarbonCopy',
+    method: 'post',
+    loading:loading,
+    data:data,
+  })
+}
