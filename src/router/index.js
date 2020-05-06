@@ -58,13 +58,13 @@ export const constantRoutes = [
     path: '/doc',
     component: Layout,
     redirect: '/mydoc',
-    meta: { title: '我的文档', icon: 'example',id:408 },
+    meta: { title: '我的文件', icon: 'example',id:408 },
     children: [
       {
         path: 'mydoc',
         name: 'mydoc',
         component: () => import('../views/doc/my-doc'),
-        meta: { title: '我的文档', icon: 'iconfont icon-iconset0155',id:409 }
+        meta: { title: '我的文件', icon: 'iconfont icon-iconset0155',id:409 }
       },
 
     ]
@@ -73,13 +73,13 @@ export const constantRoutes = [
     path: '/deptdoc',
     component: Layout,
     redirect: '/deptdoc',
-    meta: { title: '部门文档', icon: 'example',id:410 },
+    meta: { title: '部门文件', icon: 'example',id:410 },
     children: [
       {
         path: 'deptdoc',
         name: 'deptdoc',
         component: () => import('@/views/doc/dept-doc'),
-        meta: { title: '部门文档', icon: 'iconfont icon-wendang',id:411 }
+        meta: { title: '部门文件', icon: 'iconfont icon-wendang',id:411 }
       }
     ]
   },
@@ -88,13 +88,13 @@ export const constantRoutes = [
     path: '/submit',
     component: Layout,
     redirect: '/submitdoc',
-    meta: { title: '提交文档', icon: 'example',id:412 },
+    meta: { title: '提交文件', icon: 'example',id:412 },
     children: [
       {
         path: 'submitdoc',
         name: 'submitdoc',
         component: () => import('../views/doc/submit-doc'),
-        meta: { title: '提交文档', icon: 'iconfont icon-tijiaowendang',id:413 }
+        meta: { title: '提交文件', icon: 'iconfont icon-tijiaowendang',id:413 }
       }
     ]
   },
@@ -103,13 +103,13 @@ export const constantRoutes = [
     path: '/workorder',
     component: Layout,
     redirect: 'workdoc',
-    meta: { title: '文档审批', icon: 'example',id:414 },
+    meta: { title: '文件审批', icon: 'example',id:414 },
     children: [
       {
         path: 'workdoc',
         name: 'workdoc',
         component: () => import('@/views/workorder/work-doc'),
-        meta: { title: '文档审批', icon: 'iconfont icon-shenqingshenpi',id:415 }
+        meta: { title: '文件审批', icon: 'iconfont icon-shenqingshenpi',id:415 }
       },
       {
         path: 'workdocdetail',

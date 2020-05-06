@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
     <el-tabs v-model="activeName" @tab-click="handleClick" type="card">
-      <el-tab-pane label="员工文档" name="first">
+      <el-tab-pane label="员工文件" name="first">
         <el-row :gutter="20" style="margin-left: 0;padding-top: 20px">
           <el-form :inline="true"  class="demo-form-inline">
-            <el-form-item label="文档名称">
-              <el-input v-model="docName" placeholder="请输入文档名称" size="small"></el-input>
+            <el-form-item label="文件名称">
+              <el-input v-model="docName" placeholder="请输入文件名称" size="small"></el-input>
             </el-form-item>
 
             <el-form-item label="选择日期">
@@ -35,7 +35,7 @@
 
           </el-table-column>
 
-          <el-table-column algin="left" header-align="center" label="文档名称" width="400">
+          <el-table-column algin="left" header-align="center" label="文件名称" width="400">
             <template slot-scope="scope">
               <svg-icon icon-class="excel"  v-if="'xls,xlsx,csv'.indexOf(scope.row.docType) > -1"/>
               <svg-icon icon-class="PPT" v-else-if="'ppt,pptx,pps,ppsx,pot'.indexOf(scope.row.docType) > -1" />
@@ -72,11 +72,11 @@
           </el-col>
         </el-row>
       </el-tab-pane>
-      <el-tab-pane label="部门文档" name="second">
+      <el-tab-pane label="部门文件" name="second">
         <el-row :gutter="20" style=" margin-left: 0;padding-top: 20px">
           <el-form :inline="true" class="demo-form-inline">
-            <el-form-item label="文档名称">
-              <el-input v-model="docName" placeholder="请输入文档名称" size="small"></el-input>
+            <el-form-item label="文件名称">
+              <el-input v-model="docName" placeholder="请输入文件名称" size="small"></el-input>
             </el-form-item>
 
             <el-form-item label="选择日期">
@@ -104,7 +104,7 @@
 
           </el-table-column>
 
-          <el-table-column  algin="left" header-align="center" label="文档名称" width="400">
+          <el-table-column  algin="left" header-align="center" label="文件名称" width="400">
             <template slot-scope="scope">
               <svg-icon icon-class="excel"  v-if="'xls,xlsx,csv'.indexOf(scope.row.docType) > -1"/>
               <svg-icon icon-class="PPT" v-else-if="'ppt,pptx,pps,ppsx,pot'.indexOf(scope.row.docType) > -1" />

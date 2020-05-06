@@ -12,7 +12,7 @@
       </el-col>
       <el-col :span="2">
         <div @click="toMyFile">
-          <p class="doc-title">我的文档数量</p>
+          <p class="doc-title">我的文件数量</p>
           <p class="doc-content">{{userInfo.userCount}}</p>
         </div>
 
@@ -20,7 +20,7 @@
       <el-divider direction="vertical"></el-divider>
       <el-col :span="2">
         <div @click="toPartFile">
-          <p class="doc-title">部门文档数量</p>
+          <p class="doc-title">部门文件数量</p>
           <p class="doc-content">{{userInfo.deptCount}}</p>
         </div>
 
@@ -28,7 +28,7 @@
      <!-- <el-divider direction="vertical"></el-divider>
       <el-col :span="2">
         <div>
-          <p class="doc-title">公司文档数量</p>
+          <p class="doc-title">公司文件数量</p>
           <p class="doc-content">{{userInfo.companyCount}}</p>
         </div>
       </el-col>-->
@@ -43,8 +43,8 @@
         </div>
         <el-card class="box-card box-left-t">
           <div slot="header" class="clearfix">
-            <span>我的文档分类</span>
-            <el-button style="float: right; padding: 3px 0" type="text" @click="toMyFile">全部文档</el-button>
+            <span>我的文件分类</span>
+            <el-button style="float: right; padding: 3px 0" type="text" @click="toMyFile">全部文件</el-button>
           </div>
           <div class="card-content">
             <el-row>
@@ -60,7 +60,7 @@
                     由图形、图像等构成的平面媒体。图片的格式很多，我们常用的为jpg、png、jpeg等。
                   </div>
                   <div class="content-bottom">
-                    <p>文档数量</p>
+                    <p>文件数量</p>
                     <p>{{imageCount}}</p>
                   </div>
                 </router-link>
@@ -74,10 +74,10 @@
                     <span>Word</span>
                   </div>
                   <div class="content-middle">
-                    微软公司的一个文字处理器应用程序。Word给用户提供了用于创建专业而优雅的文档工具，帮助用户...
+                    微软公司的一个文字处理器应用程序。Word给用户提供了用于创建专业而优雅的文件工具，帮助用户...
                   </div>
                   <div class="content-bottom">
-                    <p>文档数量</p>
+                    <p>文件数量</p>
                     <p>{{wordCount}}</p>
                   </div>
                 </router-link>
@@ -94,7 +94,7 @@
                     是Microsoft为使用Windows和Apple Macintosh操作系统的电脑编写的一款电子表格软件。
                   </div>
                   <div class="content-bottom">
-                    <p>文档数量</p>
+                    <p>文件数量</p>
                     <p>{{excelCount}}</p>
                   </div>
                 </router-link>
@@ -112,10 +112,10 @@
                     <span>PDF</span>
                   </div>
                   <div class="content-middle">
-                    Portable Document Format的简称，意为“便携式文档格式”。
+                    Portable Document Format的简称，意为“便携式文件格式”。
                   </div>
                   <div class="content-bottom">
-                    <p>文档数量</p>
+                    <p>文件数量</p>
                     <p>{{pdfCount}}</p>
                   </div>
                 </router-link>
@@ -133,7 +133,7 @@
                     微软公司的演示文稿软件,用户可以在投影仪或者计算机上进行演示，也可以将演示文稿打印出来...
                   </div>
                   <div class="content-bottom">
-                    <p>文档数量</p>
+                    <p>文件数量</p>
                     <p>{{pptCount}}</p>
                   </div>
                 </router-link>
@@ -147,10 +147,10 @@
                     <span>其他类型</span>
                   </div>
                   <div class="content-middle">
-                    文档类型是一种特殊文档，它规定、约束符合SGML或XML规则的定义和陈述。
+                    文件类型是一种特殊文件，它规定、约束符合SGML或XML规则的定义和陈述。
                   </div>
                   <div class="content-bottom">
-                    <p>文档数量</p>
+                    <p>文件数量</p>
                     <p>{{otherCount}}</p>
                   </div>
                 </router-link>
@@ -258,7 +258,7 @@
                 workToMeList:[],
                 options:{
                     title: {
-                        text: '文档数量统计',
+                        text: '文件数量统计',
                         x: 'left',
                         align: 'right',
                         left: 20
@@ -293,7 +293,7 @@
                     ],
                     series: [
                         {
-                            name: '文档数量',
+                            name: '文件数量',
                             type: 'bar',
                             barWidth: '60%',
                             data: []

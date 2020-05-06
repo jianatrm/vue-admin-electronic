@@ -2,11 +2,11 @@
   <div class="app-container">
     <el-row :gutter="20">
       <el-col :span="12" style="text-align: left">
-        <el-input v-model="search" placeholder="文档搜索" style="width: 50%;" size="small"></el-input>
+        <el-input v-model="search" placeholder="文件搜索" style="width: 50%;" size="small"></el-input>
         <el-button type="primary" @click="querydocList(search)" size="small">查询</el-button>
       </el-col>
       <el-col :span="12" style="text-align: right">
-        <el-button type="primary" @click="uploaddoc" size="small">上传文档</el-button>
+        <el-button type="primary" @click="uploaddoc" size="small">上传文件</el-button>
       </el-col>
     </el-row>
     <el-table :data="docList" style="width: 100%;margin-top:30px;" border size="small">
@@ -14,7 +14,7 @@
 
       </el-table-column>
 
-      <el-table-column align="left" label="文档名称" header-align="center">
+      <el-table-column align="left" label="文件名称" header-align="center">
         <template slot-scope="scope">
           <svg-icon icon-class="excel" v-if="'xls,xlsx,csv'.indexOf(scope.row.docType) > -1"/>
           <svg-icon icon-class="PPT" v-else-if="'ppt,pptx,pps,ppsx,pot'.indexOf(scope.row.docType) > -1"/>
@@ -48,7 +48,7 @@
         <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize" @pagination="getList"/>
       </el-col>
     </el-row>
-    <el-dialog :visible.sync="dialogVisible" title='新建文档'>
+    <el-dialog :visible.sync="dialogVisible" title='新建文件'>
       <el-form ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item>
           <el-upload

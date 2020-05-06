@@ -106,7 +106,7 @@
         <el-button type="primary" @click="onSubmit(operateStatus)" size="small">提交</el-button>
       </div>
     </el-dialog>
-    <el-dialog :visible.sync="dialogVisibleSelectDept" title="选择文档分配部门">
+    <el-dialog :visible.sync="dialogVisibleSelectDept" title="选择文件分配部门">
       <el-form :model="dept" :rules="rules" ref="dept" label-width="80px">
         <el-form-item label="部门" prop="sysDeptList">
           <el-select  multiple v-model="dept.sysDeptList" placeholder="请选择部门" style="width: 100%" filterable>

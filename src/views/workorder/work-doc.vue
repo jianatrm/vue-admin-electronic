@@ -230,7 +230,7 @@
         <el-button style="background-color: #e67e22;color: #fff" @click="onSubmitNextApprove()" size="small" v-if="workOrderDetail.workNode&&workOrderDetail.nodeCount == workOrderDetail.workNode.nodeOrder">审批推送</el-button>
       </div>
     </el-dialog>
-    <el-dialog :visible.sync="dialogVisibleSelectDept" title="选择文档分配部门">
+    <el-dialog :visible.sync="dialogVisibleSelectDept" title="选择文件分配部门">
       <el-form :model="dept" :rules="rules" ref="dept" label-width="80px">
         <el-form-item label="部门" prop="sysDeptList">
           <el-select multiple v-model="dept.sysDeptList" filterable placeholder="请选择部门" style="width: 100%">
