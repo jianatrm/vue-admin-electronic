@@ -11,12 +11,12 @@
           </el-form-item>
           <el-form-item label="审批人选择">
             <el-select v-model="doc.approve"  placeholder="请选择审批人" @change="selectApprove()" filterable>
-              <el-option v-for="item in options" :key="item.userId" :label="item.userName" :value="item">
+              <el-option v-for="item in options" :key="item.userId" :label="item.staffName" :value="item">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="已选择审批人" prop="approveList">
-            <el-tag v-for="tag in doc.approveList" :key="tag.userName" closable style="margin-right: 10px"  @close="handleClose(tag)">{{tag.userName}}</el-tag>
+            <el-tag v-for="tag in doc.approveList" :key="tag.userName" closable style="margin-right: 10px"  @close="handleClose(tag)">{{tag.staffName}}</el-tag>
           </el-form-item>
           <el-form-item>
             <el-upload

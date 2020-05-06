@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '电子文档管理',
+  title: '山西铁路装备制造集团机车车辆有限公司公文审批系统',
 
   /**
    * @type {boolean} true | false

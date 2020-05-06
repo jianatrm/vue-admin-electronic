@@ -16,9 +16,19 @@ export function updatedoc(data,loading =true) {
     loading,
     data:data,
   })
-}export function adddoc(data,loading =true) {
+}
+
+export function adddoc(data,loading =true) {
   return request({
     url: '/electronic/doc/addElectronicDoc',
+    method: 'post',
+    loading,
+    data:data,
+  })
+}
+export function adddeptdoc(data,loading =true) {
+  return request({
+    url: '/electronic/doc/addDeptElectronicDoc',
     method: 'post',
     loading,
     data:data,

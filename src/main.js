@@ -30,7 +30,8 @@ Vue.use(ElementUI, { locale })
 import pdf from 'vue-pdf'
 Vue.use(pdf)
 
-
+import Print from 'vue-print-nb'
+Vue.use(Print);
 
 
 Vue.config.productionTip = false

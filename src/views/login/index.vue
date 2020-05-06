@@ -4,7 +4,7 @@
              label-position="left">
 
       <div class="title-container">
-        <h3 class="title">电子文档管理系统</h3>
+        <h3 class="title">山西铁路装备制造集团机车车辆有限公司公文审批系统</h3>
       </div>
 
       <el-form-item prop="username">
@@ -42,7 +42,7 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading"  style="width:100%;margin-bottom:30px;background-color: #046993;opacity: 0.8;color: #fff"
+      <el-button :loading="loading"  style="width:520px;margin-bottom:30px;background-color: #046993;opacity: 0.8;color: #fff"
                  @click.native.prevent="handleLogin">登录
       </el-button>
 
@@ -220,11 +220,20 @@
 
     .login-form {
       position: relative;
-      width: 520px;
+      width: 720px;
       max-width: 100%;
       padding: 160px 35px 0;
       margin: 0 auto;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      .el-form-item{
+        width: 520px;
+      }
+      .el-button{
+        width: 520px;
+      }
     }
 
     .tips {
@@ -249,7 +258,6 @@
 
     .title-container {
       position: relative;
-
       .title {
         font-size: 26px;
         color: $light_gray;

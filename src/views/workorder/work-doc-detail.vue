@@ -1,10 +1,13 @@
 <template>
-  <div class="contianer">
+  <div class="contianer" id="printMe">
     <div>
       <div style="float: right">
         <el-button type="primary" @click="handle('90')" size="small" v-if="type">审批通过</el-button>
         <el-button type="danger" @click="handle('70')" size="small"  v-if="type">审批拒绝</el-button>
+        <el-button style="background-color: #e67e22;color: #fff" @click="onSubmitNextApprove()" size="small" v-if="type&&workOrderDetail.workNode&&workOrderDetail.nodeCount == workOrderDetail.workNode.nodeOrder">审批推送</el-button>
+        <el-button  size="small" v-print="'#printMe'" style="background-color: #7f8c8d;color: #fff">打印</el-button>
         <el-button type="primary" size="small" @click="goback()">返回</el-button>
+
       </div>
       <p class="detail-title"><span>工单信息</span></p>
       <el-row>
@@ -34,15 +37,6 @@
         <el-col :span="8">
           <div class="grid-content bg-purple-light">
             <p class="detail-lable">状态：<span class="detail-content">{{workOrderDetail.workOrderStatusDesc}}</span></p>
-<!--            <el-link class="deatil-state" type="primary" v-if="workOrderDetail.workOrderStatus==10" :underline="false">{{-->
-<!--              workOrderDetail.workOrderStatusDesc }}-->
-<!--            </el-link>-->
-<!--            <el-link class="deatil-state" type="success" v-if="workOrderDetail.workOrderStatus==90" :underline="false">{{-->
-<!--              workOrderDetail.workOrderStatusDesc }}-->
-<!--            </el-link>-->
-<!--            <el-link class="deatil-state" type="danger" v-if="workOrderDetail.workOrderStatus==70" :underline="false">{{-->
-<!--              workOrderDetail.workOrderStatusDesc }}-->
-<!--            </el-link>-->
           </div>
         </el-col>
       </el-row>
@@ -115,7 +109,7 @@
     <el-dialog :visible.sync="dialogVisibleSelectDept" title="选择文档分配部门">
       <el-form :model="dept" :rules="rules" ref="dept" label-width="80px">
         <el-form-item label="部门" prop="sysDeptList">
-          <el-select  multiple v-model="dept.sysDeptList" placeholder="请选择部门" style="width: 100%">
+          <el-select  multiple v-model="dept.sysDeptList" placeholder="请选择部门" style="width: 100%" filterable>
             <el-option :label="item.deptName" :value="item.deptId" v-for="(item,index) in deptList"
                        :key="index"></el-option>
           </el-select>
@@ -125,12 +119,30 @@
         <el-button type="primary" @click="onSubmitFinsh('dept')">提交</el-button>
       </div>
     </el-dialog>
+    <el-dialog :visible.sync="dialogVisibleNextApprove" title="选择下一级审批人">
+      <el-form  ref="dept" label-width="80px">
+        <el-form-item label="审批人" prop="">
+          <el-select v-model="nextApprove" placeholder="请选择下一级审批人" style="width: 100%" filterable>
+            <el-option v-for="item in nextApproveList" :key="item.userId" :label="item.staffName" :value="item.userId"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="抄送人" prop="">
+          <el-select multiple v-model="carbonList" placeholder="请选择抄送人" style="width: 100%">
+            <el-option v-for="item in nextApproveList" :key="item.userId" :label="item.staffName" :value="item.userId"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div style="text-align:right;">
+        <el-button type="primary" @click="submitNextApprove()">提交</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-    import {queryWorkOrderDetail,approveWorkOrder} from "../../api/workOrder";
+  import {queryWorkOrderDetail, approveWorkOrder, approverCarbonCopy} from "../../api/workOrder";
     import {querydept} from "../../api/dept";
+    import {queryuser} from "../../api/user";
     export default {
         name: "work-foc-detail",
         data() {
@@ -153,7 +165,11 @@
                   sysDeptList: [
                         {required: true, message: '请选择部门', trigger: 'change'}
                     ],
-                }
+                },
+              dialogVisibleNextApprove: false,
+              nextApproveList:[],
+              nextApprove:'',
+              carbonList:'',
             }
         },
         created() {
@@ -277,6 +293,56 @@
                     }
                 })
             },
+          onSubmitNextApprove(){
+            this.queryUserList();
+            this.dialogVisibleNextApprove = true;
+
+          },
+          queryUserList(val) {
+            queryuser({
+              pageSize: 10000,
+              pageNum: 1,
+            },false).then(res => {
+              if (res.success) {
+                this.nextApproveList = res.result.result
+              }
+            })
+          },
+          submitNextApprove(){
+            let array = [];
+            for (let i = 0; i <this.carbonList.length ; i++) {
+              let temp ={};
+              temp.userId = this.carbonList[i];
+              array.push(temp)
+            }
+            approverCarbonCopy({
+              workOrderId: this.workOrderDetail.workOrderId,
+              currentNode: this.workOrderDetail.currentNode,
+              workNode: {
+                userId:this.nextApprove,
+                nodeId: this.workOrderDetail.workNode.nodeId,
+                nodeOperateResult: '90',
+                nodeOperateDesc: this.approve.remark
+              },
+              workCarbonList: JSON.stringify(array)
+            }).then(res=>{
+              this.$loading().close()
+              if (res.success){
+                this.$message({
+                  type: 'success',
+                  message: '操作成功'
+                })
+                this.dialogVisible = false;
+                this.dialogVisibleNextApprove = false;
+                this.$router.go(-1)
+              }else {
+                this.$message({
+                  type: 'fail',
+                  message: '操作失败'
+                })
+              }
+            })
+          }
         }
     }
 </script>

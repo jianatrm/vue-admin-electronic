@@ -227,13 +227,13 @@
       <div style="text-align:right;">
         <el-button type="primary" @click="onSubmit('90')" size="small">审批通过</el-button>
         <el-button type="danger" @click="onSubmit('70')" size="small">审批拒绝</el-button>
-        <el-button style="background-color: #e67e22;color: #fff" @click="onSubmitNextApprove()" size="small" v-if="workOrderDetail.workNode&&workOrderDetail.nodeCount == workOrderDetail.workNode.nodeOrder">下级审批</el-button>
+        <el-button style="background-color: #e67e22;color: #fff" @click="onSubmitNextApprove()" size="small" v-if="workOrderDetail.workNode&&workOrderDetail.nodeCount == workOrderDetail.workNode.nodeOrder">审批推送</el-button>
       </div>
     </el-dialog>
     <el-dialog :visible.sync="dialogVisibleSelectDept" title="选择文档分配部门">
       <el-form :model="dept" :rules="rules" ref="dept" label-width="80px">
         <el-form-item label="部门" prop="sysDeptList">
-          <el-select multiple v-model="dept.sysDeptList" placeholder="请选择部门" style="width: 100%">
+          <el-select multiple v-model="dept.sysDeptList" filterable placeholder="请选择部门" style="width: 100%">
             <el-option :label="item.deptName" :value="item.deptId" v-for="(item,index) in deptList"
                        :key="index"></el-option>
           </el-select>
@@ -246,13 +246,13 @@
     <el-dialog :visible.sync="dialogVisibleNextApprove" title="选择下一级审批人">
       <el-form  ref="dept" label-width="80px">
         <el-form-item label="审批人" prop="">
-          <el-select v-model="nextApprove" placeholder="请选择下一级审批人" style="width: 100%">
-            <el-option v-for="item in nextApproveList" :key="item.userId" :label="item.userName" :value="item.userId"></el-option>
+          <el-select v-model="nextApprove" placeholder="请选择下一级审批人" style="width: 100%" filterable>
+            <el-option v-for="item in nextApproveList" :key="item.userId" :label="item.staffName" :value="item.userId"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="抄送人" prop="">
           <el-select multiple v-model="carbonList" placeholder="请选择抄送人" style="width: 100%">
-            <el-option v-for="item in nextApproveList" :key="item.userId" :label="item.userName" :value="item.userId"></el-option>
+            <el-option v-for="item in nextApproveList" :key="item.userId" :label="item.staffName" :value="item.userId"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -470,7 +470,7 @@
       },
       queryUserList(val) {
         queryuser({
-          pageSize: this.pageSize,
+          pageSize: 10000,
           pageNum: this.pageNum,
           userName: val
         },false).then(res => {
