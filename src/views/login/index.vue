@@ -147,7 +147,7 @@
                 this.$store.commit("user/SET_AVATAR",res.result.userAvatar)
                 this.$store.commit("user/SET_USER",res.result)
                 this.$store.commit("user/SET_ROLE_TYPE_LIST",admin)
-                localStorage.setItem('new', 'new');
+                //localStorage.setItem('new', 'new');
                 this.$router.push({path: '/'})
               }
             })

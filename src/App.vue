@@ -28,7 +28,6 @@
         mounted() {
             window.addEventListener('beforeunload', e => {
                 localStorage.setItem('new', 'new');
-
             });
         },
         data() {
