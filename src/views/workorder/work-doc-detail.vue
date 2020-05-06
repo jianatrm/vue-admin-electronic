@@ -81,7 +81,7 @@
           :key="index"
           :color="workOrderDetail.workNode.nodeId >=activity.nodeId?(activity.nodeOperateResult == '90'?'#67C23A':activity.nodeOperateResult ==70?'#F56C6C':'#3498db'):''"
           size="large"
-          :timestamp="activity.nodeOperateTime" placement="top">
+          :timestamp="activity.nodeOperateTime&&new Date(activity.nodeOperateTime).format('yyyy/MM/dd hh:mm:ss')" placement="top">
           <p>审批人：{{activity.userName}}</p>
           <p class="approve-suggest">审批批注：{{activity.nodeOperateDesc}}</p>
           <p class="approve-suggest">抄送人员：

@@ -33,6 +33,8 @@ Vue.use(pdf)
 import Print from 'vue-print-nb'
 Vue.use(Print);
 
+import 'babel-polyfill'
+
 
 Vue.config.productionTip = false
 
