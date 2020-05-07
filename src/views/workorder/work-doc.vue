@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-tabs v-model="activeName" @tab-click="handleClick" type="card">
       <el-tab-pane label="我的申请" name="first">
-        <el-table :data="workList" style="width: 100%;margin-top:30px;" border  size="small">
+        <el-table :data="workList" style="width: 100%;margin-top:30px;" border size="small">
           <el-table-column align="center" label="工单编码" width="220">
             <template slot-scope="scope">
               {{ scope.row.workOrderCode }}
@@ -20,9 +20,15 @@
           </el-table-column>
           <el-table-column align="center" label="状态">
             <template slot-scope="scope">
-              <el-link  type="primary" v-if="scope.row.workOrderStatus==10"  :underline="false">{{ scope.row.workOrderStatusDesc }}</el-link>
-              <el-link  type="success" v-if="scope.row.workOrderStatus==90"  :underline="false">{{ scope.row.workOrderStatusDesc }}</el-link>
-              <el-link  type="danger" v-if="scope.row.workOrderStatus==70"  :underline="false">{{ scope.row.workOrderStatusDesc }}</el-link>
+              <el-link type="primary" v-if="scope.row.workOrderStatus==10" :underline="false">{{
+                scope.row.workOrderStatusDesc }}
+              </el-link>
+              <el-link type="success" v-if="scope.row.workOrderStatus==90" :underline="false">{{
+                scope.row.workOrderStatusDesc }}
+              </el-link>
+              <el-link type="danger" v-if="scope.row.workOrderStatus==70" :underline="false">{{
+                scope.row.workOrderStatusDesc }}
+              </el-link>
 
             </template>
           </el-table-column>
@@ -30,11 +36,11 @@
           <el-table-column align="center" label="操作">
             <template slot-scope="scope">
               <el-button type="primary" size="small" @click="queryWorkDetail(scope.row.workOrderId)">详情</el-button>
-<!--              <el-button type="danger" size="small" @click="handleDelete(scope)">取消</el-button>-->
+              <!--              <el-button type="danger" size="small" @click="handleDelete(scope)">取消</el-button>-->
             </template>
           </el-table-column>
           <div slot="empty">
-            <span >未查询到数据</span>
+            <span>未查询到数据</span>
           </div>
         </el-table>
         <el-row :gutter="20">
@@ -44,7 +50,7 @@
         </el-row>
       </el-tab-pane>
       <el-tab-pane label="审批工单" name="second">
-        <el-table :data="workToMeList" style="width: 100%;margin-top:30px;" border  size="small">
+        <el-table :data="workToMeList" style="width: 100%;margin-top:30px;" border size="small">
           <el-table-column align="center" label="工单编码" width="220">
             <template slot-scope="scope">
               {{ scope.row.workOrderVO.workOrderCode }}
@@ -62,9 +68,15 @@
           </el-table-column>
           <el-table-column align="center" label="状态">
             <template slot-scope="scope">
-              <el-link  type="primary" v-if="scope.row.workOrderVO.workOrderStatus==10"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
-              <el-link  type="success" v-if="scope.row.workOrderVO.workOrderStatus==90"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
-              <el-link  type="danger" v-if="scope.row.workOrderVO.workOrderStatus==70"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
+              <el-link type="primary" v-if="scope.row.workOrderVO.workOrderStatus==10" :underline="false">{{
+                scope.row.workOrderVO.workOrderStatusDesc }}
+              </el-link>
+              <el-link type="success" v-if="scope.row.workOrderVO.workOrderStatus==90" :underline="false">{{
+                scope.row.workOrderVO.workOrderStatusDesc }}
+              </el-link>
+              <el-link type="danger" v-if="scope.row.workOrderVO.workOrderStatus==70" :underline="false">{{
+                scope.row.workOrderVO.workOrderStatusDesc }}
+              </el-link>
 
             </template>
           </el-table-column>
@@ -82,17 +94,18 @@
             </template>
           </el-table-column>
           <div slot="empty">
-            <span >未查询到数据</span>
+            <span>未查询到数据</span>
           </div>
         </el-table>
         <el-row :gutter="20">
           <el-col :span="24" style="text-align: right">
-            <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize" @pagination="queryWorkOrderToMeList()"/>
+            <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize"
+                        @pagination="queryWorkOrderToMeList()"/>
           </el-col>
         </el-row>
       </el-tab-pane>
       <el-tab-pane label="审批记录" name="three">
-        <el-table :data="workToMeList" style="width: 100%;margin-top:30px;" border  size="small">
+        <el-table :data="workToMeList" style="width: 100%;margin-top:30px;" border size="small">
           <el-table-column align="center" label="工单编码">
             <template slot-scope="scope">
               {{ scope.row.workOrderVO.workOrderCode }}
@@ -110,9 +123,15 @@
           </el-table-column>
           <el-table-column align="center" label="状态">
             <template slot-scope="scope">
-              <el-link  type="primary" v-if="scope.row.workOrderVO.workOrderStatus==10"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
-              <el-link  type="success" v-if="scope.row.workOrderVO.workOrderStatus==90"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
-              <el-link  type="danger" v-if="scope.row.workOrderVO.workOrderStatus==70"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
+              <el-link type="primary" v-if="scope.row.workOrderVO.workOrderStatus==10" :underline="false">{{
+                scope.row.workOrderVO.workOrderStatusDesc }}
+              </el-link>
+              <el-link type="success" v-if="scope.row.workOrderVO.workOrderStatus==90" :underline="false">{{
+                scope.row.workOrderVO.workOrderStatusDesc }}
+              </el-link>
+              <el-link type="danger" v-if="scope.row.workOrderVO.workOrderStatus==70" :underline="false">{{
+                scope.row.workOrderVO.workOrderStatusDesc }}
+              </el-link>
 
             </template>
           </el-table-column>
@@ -125,21 +144,22 @@
 
           <el-table-column align="center" label="操作">
             <template slot-scope="scope">
-              <el-button type="primary" size="small" @click="queryWorkDetail(scope.row.workOrderId)" >详情</el-button>
+              <el-button type="primary" size="small" @click="queryWorkDetail(scope.row.workOrderId)">详情</el-button>
             </template>
           </el-table-column>
           <div slot="empty">
-            <span >未查询到数据</span>
+            <span>未查询到数据</span>
           </div>
         </el-table>
         <el-row :gutter="20">
           <el-col :span="24" style="text-align: right">
-            <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize" @pagination="queryWorkOrderHistory()"/>
+            <pagination :total="total" :page.sync="pageNum" :limit.sync="pageSize"
+                        @pagination="queryWorkOrderHistory()"/>
           </el-col>
         </el-row>
       </el-tab-pane>
       <el-tab-pane label="我的抄送" name="four">
-        <el-table :data="carbonListResult" style="width: 100%;margin-top:30px;" border  size="small">
+        <el-table :data="carbonListResult" style="width: 100%;margin-top:30px;" border size="small">
           <el-table-column align="center" label="工单编码">
             <template slot-scope="scope">
               {{ scope.row.workOrderVO.workOrderCode }}
@@ -157,9 +177,15 @@
           </el-table-column>
           <el-table-column align="center" label="状态">
             <template slot-scope="scope">
-              <el-link  type="primary" v-if="scope.row.workOrderVO.workOrderStatus==10"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
-              <el-link  type="success" v-if="scope.row.workOrderVO.workOrderStatus==90"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
-              <el-link  type="danger" v-if="scope.row.workOrderVO.workOrderStatus==70"  :underline="false">{{ scope.row.workOrderVO.workOrderStatusDesc }}</el-link>
+              <el-link type="primary" v-if="scope.row.workOrderVO.workOrderStatus==10" :underline="false">{{
+                scope.row.workOrderVO.workOrderStatusDesc }}
+              </el-link>
+              <el-link type="success" v-if="scope.row.workOrderVO.workOrderStatus==90" :underline="false">{{
+                scope.row.workOrderVO.workOrderStatusDesc }}
+              </el-link>
+              <el-link type="danger" v-if="scope.row.workOrderVO.workOrderStatus==70" :underline="false">{{
+                scope.row.workOrderVO.workOrderStatusDesc }}
+              </el-link>
 
             </template>
           </el-table-column>
@@ -172,11 +198,11 @@
 
           <el-table-column align="center" label="操作">
             <template slot-scope="scope">
-              <el-button type="primary" size="small" @click="queryWorkDetail(scope.row.workOrderId)" >详情</el-button>
+              <el-button type="primary" size="small" @click="queryWorkDetail(scope.row.workOrderId)">详情</el-button>
             </template>
           </el-table-column>
           <div slot="empty">
-            <span >未查询到数据</span>
+            <span>未查询到数据</span>
           </div>
         </el-table>
         <el-row :gutter="20">
@@ -194,11 +220,12 @@
       <p style="font-size: 18px;"><span style="color:  #000;font-weight:bold">文件描述</span>：{{workOrderDetail.workOrderDesc}}
       </p>
       <div style="font-size: 18px;"><span style="color:  #000;font-weight:bold">文件列表：</span>
-        <p style="margin-left: 40px;display: flex;justify-content: space-between;padding-right: 60px" v-for="(item,index) in workOrderDetail.workInfo" :key="index">
-          <span >{{item.docName}}</span>
+        <p style="margin-left: 40px;display: flex;justify-content: space-between;padding-right: 60px"
+           v-for="(item,index) in workOrderDetail.workInfo" :key="index">
+          <span>{{item.docName}}</span>
           <span>
             <a :href="item.docUrl" target="_blank"><el-button type="primary" size="small">下载</el-button></a>
-          <el-button type="primary" @click="handlePreview(item.docUrl)"  size="small">预览</el-button>
+          <el-button type="primary" @click="handlePreview(item.docUrl)" size="small">预览</el-button>
           </span>
         </p>
       </div>
@@ -219,52 +246,71 @@
       </div>
     </el-dialog>
     <el-dialog :visible.sync="dialogVisible" title="审批处理">
-      <el-form class="demo-form-inline">
+      <el-form :model="approve" :rules="rules" ref="approve" class="demo-form-inline">
         <el-form-item label="审批批注" prop="remark">
           <el-input type="textarea" v-model="approve.remark" :rows="3"></el-input>
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
-        <el-button type="primary" @click="onSubmit('90')" size="small">审批通过</el-button>
-        <el-button type="danger" @click="onSubmit('70')" size="small">审批拒绝</el-button>
-        <el-button style="background-color: #e67e22;color: #fff" @click="onSubmitNextApprove()" size="small" v-if="workOrderDetail.workNode&&workOrderDetail.nodeCount == workOrderDetail.workNode.nodeOrder">审批推送</el-button>
+        <el-button type="primary" @click="onSubmit('90','approve')" size="small">审批通过</el-button>
+        <el-button type="danger" @click="onSubmit('70','approve')" size="small">审批拒绝</el-button>
+        <!--        <el-button style="background-color: #e67e22;color: #fff" @click="onSubmitNextApprove()" size="small" v-if="workOrderDetail.workNode&&workOrderDetail.nodeCount == workOrderDetail.workNode.nodeOrder">审批推送</el-button>-->
       </div>
     </el-dialog>
-    <el-dialog :visible.sync="dialogVisibleSelectDept" title="选择文件分配部门">
-      <el-form :model="dept" :rules="rules" ref="dept" label-width="80px">
+    <el-dialog :visible.sync="dialogVisibleSelectDept" title="选择处理结果">
+      <el-form label-width="80px">
+        <el-form-item label="处理结果">
+          <el-radio-group v-model="approveResult">
+            <el-radio :label="1">审批结束</el-radio>
+            <el-radio :label="2">审批推送</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+
+      <el-form :model="dept" :rules="rules" ref="dept" label-width="80px" v-if="approveResult == 1">
         <el-form-item label="部门" prop="sysDeptList">
           <el-select multiple v-model="dept.sysDeptList" filterable placeholder="请选择部门" style="width: 100%">
             <el-option :label="item.deptName" :value="item.deptId" v-for="(item,index) in deptList"
                        :key="index"></el-option>
           </el-select>
         </el-form-item>
+        <div style="text-align:right;">
+          <el-button type="primary" @click="onSubmitFinsh('dept')">提交</el-button>
+        </div>
       </el-form>
-      <div style="text-align:right;">
-        <el-button type="primary" @click="onSubmitFinsh('dept')">提交</el-button>
-      </div>
-    </el-dialog>
-    <el-dialog :visible.sync="dialogVisibleNextApprove" title="选择下一级审批人">
-      <el-form  ref="dept" label-width="80px">
-        <el-form-item label="审批人" prop="">
-          <el-select v-model="nextApprove" placeholder="请选择下一级审批人" style="width: 100%" filterable>
-            <el-option v-for="item in nextApproveList" :key="item.userId" :label="item.staffName" :value="item.userId"></el-option>
+
+      <el-form :model="carbon" :rules="rules" ref="carbon" label-width="80px" v-else>
+        <el-form-item label="审批人" prop="nextApprove">
+          <el-select v-model="carbon.nextApprove" placeholder="请选择下一级审批人" style="width: 100%" filterable>
+            <el-option v-for="item in nextApproveList" :key="item.userId" :label="item.staffName"
+                       :value="item.userId"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="抄送人" prop="">
-          <el-select multiple v-model="carbonList" placeholder="请选择抄送人" style="width: 100%">
-            <el-option v-for="item in nextApproveList" :key="item.userId" :label="item.staffName" :value="item.userId"></el-option>
+        <el-form-item label="抄送人" prop="carbonList">
+          <el-select multiple v-model="carbon.carbonList" placeholder="请选择抄送人" style="width: 100%">
+            <el-option v-for="item in nextApproveList" :key="item.userId" :label="item.staffName"
+                       :value="item.userId"></el-option>
           </el-select>
         </el-form-item>
+        <div style="text-align:right;">
+          <el-button type="primary" @click="submitNextApprove('carbon')">提交</el-button>
+        </div>
       </el-form>
-      <div style="text-align:right;">
-        <el-button type="primary" @click="submitNextApprove()">提交</el-button>
-      </div>
+
+
     </el-dialog>
   </div>
 </template>
 
 <script>
-  import {queryWorkOrder, queryWorkOrderToMe, queryWorkOrderDetail, approveWorkOrder,approverCarbonCopy,queryApproverCarbonCopy} from "../../api/workOrder";
+  import {
+    queryWorkOrder,
+    queryWorkOrderToMe,
+    queryWorkOrderDetail,
+    approveWorkOrder,
+    approverCarbonCopy,
+    queryApproverCarbonCopy
+  } from "../../api/workOrder";
   import {querydept} from "../../api/dept";
   import Pagination from '@/components/Pagination'
   import {queryuser} from "../../api/user";
@@ -278,7 +324,7 @@
         dialogVisible: false,
         dialogVisibleDetail: false,
         dialogVisibleSelectDept: false,
-        dialogVisibleNextApprove:false,
+        dialogVisibleNextApprove: false,
         activeName: 'first',
         workList: [],
         workToMeList: [],
@@ -289,24 +335,36 @@
         total: 0,
         approve: {},
         activities: [],
+        approveResult: 1,
         deptList: [],
-        nextApproveList:[],
-        nextApprove:'',
-        carbonList:'',
+        nextApproveList: [],
+
         dept: {
           deptId: [],
-          sysDeptList:[],
+          sysDeptList: [],
         },
-
+        carbon: {
+          nextApprove: '',
+          carbonList: '',
+        },
         rules: {
           sysDeptList: [
             {required: true, message: '请选择部门', trigger: 'change'}
+          ],
+          nextApprove: [
+            {required: true, message: '请选择审批人', trigger: 'change'}
+          ],
+          carbonList: [
+            {required: true, message: '请选择抄送人', trigger: 'change'}
+          ],
+          remark: [
+            {required: true, message: '请填写审批批注', trigger: 'blur'}
           ],
         }
       }
     },
     mounted() {
-      this.activeName = this.$route.query.isOrder?'second':this.activeName;
+      this.activeName = this.$route.query.isOrder ? 'second' : this.activeName;
       this.queryWorkOrderList();
 
     },
@@ -320,7 +378,7 @@
           this.queryWorkOrderToMeList();
         } else if (tab.index == 2) {
           this.queryWorkOrderHistory();
-        }else if (tab.index == 3){
+        } else if (tab.index == 3) {
           this.queryCarbonList()
         }
       },
@@ -334,7 +392,7 @@
           this.$loading().close()
           if (res.success) {
             this.workList = res.result.result;
-            this.total= res.result.count
+            this.total = res.result.count
           }
         })
       },
@@ -347,7 +405,7 @@
           this.$loading().close()
           if (res.success) {
             this.workToMeList = res.result.result;
-            this.total= res.result.count
+            this.total = res.result.count
           }
         })
       },
@@ -360,19 +418,19 @@
           this.$loading().close()
           if (res.success) {
             this.workToMeList = res.result.result;
-            this.total= res.result.count
+            this.total = res.result.count
           }
         })
       },
-      queryCarbonList(){
+      queryCarbonList() {
         queryApproverCarbonCopy({
           pageNum: this.pageNum,
           pageSize: this.pageSize
-        }).then(res=>{
+        }).then(res => {
           this.$loading().close()
-          if (res.success){
+          if (res.success) {
             this.carbonListResult = res.result.result
-            this.total= res.result.count
+            this.total = res.result.count
           }
         })
       },
@@ -389,26 +447,33 @@
           }
         })
       },
-      onSubmit(val) {
-        if (this.workOrderDetail.nodeCount == this.workOrderDetail.workNode.nodeOrder && val == '90') {
-          this.dialogVisibleSelectDept = true
-          this.queryDeptList()
-        } else {
-          this.approveSubmit(val);
-        }
-
+      onSubmit(val,formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            if (this.workOrderDetail.nodeCount == this.workOrderDetail.workNode.nodeOrder && val == '90') {
+              this.dialogVisibleSelectDept = true
+              this.queryDeptList()
+              this.queryUserList();
+            } else {
+              this.approveSubmit(val);
+            }
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
       },
 
-      queryWorkDetail(workOrderId,type) {
-        this.$router.push({path:'/workorder/workdocdetail',query:{workOrderId:workOrderId,type:type}})
+      queryWorkDetail(workOrderId, type) {
+        this.$router.push({path: '/workorder/workdocdetail', query: {workOrderId: workOrderId, type: type}})
       },
 
 
       approveSubmit(val) {
         let array = [];
-        for (let i = 0; i <this.dept.sysDeptList.length ; i++) {
+        for (let i = 0; i < this.dept.sysDeptList.length; i++) {
           let temp = {
-            deptId:this.dept.sysDeptList[i]
+            deptId: this.dept.sysDeptList[i]
           };
           array.push(temp)
         }
@@ -463,42 +528,26 @@
 
       },
 
-      onSubmitNextApprove(){
-        this.queryUserList();
-        this.dialogVisibleNextApprove = true;
-
-      },
-      queryUserList(val) {
-        queryuser({
-          pageSize: 10000,
-          pageNum: this.pageNum,
-          userName: val
-        },false).then(res => {
-          if (res.success) {
-            this.nextApproveList = res.result.result
-          }
-        })
-      },
-      submitNextApprove(){
+      onSubmitNextApprove() {
         let array = [];
-        for (let i = 0; i <this.carbonList.length ; i++) {
-          let temp ={};
-          temp.userId = this.carbonList[i];
+        for (let i = 0; i < this.carbon.carbonList.length; i++) {
+          let temp = {};
+          temp.userId = this.carbon.carbonList[i];
           array.push(temp)
         }
         approverCarbonCopy({
           workOrderId: this.workOrderDetail.workOrderId,
           currentNode: this.workOrderDetail.currentNode,
           workNode: {
-            userId:this.nextApprove,
+            userId: this.carbon.nextApprove,
             nodeId: this.workOrderDetail.workNode.nodeId,
             nodeOperateResult: '90',
             nodeOperateDesc: this.approve.remark
           },
           workCarbonList: JSON.stringify(array)
-        }).then(res=>{
+        }).then(res => {
           this.$loading().close()
-          if (res.success){
+          if (res.success) {
             this.$message({
               type: 'success',
               message: '操作成功'
@@ -508,6 +557,30 @@
             this.reload();
           }
         })
+
+      },
+      queryUserList(val) {
+        queryuser({
+          pageSize: 10000,
+          pageNum: this.pageNum,
+          userName: val
+        }, false).then(res => {
+          if (res.success) {
+            this.nextApproveList = res.result.result
+          }
+        })
+      },
+      submitNextApprove(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            console.log('success submit!!');
+            this.onSubmitNextApprove()
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+
       }
 
     }
