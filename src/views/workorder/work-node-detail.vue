@@ -1,23 +1,32 @@
 <template>
-  <div class="contianer">
+  <div class="contianer" id="printMe">
     <div class="approve-record">
-      <p class="detail-title"><span>审批记录：</span> <el-button type="primary" size="small" @click="goback">返回</el-button></p>
+      <p class="detail-title"><span>文件名称：{{filename}}</span>
+      <p class="detail-title"><span>审批记录：</span>
+      <span>
+          <el-button size="small" style="background-color: #7f8c8d;color: #fff" v-print="'#printMe'">打印</el-button>
+          <el-button type="primary" size="small" @click="goback">返回</el-button>
+      </span>
+      </p>
       <el-timeline>
         <el-timeline-item
           v-for="(activity, index) in activities"
           :key="index"
           :color="workOrderDetail.workNode.nodeId >=activity.nodeId?(activity.nodeOperateResult == '90'?'#67C23A':activity.nodeOperateResult ==70?'#F56C6C':'#3498db'):''"
           size="large"
-          :timestamp="activity.nodeOperateTime" placement="top">
+          :timestamp="activity.nodeOperateTime&&new Date(activity.nodeOperateTime).format('yyyy/MM/dd hh:mm:ss')"
+          placement="top">
           <p>审批人：{{activity.userName}}</p>
           <p class="approve-suggest">审批意见：{{activity.nodeOperateDesc}}</p>
           <p class="approve-suggest">抄送人员：
-            <el-link  type="primary" v-for="(item,m) in activity.workCarbonVOList" :key="m"  :underline="false">{{item.userName}}、</el-link>
+            <el-link type="primary" v-for="(item,m) in activity.workCarbonVOList" :key="m" :underline="false">
+              {{item.userName}}、
+            </el-link>
           </p>
           <p>审批批注：
-            <el-link  type="primary" v-if="activity.nodeOperateResult==10"  :underline="false">审批中</el-link>
-            <el-link  type="success" v-if="activity.nodeOperateResult==90"  :underline="false">审批通过</el-link>
-            <el-link  type="danger" v-if="activity.nodeOperateResult==70"  :underline="false">审批驳回</el-link>
+            <el-link type="primary" v-if="activity.nodeOperateResult==10" :underline="false">审批中</el-link>
+            <el-link type="success" v-if="activity.nodeOperateResult==90" :underline="false">审批通过</el-link>
+            <el-link type="danger" v-if="activity.nodeOperateResult==70" :underline="false">审批驳回</el-link>
           </p>
         </el-timeline-item>
       </el-timeline>
@@ -27,19 +36,22 @@
 
 <script>
   import {queryWorkOrderDetail} from "../../api/workOrder";
+
   export default {
     name: "work-node-detail",
     data() {
       return {
         workOrderId: '',
-        workOrderDetail:{},
-        activities: []
+        workOrderDetail: {},
+        activities: [],
+        filename:''
       }
     },
     created() {
       this.workOrderId = this.$route.query.workOrderId;
     },
     mounted() {
+      this.filename = this.$route.query.filename
       this.queryWorkDetail();
     },
     methods: {
@@ -55,8 +67,8 @@
         })
       },
       goback(val) {
-         this.$router.push({path:this.$route.query.route,query:{activeName:this.$route.query.activeName}});
-       // this.$router.go(-1)
+        this.$router.push({path: this.$route.query.route, query: {activeName: this.$route.query.activeName}});
+        // this.$router.go(-1)
       }
     }
   }
@@ -65,18 +77,22 @@
 <style lang="scss" scoped>
   .contianer {
     padding: 5px 20px 20px 20px;
-    .approve-record{
+
+    .approve-record {
       margin-left: 30px;
-      .approve-suggest{
+
+      .approve-suggest {
         width: 850px;
         padding-left: 4.4rem;
         text-indent: -4.4rem;
         line-height: 23px;
-        .el-link{
+
+        .el-link {
           text-indent: initial;
         }
       }
     }
+
     .detail-title {
       margin-right: 12px;
       margin-bottom: 0;
@@ -90,13 +106,16 @@
       display: flex;
       justify-content: space-between;
     }
+
     .el-row {
       padding-left: 40px;
     }
+
     .el-timeline {
       margin-top: 20px;
     }
-    .bottom-btn{
+
+    .bottom-btn {
       display: flex;
       justify-content: center;
       /*margin-top: 20px;*/
@@ -104,15 +123,18 @@
       left: 48%;
       bottom: 5%;
     }
+
     .el-link {
-      span:nth-child(1){
+      span:nth-child(1) {
         display: inline-block;
         width: 300px;
       }
+
       span:nth-child(2) {
         margin-left: 300px;
       }
     }
+
     .el-divider--horizontal {
       height: 0.5px;
     }

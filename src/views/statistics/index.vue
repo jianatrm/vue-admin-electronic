@@ -175,15 +175,18 @@
 
         },
         mounted() {
-            this.queryUserdocList()
-            this.queryUserList()
-            this.queryDeptList()
             if (this.$route.query.activeName){
               this.activeName = this.$route.query.activeName
               if (this.$route.query.activeName == 'second'){
-                this.queryDeptdocList();
-              }else {}
+                this.queryDeptdocList(false);
+              }else {
+                this.queryUserdocList()
+              }
+            }else {
+              this.queryUserdocList()
             }
+          this.queryUserList()
+          this.queryDeptList()
         },
         methods: {
             handleClick(tab, event) {
@@ -246,7 +249,7 @@
                     }
                 })
             },
-            queryDeptdocList() {
+            queryDeptdocList(loading =true) {
                 if (this.rangeTime) {
                     this.startTime = new Date(this.rangeTime[0]).format('yyyy-MM-dd')
                     this.endTime = new Date(this.rangeTime[1]).format('yyyy-MM-dd')
@@ -262,8 +265,8 @@
                     deptId: this.deptId,
                     startTime: this.startTime,
                     endTime: this.endTime
-                }).then(res => {
-                    this.$loading().close()
+                },false).then(res => {
+                   if (loading){this.$loading().close()}
                     if (res.success) {
                         this.docList = res.result.result
                         this.total = res.result.count
@@ -297,7 +300,13 @@
                 }
             },
             showNodeList(val){
-              this.$router.push({path:'/workorder/worknodedetail',query:{workOrderId:val.row.workOrderId||12,route:this.$route.fullPath,activeName:this.activeName}})
+              if (val.row.operateType == 1){
+                this.$alert('该文件未经过审批，是直接上传文件，无审批批注记录', '提示', {
+                  confirmButtonText: '确定',
+                });
+                return;
+              }
+              this.$router.push({path:'/workorder/worknodedetail',query:{workOrderId:val.row.workOrderId||12,route:this.$route.fullPath,activeName:this.activeName,filename:val.row.docName}})
             }
         }
     }

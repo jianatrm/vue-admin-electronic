@@ -157,7 +157,7 @@
             });
           return;
         }
-        this.$router.push({path: '/workorder/worknodedetail', query: {workOrderId: val.row.workOrderId}})
+        this.$router.push({path: '/workorder/worknodedetail', query: {workOrderId: val.row.workOrderId,filename:val.row.docName}})
       },
       handleAdddoc() {
         this.dialogType = 'new'
