@@ -267,11 +267,10 @@
         </el-form-item>
       </el-form>
 
-      <el-form :model="dept" :rules="rules" ref="dept" label-width="80px" v-if="approveResult == 1">
+      <el-form :model="dept" :rules="rules" ref="dept" label-width="80px" v-show="approveResult == 1">
         <el-form-item label="部门" prop="sysDeptList">
           <el-select multiple v-model="dept.sysDeptList" filterable placeholder="请选择部门" style="width: 100%">
-            <el-option :label="item.deptName" :value="item.deptId" v-for="(item,index) in deptList"
-                       :key="index"></el-option>
+            <el-option :label="item.deptName" :value="item.deptId" v-for="(item,index) in deptList" :key="index"></el-option>
           </el-select>
         </el-form-item>
         <div style="text-align:right;">
@@ -279,7 +278,7 @@
         </div>
       </el-form>
 
-      <el-form :model="carbon" :rules="rules" ref="carbon" label-width="80px" v-else>
+      <el-form :model="carbon" :rules="rules" ref="carbon" label-width="80px"  v-show="approveResult == 2">
         <el-form-item label="审批人" prop="nextApprove">
           <el-select v-model="carbon.nextApprove" placeholder="请选择下一级审批人" style="width: 100%" filterable>
             <el-option v-for="item in nextApproveList" :key="item.userId" :label="item.staffName"
@@ -287,7 +286,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="抄送人" prop="carbonList">
-          <el-select multiple v-model="carbon.carbonList" placeholder="请选择抄送人" style="width: 100%">
+          <el-select multiple v-model="carbon.carbonList" placeholder="请选择抄送人" style="width: 100%" filterable>
             <el-option v-for="item in nextApproveList" :key="item.userId" :label="item.staffName"
                        :value="item.userId"></el-option>
           </el-select>

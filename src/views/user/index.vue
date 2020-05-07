@@ -396,7 +396,6 @@
           if (valid) {
             if (this.dialogType == 'new') {
               adduser(this.user).then(res => {
-
                 this.$loading().close()
                 if (res.success) {
                   this.$message({
