@@ -31,8 +31,9 @@
 
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <a :href="scope.row.docUrl" target="_blank"><el-button type="primary" size="small" icon="el-icon-download">下载</el-button></a>
+          <el-button type="primary" size="small" icon="el-icon-download"><a :href="scope.row.docUrl" target="_blank">下载</a></el-button>
           <el-button type="success" size="small" icon="el-icon-search" @click="handlePreview(scope)">预览</el-button>
+          <el-button type="danger" size="small" icon="el-icon-delete" @click="deleteDoc(scope)">删除</el-button>
         </template>
       </el-table-column>
       <div slot="empty">
@@ -70,7 +71,7 @@
 </template>
 
 <script>
-    import {querydoc, updatedoc, adddoc} from "../../api/doc";
+    import {querydoc, updatedoc, adddoc,deleteElectronicDoc} from "../../api/doc";
     import Pagination from '@/components/Pagination'
 
     export default {
@@ -182,7 +183,36 @@
                     this.pageNum = 1;
                     this.querydocList();
                 })
-            }
+            },
+
+          deleteDoc(scope){
+
+            this.$confirm('确定删除吗?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              deleteElectronicDoc({
+                docId:scope.row.docId
+              }).then(res=>{
+                if (res.success) {
+                  this.$message({
+                    type: 'success',
+                    message: '操作成功'
+                  })
+                  this.pageNum =1
+                  this.querydocList()
+                }else {
+                  this.$message({
+                    type: 'error',
+                    message: '提交失败'
+                  });
+                }
+              })
+            })
+
+
+          }
         }
     }
 </script>

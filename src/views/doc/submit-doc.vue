@@ -160,7 +160,7 @@
                         this.$router.push({path: '/workorder/workdoc'})
                     }else {
                         this.$message({
-                            type: 'erro',
+                            type: 'error',
                             message: '提交失败'
                         });
                     }

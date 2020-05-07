@@ -34,3 +34,11 @@ export function adddeptdoc(data,loading =true) {
     data:data,
   })
 }
+export function deleteElectronicDoc(data,loading =true) {
+  return request({
+    url: '/electronic/doc/deleteElectronicDoc',
+    method: 'post',
+    loading,
+    data:data,
+  })
+}

@@ -125,7 +125,6 @@
                 })
             },
             getList() {
-                this.pageNum++;
                 this.querydeptList();
             },
             handleEdit(scope) {

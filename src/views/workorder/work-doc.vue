@@ -365,6 +365,16 @@
     mounted() {
       this.activeName = this.$route.query.isOrder ? 'second' : this.activeName;
       this.queryWorkOrderList();
+      if (this.$route.query.activeName){
+        this.activeName = this.$route.query.activeName
+        if (this.$route.query.activeName == 'second'){
+          this.queryWorkOrderToMeList(false);
+        }else if (this.$route.query.activeName == 'three') {
+          this.queryWorkOrderHistory(false);
+        } else if (this.$route.query.activeName == 'four') {
+          this.queryCarbonList(false)
+        }
+      }
 
     },
     methods: {
@@ -395,38 +405,38 @@
           }
         })
       },
-      queryWorkOrderToMeList() {
+      queryWorkOrderToMeList(loading =true) {
         queryWorkOrderToMe({
           pageNum: this.pageNum,
           pageSize: this.pageSize,
           nodeOperateStatus: 1
-        }).then(res => {
-          this.$loading().close()
+        },loading).then(res => {
+          if (loading){this.$loading().close()}
           if (res.success) {
             this.workToMeList = res.result.result;
             this.total = res.result.count
           }
         })
       },
-      queryWorkOrderHistory() {
+      queryWorkOrderHistory(loading = true) {
         queryWorkOrderToMe({
           pageNum: this.pageNum,
           pageSize: this.pageSize,
           nodeOperateStatus: 2
-        }).then(res => {
-          this.$loading().close()
+        },loading).then(res => {
+          if (loading){this.$loading().close()}
           if (res.success) {
             this.workToMeList = res.result.result;
             this.total = res.result.count
           }
         })
       },
-      queryCarbonList() {
+      queryCarbonList(loading =true) {
         queryApproverCarbonCopy({
           pageNum: this.pageNum,
           pageSize: this.pageSize
-        }).then(res => {
-          this.$loading().close()
+        },loading).then(res => {
+          if (loading) {this.$loading().close()}
           if (res.success) {
             this.carbonListResult = res.result.result
             this.total = res.result.count
@@ -464,7 +474,7 @@
       },
 
       queryWorkDetail(workOrderId, type) {
-        this.$router.push({path: '/workorder/workdocdetail', query: {workOrderId: workOrderId, type: type}})
+        this.$router.push({path: '/workorder/workdocdetail', query: {route:this.$route.fullPath,workOrderId: workOrderId, type: type,activeName:this.activeName}})
       },
 
 

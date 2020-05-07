@@ -4,7 +4,8 @@
              label-position="left">
 
       <div class="title-container">
-        <h3 class="title">山西铁路装备制造集团机车车辆有限公司公文审批系统</h3>
+        <h3 class="title">山西铁路装备制造集团</h3>
+        <h3 class="title">机车车辆有限公司公文审批系统</h3>
       </div>
 
       <el-form-item prop="username">
@@ -42,7 +43,7 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading"  style="width:520px;margin-bottom:30px;background-color: #046993;opacity: 0.8;color: #fff"
+      <el-button :loading="loading"  style="width:520px;margin-bottom:30px;background-color: rgba(0,0,0,0.8);color: #fff"
                  @click.native.prevent="handleLogin">登录
       </el-button>
 
@@ -172,8 +173,7 @@
 
   /* reset element-ui css */
   .login-container {
-    background:url("../../assets/images/pic_hd.jpg") no-repeat;
-    //object-fit:cover;
+    background:url("../../assets/images/bj.jpg") no-repeat;
     background-size: cover;
 
     .el-input {
@@ -217,12 +217,13 @@
     width: 100%;
     background-color: $bg;
     overflow: hidden;
-
+    display: flex;
+    align-items: center;
     .login-form {
       position: relative;
-      width: 720px;
+      width: 560px;
       max-width: 100%;
-      padding: 160px 35px 0;
+      padding: 0px 35px 160px;
       margin: 0 auto;
       overflow: hidden;
       display: flex;
@@ -264,6 +265,9 @@
         margin: 0px auto 40px auto;
         text-align: center;
         font-weight: bold;
+      }
+      .title:nth-child(1){
+        margin-bottom: 10px;
       }
     }
 

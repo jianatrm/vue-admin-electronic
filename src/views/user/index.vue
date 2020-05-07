@@ -319,7 +319,6 @@
       },
 
       getList() {
-        this.pageNum++;
         this.queryUserList();
       },
       handleEdit(scope) {

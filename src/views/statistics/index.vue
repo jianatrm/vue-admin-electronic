@@ -178,6 +178,12 @@
             this.queryUserdocList()
             this.queryUserList()
             this.queryDeptList()
+            if (this.$route.query.activeName){
+              this.activeName = this.$route.query.activeName
+              if (this.$route.query.activeName == 'second'){
+                this.queryDeptdocList();
+              }else {}
+            }
         },
         methods: {
             handleClick(tab, event) {
@@ -291,7 +297,7 @@
                 }
             },
             showNodeList(val){
-              this.$router.push({path:'/workorder/worknodedetail',query:{workOrderId:val.row.workOrderId||12,route:this.$route.fullPath}})
+              this.$router.push({path:'/workorder/worknodedetail',query:{workOrderId:val.row.workOrderId||12,route:this.$route.fullPath,activeName:this.activeName}})
             }
         }
     }
