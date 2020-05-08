@@ -6,7 +6,7 @@
       </el-col>
       <el-col :span="18">
         <div>
-          <p class="content-title">早安，{{userInfo.userName}}，祝你开心每一天！</p>
+          <p class="content-title">{{hello}}，{{userInfo.userName}}，祝你开心每一天！</p>
           <p class="content">{{userInfo.companyName?userInfo.companyName:'暂无设置'}}{{userInfo.deptName?'-':''}}{{userInfo.deptName?userInfo.deptName:'暂无设置'}}</p>
         </div>
       </el-col>
@@ -232,7 +232,7 @@
             ])
         },
         mounted() {
-
+            this.getHello()
             this.queryUserInfo()
             this.queryCountByMonth()
             this.queryWorkOrderList()
@@ -240,6 +240,7 @@
         },
         data() {
             return {
+                hello:'早安',
                 url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
                 value: '',
                 count: 4,
@@ -304,6 +305,20 @@
             }
         },
         methods: {
+            getHello(){
+              // 获取当前小时
+              let hours = new Date().getHours();
+              // 设置默认文字
+              if (hours >= 0 && hours <= 10) {
+                this.hello = `早上好`;
+              } else if (hours > 10 && hours <= 14) {
+                this.hello = `中午好`;
+              } else if (hours > 14 && hours <= 18) {
+                this.hello = `下午好`;
+              } else if (hours > 18 && hours <= 24) {
+                this.hello = `晚上好`;
+              }
+            },
             change(){
                 this.queryCountByMonth()
             },

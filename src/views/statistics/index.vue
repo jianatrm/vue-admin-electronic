@@ -306,7 +306,7 @@
                 });
                 return;
               }
-              this.$router.push({path:'/workorder/worknodedetail',query:{workOrderId:val.row.workOrderId||12,route:this.$route.fullPath,activeName:this.activeName,filename:val.row.docName}})
+              this.$router.push({path:'/workorder/worknodedetail',query:{workOrderId:val.row.workOrderId,route:this.$route.fullPath,activeName:this.activeName,filename:val.row.docName}})
             }
         }
     }
