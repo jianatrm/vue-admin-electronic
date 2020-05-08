@@ -135,7 +135,6 @@
             },
             queryUserInfo() {
                 getUserInfo({}).then(res => {
-                    this.$loading().close()
                     if (res.success) {
                         this.user = res.result
                     }

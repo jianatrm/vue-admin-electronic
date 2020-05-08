@@ -3,12 +3,12 @@
     <el-tabs v-model="activeName" @tab-click="handleClick" type="card">
       <el-tab-pane label="我的申请" name="first">
         <el-table :data="workList" style="width: 100%;margin-top:30px;" border size="small">
-          <el-table-column align="center" label="工单编码" width="220">
+          <el-table-column align="center" label="文件编码" width="220">
             <template slot-scope="scope">
               {{ scope.row.workOrderCode }}
             </template>
           </el-table-column>
-          <el-table-column align="center" label="工单名称">
+          <el-table-column align="center" label="文件名称">
             <template slot-scope="scope">
               {{ scope.row.workOrderName }}
             </template>
@@ -49,14 +49,14 @@
           </el-col>
         </el-row>
       </el-tab-pane>
-      <el-tab-pane label="审批工单" name="second">
+      <el-tab-pane label="文件审批" name="second">
         <el-table :data="workToMeList" style="width: 100%;margin-top:30px;" border size="small">
-          <el-table-column align="center" label="工单编码" width="220">
+          <el-table-column align="center" label="文件编码" width="220">
             <template slot-scope="scope">
               {{ scope.row.workOrderVO.workOrderCode }}
             </template>
           </el-table-column>
-          <el-table-column align="center" label="工单名称">
+          <el-table-column align="center" label="文件名称">
             <template slot-scope="scope">
               {{ scope.row.workOrderVO.workOrderName }}
             </template>
@@ -106,12 +106,12 @@
       </el-tab-pane>
       <el-tab-pane label="审批记录" name="three">
         <el-table :data="workToMeList" style="width: 100%;margin-top:30px;" border size="small">
-          <el-table-column align="center" label="工单编码">
+          <el-table-column align="center" label="文件编码">
             <template slot-scope="scope">
               {{ scope.row.workOrderVO.workOrderCode }}
             </template>
           </el-table-column>
-          <el-table-column align="center" label="工单名称">
+          <el-table-column align="center" label="文件名称">
             <template slot-scope="scope">
               {{ scope.row.workOrderVO.workOrderName }}
             </template>
@@ -160,12 +160,12 @@
       </el-tab-pane>
       <el-tab-pane label="我的抄送" name="four">
         <el-table :data="carbonListResult" style="width: 100%;margin-top:30px;" border size="small">
-          <el-table-column align="center" label="工单编码">
+          <el-table-column align="center" label="文件编码">
             <template slot-scope="scope">
               {{ scope.row.workOrderVO.workOrderCode }}
             </template>
           </el-table-column>
-          <el-table-column align="center" label="工单名称">
+          <el-table-column align="center" label="文件名称">
             <template slot-scope="scope">
               {{ scope.row.workOrderVO.workOrderName }}
             </template>

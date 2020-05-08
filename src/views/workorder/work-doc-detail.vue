@@ -12,16 +12,16 @@
         <el-button @click="goback()" size="small" type="primary">返回</el-button>
 
       </div>
-      <p class="detail-title"><span>工单信息</span></p>
+      <p class="detail-title"><span>文件信息</span></p>
       <el-row>
         <el-col :span="8">
           <div class="grid-content bg-purple-light">
-            <p class="detail-lable">工单编号：<span class="detail-content">{{workOrderDetail.workOrderCode}}</span></p>
+            <p class="detail-lable">文件编号：<span class="detail-content">{{workOrderDetail.workOrderCode}}</span></p>
           </div>
         </el-col>
         <el-col :span="8">
           <div class="grid-content bg-purple-light">
-            <p class="detail-lable">工单标题：<span class="detail-content">{{workOrderDetail.workOrderName}}</span></p>
+            <p class="detail-lable">文件标题：<span class="detail-content">{{workOrderDetail.workOrderName}}</span></p>
           </div>
         </el-col>
       </el-row>

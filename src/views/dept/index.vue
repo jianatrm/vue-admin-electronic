@@ -152,7 +152,8 @@
             deleteRole(deptId, $index) {
                 updatedept({
                     status: 0,
-                    deptId: deptId
+                    deptId: deptId,
+                    operType:'1'
                 }).then(res => {
                     this.$loading().close()
                     if (res.success) {

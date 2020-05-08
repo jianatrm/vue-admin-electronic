@@ -27,7 +27,7 @@ module.exports = {
     },
     proxy: {
       ['/electronic']: {
-        target: 'http://39.106.93.170/electronic/',
+        target: 'http://localhost:8001/electronic/',
         changeOrigin: true,
         ws: true,
         pathRewrite: {

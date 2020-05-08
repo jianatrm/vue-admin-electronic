@@ -38,13 +38,13 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     if (!res.success) {
+      vm.$loading().close()
       Message({
         message: res.resultMessage || '系统异常',
         type: 'error',
         duration: 5 * 1000
       })
       return Promise.reject(new Error(res.resultMessage || '系统异常'))
-
     } else {
       return res
     }

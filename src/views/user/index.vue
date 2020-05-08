@@ -364,7 +364,8 @@
       deleteRole(userId, $index, val) {
         updateuser({
           status: val,
-          userId: userId
+          userId: userId,
+          operType:'1'
         }).then(res => {
           this.$loading().close()
           if (res.success) {
