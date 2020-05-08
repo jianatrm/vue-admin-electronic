@@ -265,7 +265,7 @@
                     deptId: this.deptId,
                     startTime: this.startTime,
                     endTime: this.endTime
-                },false).then(res => {
+                },loading).then(res => {
                    if (loading){this.$loading().close()}
                     if (res.success) {
                         this.docList = res.result.result
