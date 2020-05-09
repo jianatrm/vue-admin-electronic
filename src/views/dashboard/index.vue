@@ -398,7 +398,7 @@
                 })
             },
             toApprovePage(val){
-                this.$router.push({path:'workorder/workdoc',query:{isOrder:val==1?true:false}});
+                this.$router.push({path:'workorder/workdoc',query:{activeName:val==1?'second':'first'}});
             },
             toMyFile(){
                 this.$router.push({path:'doc/mydoc'});

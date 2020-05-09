@@ -363,7 +363,6 @@
       }
     },
     mounted() {
-      this.activeName = this.$route.query.isOrder ? 'second' : this.activeName;
       this.queryWorkOrderList();
       if (this.$route.query.activeName){
         this.activeName = this.$route.query.activeName
