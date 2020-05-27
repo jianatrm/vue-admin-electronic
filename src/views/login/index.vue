@@ -6,6 +6,7 @@
       <div class="title-container">
         <h3 class="title">山西铁路装备制造集团</h3>
         <h3 class="title">机车车辆有限公司公文审批系统</h3>
+        <!--<h3 class="title">电子文档审批系统</h3>-->
       </div>
 
       <el-form-item prop="username">
@@ -173,7 +174,7 @@
 
   /* reset element-ui css */
   .login-container {
-    background:url("../../assets/images/bj.jpg") no-repeat;
+    background:url("../../assets/images/bj01.jpg") no-repeat;
     background-size: cover;
 
     .el-input {

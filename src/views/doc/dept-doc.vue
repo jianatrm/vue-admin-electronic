@@ -34,7 +34,7 @@
 
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" icon="el-icon-download" @click="handleEdit(scope)">下载</el-button>
+          <el-button type="primary" size="small" icon="el-icon-download"><a :href="scope.row.docUrl" target="_blank">下载</a></el-button>
           <el-button type="success" size="small" icon="el-icon-search" @click="handlePreview(scope)">预览</el-button>
           <el-button type="info" size="small" icon="el-icon-edit-outline" @click="showNodeList(scope)">审批批注</el-button>
         </template>
@@ -220,7 +220,7 @@
           return
         }
         let filename = decodeURI(scope.row.docUrl).substring(scope.row.docUrl.lastIndexOf('/') + 1);
-        if ("xls xlsx".indexOf(filetype) == -1) {
+        if ("xls xlsx".indexOf(filetype) > -1) {
           window.open(`${window.location.protocol + "//" + window.location.host}/electronic/pdf/documentConverterToPdf/${filename}`)
         } else {
           const {href} = this.$router.resolve({

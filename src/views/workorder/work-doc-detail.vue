@@ -142,7 +142,7 @@
                        v-for="item in nextApproveList"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="抄送人" prop="carbonList">
+        <el-form-item label="抄送人" >
           <el-select multiple placeholder="请选择抄送人" style="width: 100%" v-model="carbon.carbonList">
             <el-option :key="item.userId" :label="item.staffName" :value="item.userId"
                        v-for="item in nextApproveList"></el-option>

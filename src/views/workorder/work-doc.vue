@@ -285,8 +285,8 @@
                        :value="item.userId"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="抄送人" prop="carbonList">
-          <el-select multiple v-model="carbon.carbonList" placeholder="请选择抄送人" style="width: 100%" filterable>
+        <el-form-item label="抄送人" >
+          <el-select multiple v-model="carbon.carbonList" placeholder="请选择抄送人" style="width: 100%" >
             <el-option v-for="item in nextApproveList" :key="item.userId" :label="item.staffName"
                        :value="item.userId"></el-option>
           </el-select>

@@ -164,6 +164,7 @@
                     userPhone: this.user.userPhone,
                     password: this.user.password,
                     nickName: this.user.nickName,
+                    operType:'1'
                 }).then(res=>{
                     this.$loading().close()
                     if (res.success){
