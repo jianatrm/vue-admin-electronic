@@ -16,12 +16,14 @@
       <el-row>
         <el-col :span="8">
           <div class="grid-content bg-purple-light">
-            <p class="detail-lable">文件编号：<span class="detail-content">{{workOrderDetail.workOrderCode}}</span></p>
+            <p class="detail-lable">文件标题：<span class="detail-content">{{workOrderDetail.workOrderName}}</span></p>
           </div>
         </el-col>
+      </el-row>
+      <el-row>
         <el-col :span="8">
           <div class="grid-content bg-purple-light">
-            <p class="detail-lable">文件标题：<span class="detail-content">{{workOrderDetail.workOrderName}}</span></p>
+            <p class="detail-lable">文件编号：<span class="detail-content">{{workOrderDetail.workOrderCode}}</span></p>
           </div>
         </el-col>
       </el-row>
