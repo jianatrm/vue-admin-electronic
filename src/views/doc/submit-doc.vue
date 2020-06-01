@@ -64,7 +64,7 @@
                 rules: {
                     docName: [
                         {required: true, message: '请输入文件名称', trigger: 'blur'},
-                        {min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'blur'}
+                        {min: 3, max: 250, message: '长度在 3 到 250 个字符', trigger: 'blur'}
                     ],
                     remark: [
                         {required: true, message: '请填写文件描述', trigger: 'blur'}
