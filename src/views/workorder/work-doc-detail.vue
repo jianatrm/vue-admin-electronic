@@ -118,8 +118,8 @@
       <el-form label-width="80px">
         <el-form-item label="处理结果">
           <el-radio-group v-model="approveResult">
-            <el-radio :label="1">审批结束</el-radio>
             <el-radio :label="2">审批推送</el-radio>
+            <el-radio :label="1">审批结束</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -198,7 +198,7 @@
         },
         dialogVisibleNextApprove: false,
         nextApproveList: [],
-        approveResult:1,
+        approveResult:2,
         carbon: {
           nextApprove: '',
           carbonList: '',
