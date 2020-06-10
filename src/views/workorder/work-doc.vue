@@ -36,7 +36,7 @@
           <el-table-column align="center" label="操作">
             <template slot-scope="scope">
               <el-button type="primary" size="small" @click="queryWorkDetail(scope.row.workOrderId)">详情</el-button>
-              <!--              <el-button type="danger" size="small" @click="handleDelete(scope)">取消</el-button>-->
+              <el-button type="danger" size="small" @click="handleDelete(scope.row.workOrderId)">删除</el-button>
             </template>
           </el-table-column>
           <div slot="empty">
@@ -308,7 +308,8 @@
     queryWorkOrderDetail,
     approveWorkOrder,
     approverCarbonCopy,
-    queryApproverCarbonCopy
+    queryApproverCarbonCopy,
+      deleteWorkOrder
   } from "../../api/workOrder";
   import {querydept} from "../../api/dept";
   import Pagination from '@/components/Pagination'
@@ -589,6 +590,31 @@
           }
         });
 
+      },
+      handleDelete(workOrderId){
+          this.$confirm('确定删除吗?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+          }).then(() => {
+              deleteWorkOrder({
+                  workOrderId:workOrderId
+              }).then(res=>{
+                  if (res.success) {
+                      this.$message({
+                          type: 'success',
+                          message: '操作成功'
+                      })
+                      this.pageNum =1
+                      this.queryWorkOrderList()
+                  }else {
+                      this.$message({
+                          type: 'error',
+                          message: '提交失败'
+                      });
+                  }
+              })
+          })
       }
 
     }

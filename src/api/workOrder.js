@@ -74,3 +74,11 @@ export function queryApproverCarbonCopy(data,loading =true) {
     data:data,
   })
 }
+export function deleteWorkOrder(data,loading =true) {
+  return request({
+    url: '/electronic/workOrder/deleteWorkOrder',
+    method: 'post',
+    loading:loading,
+    data:data,
+  })
+}
